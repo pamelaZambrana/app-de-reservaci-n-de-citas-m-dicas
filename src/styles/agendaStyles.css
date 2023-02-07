@@ -1,0 +1,21 @@
+.agenda{
+    overflow:scroll;
+    position: relative;
+    top:5rem;
+    padding: 5px;
+}
+.card-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+th, tr, td{
+    padding: 10px;
+    border: solid var(--gray1) 0.1px;
+}
+.agenda table{
+    margin: 0 auto;
+}
+td i{
+    margin: 10px;
+}

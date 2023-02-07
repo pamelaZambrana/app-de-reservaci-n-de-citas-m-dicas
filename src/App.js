@@ -1,23 +1,29 @@
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import Navbar from './components/pure/navbar';
+import Agenda from './components/tabs/agenda';
+
 
 function App() {
+  const [navBarMenu, setNavBarMenu] = useState(false);
+    function openNavBarMenu(){
+      console.log(navBarMenu);
+       console.log("navBarMenu is Open");
+        setNavBarMenu(prevState=>!prevState);  
+        console.log(navBarMenu);
+    }
+ 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className="App container">
+      <header >
+        <Navbar
+          navBarMenu={navBarMenu}
+          openNavBarMenu={openNavBarMenu}
+        ></Navbar>
       </header>
+      <section>
+        <Agenda></Agenda>
+      </section>
     </div>
   );
 }

@@ -1,0 +1,66 @@
+const client1={name:"juanita",lastName:"de los palotes", cellphone:4512266,email:"juenita@delospalote.com",estado:"general",doctor:"Osso de Bernoulli",date:"8/02/2023",initialHour:"8:30",finalHour:"9:00",location:"la paz"};
+const client2={name:"juanito",lastName:"de los palotes", cellphone:1782266,email:"juenito@delospalote.com",estado:"general",doctor:"Osso de Bernoulli",date:"8/02/2023",initialHour:"7:30",finalHour:"8:00",location:"la paz"};
+const client3={name:"belloti",lastName:"de los palotes", cellphone:4512266,email:"juenito@delospalote.com",estado:"general",doctor:"Osso de Bernoulli",date:"8/02/2023",initialHour:"16:30",finalHour:"17:00",location:"la paz"};
+const client4={name:"belloti",lastName:"de los palotes", cellphone:4512266,email:"juenito@delospalote.com",estado:"general",doctor:"Osso de Bernoulli",date:"8/02/2023",initialHour:"13:30",finalHour:"17:00",location:"la paz"};
+const clients=[client1,client2,client3,client4];
+
+let orderedClients=[];
+function hourOrder(clients){
+        let hours=clients.map(client=>(client.initialHour.split(":").join("")));
+        let orderedHours=hours.sort(function(a,b){
+           return(a-b)
+        });
+        orderedHours=orderedHours.map(element => element.split(""));
+           for(let i=0;i<orderedHours.length;i++){
+                let element=orderedHours[i];
+                if(element.length<4){
+                    element[0]=`${element[0]}:`;
+                }else{
+                    element[1]=`${element[1]}:`;;
+                };
+                element.join("");
+            };
+        orderedHours=orderedHours.map(hour=>hour.join(""));
+        for (let i=0;i<orderedHours.length;i++){
+            const item=orderedHours[i];
+            const element=clients.find(client=>(client.initialHour===item));
+            orderedClients.push(element);
+            }
+        return(orderedClients)
+    };
+console.log(hourOrder()); 
+
+console.log(clients);
+
+/* const arr=[
+    [ '7', '3', '0' ],
+    [ '8', '3', '0' ],
+    [ '1', '3', '3', '0' ],
+    [ '1', '6', '3', '0' ]
+  ];
+  function newArr(){
+    for(let i=0;i<arr.length;i++){
+        let element=arr[i];
+        if(element.length<4){
+            element[0]="holi";
+        }else{
+            element[1]="holi";
+        };
+        
+    };
+    const arr2=arr.map(item=>item.join(""));
+    return(arr2)
+  }
+  
+console.log(newArr()); */
+
+const arr=["7:30","19:30","6:00"]
+
+function order(){
+    const ans=arr.sort(function(a,b){
+        return(a-b)
+    });
+    return ans;
+}
+
+console.log(order())
