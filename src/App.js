@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
 import Navbar from './components/pure/navbar';
-import Agenda from './components/tabs/agenda';
+import Agenda from './components/containers/agenda';
 
 
 function App() {

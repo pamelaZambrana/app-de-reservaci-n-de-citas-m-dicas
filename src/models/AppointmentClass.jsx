@@ -7,8 +7,7 @@ export class Appointment{
     email="";
     specialty=ESPECIALIDAD.General;
     specialist="";
-    date="";
-    initialHour="";
+    dateTime="";
     finalHour="";
     location="";
     complete=false;
@@ -19,8 +18,7 @@ export class Appointment{
         email,
         specialty,
         specialist,
-        date,
-        initialHour,
+        dateTime,
         finalHour,
         location,
         complete){
@@ -31,8 +29,7 @@ export class Appointment{
         this.email=email;
         this.specialty=specialty;
         this.specialist=specialist;
-        this.date=date;
-        this.initialHour=initialHour;
+        this.dateTime=dateTime;
         this.finalHour=finalHour;
         this.location=location;
         this.complete=complete;

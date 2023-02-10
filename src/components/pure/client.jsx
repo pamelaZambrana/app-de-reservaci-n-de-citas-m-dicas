@@ -1,10 +1,33 @@
 import React from 'react';
 
-const ClientComponent = ({ client }) => {
+const ClientComponent = ({ client, complete, completeTask }) => {
+   
+    function completedIcon(){
+        if(client.complete){
+            return(
+            <i 
+                onClick={ ()=>completeTask(client) }
+                className='bi bi-toggle-on task-action'
+                style={{ color:"green" }}
+            >
+
+            </i>
+            );
+        }else{
+            return(
+                <i 
+                onClick={ ()=>completeTask(client) }
+                className='bi bi-toggle-off task-action'
+                style={{ color:"gray" }}
+                >
+                </i>
+            );
+        };
+    };
     return (
         <tr>
             <th>
-                <span className='ms-2'>{ `${client.initialHour} - ${client. finalHour}`}</span>
+                <span className='ms-2'>{ `${new Date(client.dateTime).getHours()}:${new Date(client.dateTime).getMinutes()} - ${client.finalHour}`}</span>
             </th>
             <td className='align-middle'>
                 <span>{ `${client.name} ${client.lastName}` }</span>
@@ -19,8 +42,7 @@ const ClientComponent = ({ client }) => {
                 {client.specialist}
             </td>
             <td className='align-middle'>
-                {client.complete}
-                <i class="bi bi-check2-square"></i>
+                {completedIcon()}
             </td>
             <td className='align-middle'>
                 <i className="bi bi-pencil-square"></i>

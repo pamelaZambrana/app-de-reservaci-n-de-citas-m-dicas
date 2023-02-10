@@ -1,12 +1,23 @@
-const client1={name:"juanita",lastName:"de los palotes", cellphone:4512266,email:"juenita@delospalote.com",estado:"general",doctor:"Osso de Bernoulli",date:"8/02/2023",initialHour:"8:30",finalHour:"9:00",location:"la paz"};
-const client2={name:"juanito",lastName:"de los palotes", cellphone:1782266,email:"juenito@delospalote.com",estado:"general",doctor:"Osso de Bernoulli",date:"8/02/2023",initialHour:"7:30",finalHour:"8:00",location:"la paz"};
-const client3={name:"belloti",lastName:"de los palotes", cellphone:4512266,email:"juenito@delospalote.com",estado:"general",doctor:"Osso de Bernoulli",date:"8/02/2023",initialHour:"16:30",finalHour:"17:00",location:"la paz"};
-const client4={name:"belloti",lastName:"de los palotes", cellphone:4512266,email:"juenito@delospalote.com",estado:"general",doctor:"Osso de Bernoulli",date:"8/02/2023",initialHour:"13:30",finalHour:"17:00",location:"la paz"};
-const clients=[client1,client2,client3,client4];
+const client1={name:"juanita",lastName:"de los palotes", cellphone:4512266,email:"juenita@delospalote.com",estado:"general",doctor:"Osso de Bernoulli",date:'2018-06-12T19:30',initialHour:"8:30",finalHour:"9:00",location:"la paz"};
+const client2={name:"juanito",lastName:"de los palotes", cellphone:1782266,email:"juenito@delospalote.com",estado:"general",doctor:"Osso de Bernoulli",date:'2023-07-12T19:30',initialHour:"7:30",finalHour:"8:00",location:"la paz"};
+const client3={name:"belloti",lastName:"de los palotes", cellphone:4512266,email:"juenito@delospalote.com",estado:"general",doctor:"Osso de Bernoulli",date:'2014-11-12T19:30',initialHour:"16:30",finalHour:"17:00",location:"la paz"};
+const client4={name:"belloti",lastName:"de los palotes", cellphone:4512266,email:"juenito@delospalote.com",estado:"general",doctor:"Osso de Bernoulli",date:'2023-06-12T12:30',initialHour:"13:30",finalHour:"17:00",location:"la paz"};
+const client5={name:"belloti",lastName:"de los palotes", cellphone:4512266,email:"juenito@delospalote.com",estado:"general",doctor:"Osso de Bernoulli",date:'2023-02-12T10:30',initialHour:"13:30",finalHour:"17:00",location:"la paz"};
+const clients=[client1,client2,client3,client4,client5];
+
+function orderDates(){
+    const orderedDate=clients.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+    const date = clients[0].dateTime;
+    return date
+    //return orderedDate;
+};
+console.log(orderDates());
+
+
 
 let orderedClients=[];
-function hourOrder(clients){
-        let hours=clients.map(client=>(client.initialHour.split(":").join("")));
+function hourOrder(){
+        let hours=clients.map(client=>(client.initialHour));
         let orderedHours=hours.sort(function(a,b){
            return(a-b)
         });
@@ -26,7 +37,7 @@ function hourOrder(clients){
             const element=clients.find(client=>(client.initialHour===item));
             orderedClients.push(element);
             }
-        return(orderedClients)
+        return(hours)
     };
 console.log(hourOrder()); 
 
@@ -53,14 +64,21 @@ console.log(clients);
   }
   
 console.log(newArr()); */
-
-const arr=["7:30","19:30","6:00"]
+/* Ordenando por fechas */
+/* const arr=[
+    '2023-08-02',
+    '2024-07-08',
+    '2023-02-21',
+    '2023-11-06',
+    '2023-03-11'
+  ]
 
 function order(){
-    const ans=arr.sort(function(a,b){
-        return(a-b)
-    });
-    return ans;
-}
 
-console.log(order())
+    return (arr.sort((a, b) => new Date(a).getTime() - new Date(b).getTime()));
+
+}
+console.log(order()) */
+
+
+
