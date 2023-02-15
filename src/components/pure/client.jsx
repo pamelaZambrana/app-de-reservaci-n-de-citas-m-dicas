@@ -1,8 +1,34 @@
 import React from 'react';
 
-const ClientComponent = ({ client, complete, completeTask }) => {
-   
+const ClientComponent = ({ client, complete, completeTask, remove }) => {
+    let finalHour;
+    /* calculando el final de la sesión*/
+    function timeRange(){
+        let initialHour=(new Date(client.dateTime).getHours())*60;
+        let initialMinutes=new Date(client.dateTime).getMinutes();
+        let totalMinutes=initialHour+initialMinutes;
+        /* duración de cada sesión */
+        let EA=30;
+        let LP=45;
+        let minutes;
+        let hours;
+        if((client.branch==="la paz")){
+            hours=Math.floor((totalMinutes+LP)/(60));
+            minutes=(((totalMinutes+LP)/(60))-hours)*60;
+        }else if((client.branch==="el alto")){
+            hours=Math.floor((totalMinutes+EA)/(60));
+            minutes=(((totalMinutes+EA)/(60))-hours)*60;
+        };
+        if(minutes===0){
+            minutes='00';
+        }
+        finalHour=`${hours}:${minutes}`;
+        return(
+            `${new Date(client.dateTime).getHours()}:${new Date(client.dateTime).getMinutes()}-${finalHour}`
+        );
+    };
     function completedIcon(){
+        
         if(client.complete){
             return(
             <i 
@@ -25,28 +51,34 @@ const ClientComponent = ({ client, complete, completeTask }) => {
         };
     };
     return (
-        <tr>
+        <tr className={client.complete ? "complete-appointment" : "uncomplete-appointment"}>
             <th>
-                <span className='ms-2'>{ `${new Date(client.dateTime).getHours()}:${new Date(client.dateTime).getMinutes()} - ${client.finalHour}`}</span>
+                <span className='ms-2'>{ client.branch }</span>
             </th>
             <td className='align-middle'>
-                <span>{ `${client.name} ${client.lastName}` }</span>
+                <span>{ timeRange() }</span>
+            </td>
+            <td className='align-middle'>
+                <span>{ client.name }</span>
             </td>
             <td className='align-middle'>
                 {client.cellphone}
             </td>
             <td className='align-middle'>
-                {client.specialty}
+                {client.doctor}
             </td>
             <td className='align-middle'>
-                {client.specialist}
+                {client.specialty}
             </td>
             <td className='align-middle'>
                 {completedIcon()}
             </td>
             <td className='align-middle'>
                 <i className="bi bi-pencil-square"></i>
-                <i className="bi bi-trash3"></i>
+                <i 
+                    className="bi bi-trash3"
+                    onClick={()=>remove(client)}
+                ></i>
             </td>
         </tr>
     )

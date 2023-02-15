@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import './App.css';
 import Navbar from './components/pure/navbar';
 import Agenda from './components/containers/agenda';
+import LoginFormik from './components/forms/loginFormik';
+import AppointmentFormik from './components/forms/appointmentFormik';
 
 
 function App() {
@@ -24,6 +26,8 @@ function App() {
       <section>
         <Agenda></Agenda>
       </section>
+      {/* <LoginFormik></LoginFormik> */}
+      {/* <AppointmentFormik></AppointmentFormik> */}
     </div>
   );
 }

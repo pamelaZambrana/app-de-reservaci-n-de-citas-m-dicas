@@ -13,9 +13,22 @@ th, tr, td{
     padding: 10px;
     border: solid var(--gray1) 0.1px;
 }
+.complete-appointment{
+    text-decoration: line-through;
+    color: gray;
+}
+
 .agenda table{
     margin: 0 auto;
 }
 td i{
     margin: 10px;
+    cursor: pointer;
+}
+
+td i:hover{
+    color: blue;
+    padding: 3px;
+    border-radius: 50%;
+    background-color: var(--ligth-blue1);
 }

@@ -2,36 +2,27 @@ import { ESPECIALIDAD } from "./especialidad";
 
 export class Appointment{
     name="";
-    lastName="";
     cellphone="";
-    email="";
+    doctor="";
     specialty=ESPECIALIDAD.General;
-    specialist="";
     dateTime="";
-    finalHour="";
-    location="";
+    branch="";
     complete=false;
     constructor(
         name,
-        lastName,
         cellphone,
-        email,
+        doctor,
         specialty,
-        specialist,
         dateTime,
-        finalHour,
-        location,
+        branch,
         complete){
 
         this.name=name;
-        this.lastName=lastName;
         this.cellphone=cellphone;
-        this.email=email;
+        this.doctor=doctor;
         this.specialty=specialty;
-        this.specialist=specialist;
         this.dateTime=dateTime;
-        this.finalHour=finalHour;
-        this.location=location;
+        this.branch=branch;
         this.complete=complete;
     }
 }
