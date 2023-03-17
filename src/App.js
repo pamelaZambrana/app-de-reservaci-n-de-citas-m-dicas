@@ -1,34 +1,27 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './App.css';
-import Navbar from './components/pure/navbar';
-import Agenda from './components/containers/agenda';
+import {Routes, Route, Navigate} from 'react-router-dom';
+import"./styles/principal-section.css";
+
 import LoginFormik from './components/forms/loginFormik';
 import AppointmentFormik from './components/forms/appointmentFormik';
+import Dashboard from './pages/dashboard/Dashboard';
 
 
 function App() {
-  const [navBarMenu, setNavBarMenu] = useState(false);
-    function openNavBarMenu(){
-      console.log(navBarMenu);
-       console.log("navBarMenu is Open");
-        setNavBarMenu(prevState=>!prevState);  
-        console.log(navBarMenu);
-    }
+  
  
   return (
-    <div className="App container">
-      <header >
-        <Navbar
-          navBarMenu={navBarMenu}
-          openNavBarMenu={openNavBarMenu}
-        ></Navbar>
-      </header>
-      <section>
-        <Agenda></Agenda>
-      </section>
-      {/* <LoginFormik></LoginFormik> */}
-      {/* <AppointmentFormik></AppointmentFormik> */}
-    </div>
+    <Routes>
+      
+      <Route 
+        path='/'
+        element = { <Dashboard/> }
+      />
+      
+    </Routes> 
+    
+    
   );
 }
 

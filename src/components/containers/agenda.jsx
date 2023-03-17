@@ -7,37 +7,28 @@ import DateControl from '../pure/dateControl';
 import ColoredTable from '../tabs/coloredTable';
 
 
-const Agenda = () => {
+const Agenda = ({ clients, setClients }) => {
 
-    
-    const client1=new Appointment("juanita", 4512266, "Osso de Bernoulli",ESPECIALIDAD.General,'2018-02-13T19:30',"el alto",false);
-    const client2=new Appointment("juanito", 25262621, "Osso de Bernoulli",ESPECIALIDAD.Fisioterapia,'2023-02-13T15:00',"el alto",true);
-    const client3=new Appointment("belloti", 6980555, "Osso de Bernoulli",ESPECIALIDAD.General,'2023-02-13T08:30',"el alto",true);
-    const client4=new Appointment("paola", 77788555, "Osso de Bernoulli",ESPECIALIDAD.EducacionEspecial,'2023-02-13T10:30',"el alto",false);
-    const client5=new Appointment("stampy", 77788555, "Osso de Bernoulli",ESPECIALIDAD.Psicopedagogia,'2023-02-13T12:30',"el alto",false);
-    const client6=new Appointment("jack", 77788555, "Osso de Bernoulli",ESPECIALIDAD.General,'2023-02-13T15:00',"el alto",false);
-    const client7=new Appointment("ronald", 77788555,"Osso de Bernoulli", ESPECIALIDAD.Psicologia,'2023-02-14T11:30',"el alto",false);
-    const client8=new Appointment("ana", 77788555,"Osso de Bernoulli", ESPECIALIDAD.Psicopedagogia,'2023-02-14T08:30',"el alto",false);
-    const client9=new Appointment("andy", 77788555,"Osso de Bernoulli", ESPECIALIDAD.Psicopedagogia,'2023-02-14T10:30',"el alto",false);
-    const client10=new Appointment("eli", 77788555,"Osso de Bernoulli", ESPECIALIDAD.Fisioterapia,'2023-02-14T08:30',"el alto",false);
     
     /* Current date */
     const date = new Date();
     const today=new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toJSON().slice(0,10);
 
-    const [clients, setClients] = useState([client1,client2,client3,client4,client5,client6, client7, client8, client9, client10]);
+    /* Estados de agenda */
     const [searchDate, setSearchDate] = useState(today);
+    const [arrows, setArrows] = useState(1);
     const [loading, setLoading] = useState(true);
     /* ordenando la lista por fecha y hora */
     let orderedClients=clients.sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime());
     let clientsTable;
+    let coloredSch;
     const regex=/^[^T]*/;
 
     /* Buscando por fecha */
     let searchedDates=orderedClients.filter((client)=>{
-    const dateValue=client.dateTime.match(regex)[0];
-    const searchValue=searchDate;
-    return (dateValue.includes(searchValue));
+        const dateValue=client.dateTime.match(regex)[0];
+        const searchValue=searchDate;
+        return (dateValue.includes(searchValue));
     });
     
     /* completando citas */
@@ -56,7 +47,6 @@ const Agenda = () => {
         tempClients.splice(index,1);
         setClients(tempClients);
     }
-    /* crear citas */
     
 
     if(searchedDates.length>0){
@@ -66,9 +56,18 @@ const Agenda = () => {
                 completeTask={completeAppointment}
                 remove={removeAppointment}
             ></Table>
+        /* Horaro por colores */
+        coloredSch=<ColoredTable clients={searchedDates}></ColoredTable>;
     }else{
        clientsTable = (
        <div>
+            <h4>No hay citas agendadas para esta fecha</h4>
+            <h5>Crea una nueva cita.</h5>
+       </div>
+       )
+        /* Horaro por colores */
+       coloredSch = (
+        <div>
             <h4>No hay citas agendadas para esta fecha</h4>
             <h5>Crea una nueva cita.</h5>
        </div>
@@ -84,36 +83,40 @@ const Agenda = () => {
             console.log("TaskList component is going to unmount...")
         };
     }, [clients]);
-    return (
-        <div>
-        <div className='col-12'>
+    return (    
             <div className='card agenda'>
-                <div className='card-header p-3'>
+                <div className='card-header d-flex'>
                     <DateControl 
                         searchDate={searchDate}
                         setSearchDate={setSearchDate}
+                        arrows={ arrows }
+                        setArrows = { setArrows }
                     ></DateControl>
-                    <button className='button'>
-                        Agendar Cita
-                    </button>
+                    
                 </div>
-                <div 
-                    className='card-body' 
-                    style={ {position:"relative", height:"400px"}} 
-                    data-mdb-perfect-scrollbar="true"
-                >
-                    { loading ? <p>Cargando lista de reservas</p> : clientsTable }
-                </div>
-                <div>
-                    <ColoredTable
-                        clients={searchedDates}
-                    ></ColoredTable>
-                   
+                { arrows === 1 
+                ? 
+                    <div 
+                        className='card-body' 
+                        style={ {position:"relative", height:"400px"}} 
+                        data-mdb-perfect-scrollbar="true"
+                    >
+                        { loading ? <p>Cargando lista de reservas</p> : clientsTable }
+                    </div>
+                :
+                    <div
+                        className='card-body'
+                        style={ {position:"relative", height:"400px"}} 
+                    >
+                        { loading 
+                        ? <p>Cargando lista de reservas</p> 
+                        :   coloredSch
+                        }
+                        
+                    </div>
+                }
+                
             </div>
-            </div>
-            
-        </div>
-    </div>
     )
 }
 

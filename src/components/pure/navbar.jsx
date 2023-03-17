@@ -20,12 +20,14 @@ const Navbar = ({navBarMenu, openNavBarMenu}) => {
                         </button>
                         
                     </h5>
+                    
                 </div>
                 
-                <div >
+                <div className='d-flex gap-3 align-items-center'>
+                    
                     <h5 
-                    className='nav-item dropdown-toggle'
-                    onClick={()=> openNavBarMenu() }
+                        className='nav-item dropdown-toggle menu-button'
+                        onClick={()=> openNavBarMenu() }
                     >
                         Menu
                     </h5>

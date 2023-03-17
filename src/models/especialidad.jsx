@@ -6,4 +6,11 @@ export const ESPECIALIDAD={
     Psicopedagogia: "Psicopedagogía",
     Fonoaudiologia:"Fonoaudiología",
     General: "General"
-}
+};
+
+export const DOCTOR={
+    Juanito: "Juanito",
+    Juanita: "Juanita",
+    OssoDeBernoulli: "Osso de Bernoulli",
+    
+};

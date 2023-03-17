@@ -3,9 +3,9 @@
     align-items: center;
     width: 100%;
     height: auto;
-    padding: 1rem;
+    padding: 0.5rem;
     background-color: var(--gray1);
-    border-bottom: solid black 1px;
+    border-bottom: solid var(--gray2) 1px;
 
 }
 .months{
@@ -44,5 +44,8 @@
  }
  .navbar-menu .navbar-item:hover{
     cursor: pointer;
-    border-bottom: solid black 1px;
+    border-bottom: solid var(--gray2) 1px;
  }
+
+
+ 

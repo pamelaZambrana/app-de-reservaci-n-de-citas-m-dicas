@@ -1,4 +1,5 @@
 import React from 'react';
+import "../../styles/colorTable.css"
 
 const ColoredTable = ({clients}) => {
     /* Array de especialidades */
@@ -130,7 +131,7 @@ const ColoredTable = ({clients}) => {
        
             
     return (
-        <table className='Table'>
+        <table className='Table colorTable'>
             <thead>
                 <tr>
                     <th scope="col">Horario</th>
@@ -146,39 +147,21 @@ const ColoredTable = ({clients}) => {
             <tbody>
                 {contentRow.map((item, index)=>{
                     return(  
-                        <tr key={index}>
-                            <th>
+                        <tr key={index} >
+                            <th className="colorTable-cell">
                                 {item[0].schedule}
                             </th>
                             {item.map((item1,index1)=>{
                                 return(
-                                    <td key={index1} style={item1!=="-"?{backgroundColor:`${item1.style}`}:null}>
+                                    <td 
+                                        key={index1} 
+                                        style={item1!=="-"?{backgroundColor:`${item1.style}`}:null}
+                                        className="colorTable-cell"
+                                    >
                                         {item1.content}
                                     </td>
                                 )
                             })}
-                            
-                            
-                            
-                            
-                            
-                            {/* {item[1]>-1
-                            ?specialtyArr.map((spe,speIndex)=>{
-                                return(
-                                    <td key={speIndex} >
-                                    {speIndex===item[2]
-                                    ?<p style={{backgroundColor:`${spe.color}`}}>{clients[item[1]].name}</p>
-                                    :"-"}
-                                    </td>
-                                )
-                            })
-                            :specialtyArr.map((spe,speIndex)=>{
-                                return(
-                                    <td key={speIndex}>
-                                        -
-                                    </td>
-                                )
-                            })} */}
                         </tr>
                     ) 
                 })}
