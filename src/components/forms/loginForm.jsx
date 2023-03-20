@@ -15,13 +15,13 @@ const loginSchema=Yup.object().shape(
     }
 );
 
-const LoginFormik = () => {
+const LoginForm = () => {
     const initialCredentials={
         userName:"",
         password:""
     };
     return (
-        <div className='h-100 container d-flex justify-content-center align-items-center '>
+        <div className='login-container '>
             <Formik
                 
                 initialValues={
@@ -42,9 +42,10 @@ const LoginFormik = () => {
                     isSubmitting,
                     /* and other goodies */
                 }) => (
-                    <Form className="p-3 border border-3 rounded">
+                    <Form className="card login-form">
                         <h2>Inciar sesión: </h2>
-                        <div className="mt-3 d-flex gap-3 align-items-center">
+                        <hr className='w-100'/>
+                        <div className="w-100 mt-3 d-flex gap-3 align-items-center">
                             <label className="form-label">Usuario:</label>
                             <input
                                 type="text"
@@ -52,7 +53,7 @@ const LoginFormik = () => {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 value={values.userName}
-                                className="form-control"
+                                className="w-100 form-control"
                             />
                         
                         </div>
@@ -62,7 +63,7 @@ const LoginFormik = () => {
                                 <ErrorMessage className="form-text d-flex" name="userName" component="div"></ErrorMessage>
                             )
                         }
-                        <div className="mt-3 d-flex gap-3 align-items-center">
+                        <div className="w-100 mt-3 d-flex gap-3 align-items-center">
                             <label className="form-label">Contraseña:</label>
                             <input
                                 type="password"
@@ -80,15 +81,15 @@ const LoginFormik = () => {
                                 <ErrorMessage className="form-text" name="password" component="div"></ErrorMessage>
                             )
                         }
-                        <div className="mt-3">
-                            <button 
-                                type="submit" 
-                                disabled={isSubmitting}
-                                className="btn btn-primary"
-                            >
-                                Siguiente
-                            </button>
-                        </div>
+                        
+                        <button 
+                            type="submit" 
+                            disabled={isSubmitting}
+                            className="btn btn-primary login-button"
+                        >
+                            Siguiente
+                        </button>
+                        
                     </Form>
                 )}
             </Formik>
@@ -97,4 +98,4 @@ const LoginFormik = () => {
 
 
 
-export default LoginFormik;
+export default LoginForm;

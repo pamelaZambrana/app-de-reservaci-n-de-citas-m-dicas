@@ -1,9 +1,9 @@
-import { ESPECIALIDAD } from "./especialidad";
+import { DOCTOR, ESPECIALIDAD } from "./especialidad";
 
 export class Appointment{
     name="";
     cellphone="";
-    doctor="";
+    doctor=DOCTOR.Juanita;
     specialty=ESPECIALIDAD.General;
     dateTime="";
     branch="";
