@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import { Appointment } from '../../models/AppointmentClass';
-import { ESPECIALIDAD } from '../../models/especialidad';
+import { ESPECIALIDAD } from '../../models/options';
 import Table from '../tabs/Table';
 import "../../styles/agendaStyles.css";
 import DateControl from '../pure/dateControl';
 import ColoredTable from '../tabs/coloredTable';
 
 
-const Agenda = ({ clients, setClients }) => {
+const Agenda = ({ clients, setClients, arrows, setArrows }) => {
 
     
     /* Current date */
@@ -16,7 +16,6 @@ const Agenda = ({ clients, setClients }) => {
 
     /* Estados de agenda */
     const [searchDate, setSearchDate] = useState(today);
-    const [arrows, setArrows] = useState(1);
     const [loading, setLoading] = useState(true);
     /* ordenando la lista por fecha y hora */
     let orderedClients=clients.sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime());

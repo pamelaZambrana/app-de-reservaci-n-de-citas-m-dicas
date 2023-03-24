@@ -1,4 +1,4 @@
-import { DOCTOR, ESPECIALIDAD } from "./especialidad";
+import { BRANCHES, DOCTOR, ESPECIALIDAD } from "./options";
 
 export class Appointment{
     name="";
@@ -6,7 +6,7 @@ export class Appointment{
     doctor=DOCTOR.Juanita;
     specialty=ESPECIALIDAD.General;
     dateTime="";
-    branch="";
+    branch=BRANCHES.EA;
     complete=false;
     constructor(
         name,

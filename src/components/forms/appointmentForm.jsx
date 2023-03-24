@@ -1,11 +1,18 @@
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import { useNavigate } from 'react-router-dom';
-import { DOCTOR, ESPECIALIDAD } from "../../models/especialidad";
+import { DOCTOR, ESPECIALIDAD } from "../../models/options";
 import { Appointment } from "../../models/AppointmentClass";
+import Agenda from '../../components/containers/agenda';
 import "../../styles/newAppointment.css";
 
-const AppointmentForm = ({ addNewAppointment }) => {
-    const initialValues=new Appointment("","","",ESPECIALIDAD.General,"","", false) ;
+const AppointmentForm = ({ clients, addNewAppointment, arrows, setArrows }) => {
+    /* Estado de tabla abierta */
+    const [open, setOpen] = useState(false);
+
+    function openCloseTab(){
+        setArrows(2);
+        setOpen(!open);
+    }
     /* Referencias para los inputs */
     const nameRef = useRef("");
     const apPaternoRef = useRef("");
@@ -16,10 +23,8 @@ const AppointmentForm = ({ addNewAppointment }) => {
     const dateRef = useRef("");
     const timeRef = useRef("");
 
-
-   
-
     const navigate=useNavigate();
+    /* submit button */
     function addAppointment(e){
         e.preventDefault();
         const values=new Appointment(
@@ -28,7 +33,7 @@ const AppointmentForm = ({ addNewAppointment }) => {
             doctorRef.current.value,
             specialtyRef.current.value,
             `${dateRef.current.value}T${timeRef.current.value}`,
-            "El Alto",
+            "el alto",
             false
         )
         alert(JSON.stringify(values));
@@ -36,8 +41,6 @@ const AppointmentForm = ({ addNewAppointment }) => {
         navigate("/");
         console.log("sending values", values)
     }
-
-    
     return (
         <div className="appointment-container" >
              <h3>NUEVA CITA MÉDICA</h3>
@@ -208,13 +211,39 @@ const AppointmentForm = ({ addNewAppointment }) => {
                             ></option>
                         </datalist>
                     </fieldset>
+                    <div className="buttons-container" >
+                        <button 
+                            type="button"
+                            className='btn btn-primary watch-table-button'
+                            onClick={ openCloseTab }
+                        >Ver Horarios</button>
+                        <button 
+                            type="submit"
+                            className='btn btn-primary appointment-submit-button'
+                        >Guardar</button>
+                    </div>
 
-                    <button 
-                        type="submit"
-                        className='btn btn-primary appointment-submit-button '
-                        
-                    >Aceptar</button>
                 </form>
+            { open 
+            ? (
+                <div className='colored-agenda-container'>
+                    <div className='icon-container'>
+                        <button 
+                            className='close-table-button'
+                            onClick={ openCloseTab}
+                        >
+                            <i className="bi bi-x"></i>
+                        </button>
+                    </div>
+                    <Agenda 
+                        clients = { clients } 
+                        arrows = { arrows }
+                        setArrows = { setArrows }
+                    ></Agenda>
+                </div>
+            )
+            : null
+            }
                 
         </div>
     );
