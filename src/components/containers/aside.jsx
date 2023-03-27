@@ -4,7 +4,13 @@ import "../../styles/aside.css";
 const Aside = ({addNewAppointment}) => {
     const navigate=useNavigate();
     return (
-        <div className='aside'>
+        <div className='aside d-flex flex-column gap-3'>
+            <button 
+                className='aside-button'
+                onClick={()=>navigate("/registroUsuario")}
+            >
+                Crear nuevo usuario
+            </button>
             <button 
                 className='aside-button'
                 onClick={()=>navigate("/newAppointment")}

@@ -30,6 +30,7 @@ const UserForm = ({addNewUser}) => {
         )
         alert(JSON.stringify(values));
         addNewUser(values);
+        navigate("/tablaUsuarios")
         /* TODO: redireccionar a tabla de usuarios */
         /* navigate("/"); */
         console.log("sending values", values)

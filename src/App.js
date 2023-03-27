@@ -14,6 +14,7 @@ import ColoredTablePage from "./pages/appointments/coloredTablePage"
 import LoginPage from './pages/auth/loginPage';
 import { User } from './models/users';
 import UserFormPage from './pages/formPages/userFormPage';
+import UsersDashboard from './pages/dashboard/usersDashboard';
 
 /* Clientes de prueba */
 const client1=new Appointment("juanita", 4512266, "Osso de Bernoulli",ESPECIALIDAD.General,'2018-03-22T19:00',"el alto",false);
@@ -28,16 +29,25 @@ const client9=new Appointment("andy", 77788555,"Osso de Bernoulli", ESPECIALIDAD
 const client10=new Appointment("eli", 77788555,"Osso de Bernoulli", ESPECIALIDAD.Fisioterapia,'2023-03-22T08:30',"el alto",false);
 
 /* Usuarios de prueba */
-const user1 = new User("Juanito de los Palotes",ESPECIALIDAD.General,"el alto", [AVAILABILITY.morning, AVAILABILITY.evening], "69802366","Av.Quintanilla Zuazo","p_zf888@hotmail.com","juanito123");
-const user2 = new User("Osso de Bernoulli",ESPECIALIDAD.General,"el alto", [AVAILABILITY.morning, AVAILABILITY.evening], "69802366","Av.Quintanilla Zuazo","bernoulli@hotmail.com","juanito123");
-const user3 = new User("Alien86",ESPECIALIDAD.General,"el alto", [AVAILABILITY.morning, AVAILABILITY.evening], "69802366","Av.Quintanilla Zuazo","alien86@hotmail.com","juanito123");
+const user1 = new User("Juanito de los Palotes",ESPECIALIDAD.General,"el alto", AVAILABILITY.morning, "69802366","Av.Quintanilla Zuazo","p_zf888@hotmail.com","juanito123");
+const user2 = new User("Osso de Bernoulli",ESPECIALIDAD.General,"el alto", AVAILABILITY.evening, "69802366","Av.Quintanilla Zuazo","bernoulli@hotmail.com","juanito123");
+const user3 = new User("Alien86",ESPECIALIDAD.General,"el alto", AVAILABILITY.both, "69802366","Av.Quintanilla Zuazo","alien86@hotmail.com","juanito123");
 
 function App() {
 
   /* Estados generales */
   const [clients, setClients] = useState([client1,client2,client3,client4,client5,client6, client7, client8, client9, client10]);
-  const [users, setUsers] = useState([user1],[user2],[user3]);
+  const [users, setUsers] = useState([user1,user2,user3]);
   const [arrows, setArrows] = useState(1);
+  const [navBarMenu, setNavBarMenu] = useState(false);
+
+  /* Abrir navBarMenu */
+  function openNavBarMenu(){
+    console.log(navBarMenu);
+      console.log("navBarMenu is Open");
+      setNavBarMenu(prevState=>!prevState);  
+      console.log(navBarMenu);
+  }
   /* Add new user */
   function addNewUser(newUser){
     const userList = [...users];
@@ -53,7 +63,7 @@ function App() {
     console.log(appo);
   };
 
-  console.log(clients)
+  console.log("users",users)
   return (
     <Routes>
       <Route 
@@ -63,12 +73,23 @@ function App() {
                       /> }
       />
       <Route 
+        path='tablaUsuarios'
+        element = { <UsersDashboard 
+                      navBarMenu = { navBarMenu }
+                      openNavBarMenu = { openNavBarMenu }
+                      users = { users }
+                      setUsers = { setUsers }
+                      /> }
+      />
+      <Route 
         path='/'
         element = { <Dashboard 
                       clients = { clients }
                       setClients = { setClients }
                       arrows = { arrows }
                       setArrows = { setArrows }
+                      navBarMenu = { navBarMenu }
+                      openNavBarMenu = { openNavBarMenu }
                       /> }
       />
       <Route 

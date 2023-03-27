@@ -35,8 +35,7 @@ td i{
 }
 
 td i:hover{
-    color: blue;
-    padding: 3px;
+    color: red;
     border-radius: 50%;
     background-color: var(--ligth-blue1);
 }

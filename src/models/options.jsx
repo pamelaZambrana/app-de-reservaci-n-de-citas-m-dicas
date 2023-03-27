@@ -18,7 +18,7 @@ export const DOCTOR={
 export const AVAILABILITY={
         morning: "mañana",
         evening: "tarde",
-        both:"ambos",
+        both:"mañana y tarde",
 }
 
 export const BRANCHES={

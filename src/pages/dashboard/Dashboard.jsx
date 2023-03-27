@@ -3,17 +3,8 @@ import Navbar from '../../components/pure/navbar';
 import Agenda from '../../components/containers/agenda';
 import Aside from '../../components/containers/aside';
 
-const Dashboard = ({ clients, setClients, addNewAppointment, arrows, setArrows }) => {
+const Dashboard = ({ clients, setClients, addNewAppointment, arrows, setArrows, navBarMenu, setNavBarMenu, openNavBarMenu }) => {
 
-    
-    const [navBarMenu, setNavBarMenu] = useState(false);
-
-    function openNavBarMenu(){
-      console.log(navBarMenu);
-       console.log("navBarMenu is Open");
-        setNavBarMenu(prevState=>!prevState);  
-        console.log(navBarMenu);
-    }
     return (
         <div className="App ">
             <header >

@@ -19,6 +19,7 @@ const Agenda = ({ clients, setClients, arrows, setArrows }) => {
     const [loading, setLoading] = useState(true);
     /* ordenando la lista por fecha y hora */
     let orderedClients=clients.sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime());
+    /* Desplegando la tabla */
     let clientsTable;
     let coloredSch;
     const regex=/^[^T]*/;
