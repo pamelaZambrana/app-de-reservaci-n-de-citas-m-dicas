@@ -1,4 +1,6 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import EditAppointmentForm from '../forms/editAppointmentForm';
 
 const ClientComponent = ({ client, complete, completeTask, remove }) => {
     let finalHour;
@@ -59,6 +61,13 @@ const ClientComponent = ({ client, complete, completeTask, remove }) => {
             );
         };
     };
+    /* Open Edit Appointment */
+    const navigate=useNavigate();
+    function editAppointment(client){
+        return(
+           <EditAppointmentForm></EditAppointmentForm> 
+        )
+    }
     return (
         <tr className={client.complete ? "complete-appointment" : "uncomplete-appointment"}>
             <th>
@@ -83,7 +92,10 @@ const ClientComponent = ({ client, complete, completeTask, remove }) => {
                 {completedIcon()}
             </td>
             <td className='align-middle'>
-                <i className="bi bi-pencil-square"></i>
+                <i 
+                    className="bi bi-pencil-square"
+                    onClick={ ()=>editAppointment(client) }
+                ></i>
                 <i 
                     className="bi bi-trash3"
                     onClick={()=>remove(client)}

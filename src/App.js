@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 import {Routes, Route} from 'react-router-dom';
 import"./styles/principal-section.css";
@@ -19,7 +19,7 @@ import CustomerForm from './components/forms/custormerForm';
 import { Customer } from './models/customer';
 import CustomerDashboard from './pages/dashboard/customerDashboard';
 
-/* Clientes de prueba */
+/* Citas de prueba */
 const client1=new Appointment("juanita", 4512266, "Osso de Bernoulli",ESPECIALIDAD.General,'2018-03-22T19:00',"el alto",false);
 const client2=new Appointment("juanito", 25262621, "Osso de Bernoulli",ESPECIALIDAD.Fisioterapia,'2023-03-22T15:00',"el alto",true);
 const client3=new Appointment("belloti", 6980555, "Osso de Bernoulli",ESPECIALIDAD.General,'2023-03-23T08:30',"el alto",true);
@@ -31,10 +31,7 @@ const client8=new Appointment("ana", 77788555,"Osso de Bernoulli", ESPECIALIDAD.
 const client9=new Appointment("andy", 77788555,"Osso de Bernoulli", ESPECIALIDAD.Psicopedagogia,'2023-03-23T10:30',"el alto",false);
 const client10=new Appointment("eli", 77788555,"Osso de Bernoulli", ESPECIALIDAD.Fisioterapia,'2023-03-22T08:30',"el alto",false);
 
-/* Usuarios de prueba */
-const user1 = new User("Juanito de los Palotes",ESPECIALIDAD.General,"el alto", AVAILABILITY.morning, "69802366","Av.Quintanilla Zuazo","p_zf888@hotmail.com","juanito123");
-const user2 = new User("Osso de Bernoulli",ESPECIALIDAD.General,"el alto", AVAILABILITY.evening, "69802366","Av.Quintanilla Zuazo","bernoulli@hotmail.com","juanito123");
-const user3 = new User("Alien86",ESPECIALIDAD.General,"el alto", AVAILABILITY.both, "69802366","Av.Quintanilla Zuazo","alien86@hotmail.com","juanito123");
+
 
 /* Pacientes de prueba */
 const customer1 = new Customer("Juanito de los Palotes",18,"10-08-1994","69802366","el alto",ESPECIALIDAD.General,"-");
@@ -45,7 +42,6 @@ function App() {
 
   /* Estados generales */
   const [clients, setClients] = useState([client1,client2,client3,client4,client5,client6, client7, client8, client9, client10]);
-  const [users, setUsers] = useState([user1,user2,user3]);
   const [customers, setCustomers] = useState([customer1,customer2,customer3]);
   const [arrows, setArrows] = useState(1);
   const [navBarMenu, setNavBarMenu] = useState(false);
@@ -57,13 +53,7 @@ function App() {
       setNavBarMenu(prevState=>!prevState);  
       console.log(navBarMenu);
   }
-  /* Add new user */
-  function addNewUser(newUser){
-    const userList = [...users];
-    userList.push(newUser);
-    setUsers(userList);
-    console.log("nuevo usuario",newUser);
-  };
+ 
   /* Add new customer */
   function addNewCustomer(newCustomer){
     const CustomerList = [...customers];
@@ -78,15 +68,14 @@ function App() {
     setClients(clientList);
     console.log(appo);
   };
-
-  console.log("users",users);
+  
+;
   console.log("pacientes",customers);
   return (
     <Routes>
       <Route 
         path='registroUsuario'
         element = { <UserFormPage 
-                      addNewUser = { addNewUser }
                       /> }
       />
       <Route 
@@ -94,8 +83,6 @@ function App() {
         element = { <UsersDashboard 
                       navBarMenu = { navBarMenu }
                       openNavBarMenu = { openNavBarMenu }
-                      users = { users }
-                      setUsers = { setUsers }
                       /> }
       />
       <Route 

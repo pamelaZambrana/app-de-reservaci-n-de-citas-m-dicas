@@ -1,11 +1,13 @@
 import React from 'react';
 import "../../styles/loginStyles.css";
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { useNavigate } from 'react-router-dom';
+import { Formik, Form, ErrorMessage } from 'formik';
 import * as Yup from "yup";
+import { login, loginUser } from '../../requests/userRequest';
 
 const loginSchema=Yup.object().shape(
     {
-        userName: Yup
+        email: Yup
                 .string()
                 .required("User is required"),
 
@@ -17,9 +19,23 @@ const loginSchema=Yup.object().shape(
 
 const LoginForm = () => {
     const initialCredentials={
-        userName:"",
+        email:"",
         password:""
     };
+    const navigate = useNavigate();
+
+    async function loginToApi(values){
+        await loginUser(values)
+                            .then(ans=>{
+                                console.log(ans.data);
+                                sessionStorage.setItem("t",ans.data.body);
+                                navigate("/");
+                            })
+                            .catch(error=>{
+                                console.log(error.response.data)
+                            })
+        console.log(values);
+    }
     return (
         <div className='login-container '>
             <Formik
@@ -28,10 +44,13 @@ const LoginForm = () => {
                     initialCredentials
                     }
                 validationSchema={ loginSchema }
-                onSubmit={async (values) => {
-                await new Promise((r) => setTimeout(r, 1000));
-                alert(JSON.stringify(values, null, 2));
-                }}
+                onSubmit={
+                    
+                    async (values) => {
+                    alert(JSON.stringify(values, null, 2));
+                    loginToApi(values);
+                    }
+                }
                 >
                 {({
                     values,
@@ -46,21 +65,21 @@ const LoginForm = () => {
                         <h2>Inciar sesión: </h2>
                         <hr className='w-100'/>
                         <div className="w-100 mt-3 d-flex gap-3 align-items-center">
-                            <label className="form-label">Usuario:</label>
+                            <label className="form-label">Email:</label>
                             <input
                                 type="text"
-                                name="userName"
+                                name="email"
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                value={values.userName}
+                                value={values.email}
                                 className="w-100 form-control"
                             />
                         
                         </div>
                         {
-                            errors.userName && touched.userName && 
+                            errors.email && touched.email && 
                             (
-                                <ErrorMessage className="form-text d-flex" name="userName" component="div"></ErrorMessage>
+                                <ErrorMessage className="form-text d-flex" name="email" component="div"></ErrorMessage>
                             )
                         }
                         <div className="w-100 mt-3 d-flex gap-3 align-items-center">
@@ -76,7 +95,7 @@ const LoginForm = () => {
                             
                         </div>
                         {
-                            errors.password && touched.userName && 
+                            errors.password && touched.email && 
                             (
                                 <ErrorMessage className="form-text" name="password" component="div"></ErrorMessage>
                             )
@@ -99,3 +118,11 @@ const LoginForm = () => {
 
 
 export default LoginForm;
+
+/* await login(values)
+                            .then(ans=>{
+                                console.log(ans)
+                            })
+                            .catch(error=>{
+                                console.log(error)
+                            }) */

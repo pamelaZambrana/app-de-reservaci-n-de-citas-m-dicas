@@ -2,25 +2,27 @@ import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AVAILABILITY, BRANCHES, ESPECIALIDAD } from '../../models/options';
 import { User } from '../../models/users';
+import { saveNewUser } from '../../requests/userRequest';
 import "../../styles/newUser.css";
-const UserForm = ({addNewUser}) => {
+
+const UserForm = () => {
     /* Referencias para los inputs */
     const nameRef = useRef("");
     const specialtyRef = useRef(ESPECIALIDAD.General);
+    const phoneRef = useRef("");
     const branchRef = useRef("");
     const avaRef = useRef(AVAILABILITY.morning);
-    const phoneRef = useRef("");
     const addressRef = useRef("");
     const emailRef = useRef("");
     const passwordRef = useRef("");
 
     const navigate=useNavigate();
     /* submit button */
-    function addUser(e){
+    async function  addUser(e){
         e.preventDefault();
         const values=new User(
             `${nameRef.current.value}`,
-            phoneRef.current.value,
+            specialtyRef.current.value,
             branchRef.current.value,
             avaRef.current.value,
             phoneRef.current.value,
@@ -29,8 +31,15 @@ const UserForm = ({addNewUser}) => {
             passwordRef.current.value,
         )
         alert(JSON.stringify(values));
-        addNewUser(values);
-        navigate("/tablaUsuarios")
+        
+        await saveNewUser(values)
+                        .then( ans => {
+                            console.log(ans)
+                        })
+                        .catch( error => {
+                            console.log(error)
+                        })
+        navigate("/tablaUsuarios");
         /* TODO: redireccionar a tabla de usuarios */
         /* navigate("/"); */
         console.log("sending values", values)
@@ -113,7 +122,7 @@ const UserForm = ({addNewUser}) => {
                             <option value="" disabled selected hidden>Elija los turnos de atención </option>
                             <option value={ AVAILABILITY.morning }>Turno mañana</option>
                             <option value={ AVAILABILITY.evening }>Turno tarde</option>
-                            <option value={ AVAILABILITY.ambos }>Ambos</option>
+                            <option value={ AVAILABILITY.ambos }>Mañana y tarde</option>
                         </select>
                         <label className="user-label" htmlFor="phone">Tel/Cel.: </label>
                         <input

@@ -13,7 +13,6 @@ const UserTable = ({usersList, remove}) => {
                         <th scope='col'>Contacto</th> 
                         <th scope='col'>Dirección</th>
                         <th scope='col'>Email</th>
-                        <th scope='col'>Contraseña</th>
                         <th scope='col'>Modificar</th>         
                     </tr>
                 </thead>

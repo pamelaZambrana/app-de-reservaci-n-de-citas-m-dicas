@@ -47,8 +47,10 @@ const Agenda = ({ clients, setClients, arrows, setArrows }) => {
         tempClients.splice(index,1);
         setClients(tempClients);
     }
-    
-
+    /* Editando citas */
+    function editAppointment(client){
+        
+    }
     if(searchedDates.length>0){
         clientsTable=
             <Table 

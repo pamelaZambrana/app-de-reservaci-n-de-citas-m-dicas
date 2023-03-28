@@ -16,9 +16,9 @@ export const DOCTOR={
 };
 
 export const AVAILABILITY={
-        morning: "mañana",
-        evening: "tarde",
-        both:"mañana y tarde",
+    morning: "Mañana",
+    evening: "Tarde",
+    both:"Mañana y tarde",
 }
 
 export const BRANCHES={

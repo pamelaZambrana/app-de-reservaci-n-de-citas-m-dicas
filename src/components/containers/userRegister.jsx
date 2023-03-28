@@ -1,14 +1,27 @@
 import React, {useState, useEffect} from 'react';
+import { getUsers } from '../../requests/userRequest';
 import "../../styles/agendaStyles.css";
 import UserTable from '../tabs/UserTable';
 
 
-const UserRegister = ({ users, setUsers}) => {
-
+const UserRegister = () => {
     /* Estados de UserRegister */
+    const [users, setUsers] = useState([]);
     const [searchUser, setSearchUser] = useState("");
     const [loading, setLoading] = useState(true);
 
+    /* Petición */
+        async function usersRequest(){
+            await getUsers()
+                        .then(ans=>{
+                            console.log(ans);
+                            setUsers(ans.data.body)
+
+                        })
+                        .catch(error=>{
+                            console.log(error)
+                        })
+        };
     
     /* Buscando por usuario */
     
@@ -25,7 +38,7 @@ const UserRegister = ({ users, setUsers}) => {
     
     /* Desplegando la tabla */
     let usersTable;
-    if(users.length>0){
+    if(users.length>0 && !loading){
         usersTable=
             <UserTable 
                 usersList={ users }
@@ -40,15 +53,20 @@ const UserRegister = ({ users, setUsers}) => {
        ) 
     };
 
+    
+
     useEffect(() => {
-        setTimeout(() => {
-            setLoading(false);
-        }, 2000);
-    }, [users]);
+        
+        setLoading(false);
+        usersRequest();
+    }, []);
     return (    
             <div className='card agenda'>
             <div className='card-header d-flex'>
                 <h1>Registro de Trabajadores</h1>
+                <button
+                    onClick={usersRequest}
+                >Actualizar</button>
             </div>
                 <div 
                     className='card-body' 
