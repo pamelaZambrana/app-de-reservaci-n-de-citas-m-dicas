@@ -9,7 +9,13 @@ const Aside = ({addNewAppointment}) => {
                 className='aside-button'
                 onClick={()=>navigate("/registroUsuario")}
             >
-                Crear nuevo usuario
+                Nuevo perfil de trabajador
+            </button>
+            <button 
+                className='aside-button'
+                onClick={()=>navigate("/registroPaciente")}
+            >
+                Nuevo perfil de paciente
             </button>
             <button 
                 className='aside-button'

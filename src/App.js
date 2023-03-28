@@ -15,6 +15,9 @@ import LoginPage from './pages/auth/loginPage';
 import { User } from './models/users';
 import UserFormPage from './pages/formPages/userFormPage';
 import UsersDashboard from './pages/dashboard/usersDashboard';
+import CustomerForm from './components/forms/custormerForm';
+import { Customer } from './models/customer';
+import CustomerDashboard from './pages/dashboard/customerDashboard';
 
 /* Clientes de prueba */
 const client1=new Appointment("juanita", 4512266, "Osso de Bernoulli",ESPECIALIDAD.General,'2018-03-22T19:00',"el alto",false);
@@ -33,11 +36,17 @@ const user1 = new User("Juanito de los Palotes",ESPECIALIDAD.General,"el alto", 
 const user2 = new User("Osso de Bernoulli",ESPECIALIDAD.General,"el alto", AVAILABILITY.evening, "69802366","Av.Quintanilla Zuazo","bernoulli@hotmail.com","juanito123");
 const user3 = new User("Alien86",ESPECIALIDAD.General,"el alto", AVAILABILITY.both, "69802366","Av.Quintanilla Zuazo","alien86@hotmail.com","juanito123");
 
+/* Pacientes de prueba */
+const customer1 = new Customer("Juanito de los Palotes",18,"10-08-1994","69802366","el alto",ESPECIALIDAD.General,"-");
+const customer2 = new Customer("Brosso",30,"09-01-1992","74512369","el alto",ESPECIALIDAD.General,"-");
+const customer3 = new Customer("Gabriela",18,"20-12-1991","71296854","el alto",ESPECIALIDAD.General,"-");
+
 function App() {
 
   /* Estados generales */
   const [clients, setClients] = useState([client1,client2,client3,client4,client5,client6, client7, client8, client9, client10]);
   const [users, setUsers] = useState([user1,user2,user3]);
+  const [customers, setCustomers] = useState([customer1,customer2,customer3]);
   const [arrows, setArrows] = useState(1);
   const [navBarMenu, setNavBarMenu] = useState(false);
 
@@ -55,6 +64,13 @@ function App() {
     setUsers(userList);
     console.log("nuevo usuario",newUser);
   };
+  /* Add new customer */
+  function addNewCustomer(newCustomer){
+    const CustomerList = [...customers];
+    CustomerList.push(newCustomer);
+    setCustomers(CustomerList);
+    console.log("nuevo paciente",newCustomer);
+  };
   /* Add new appointment */
   function addNewAppointment(appo){
     const clientList = [...clients];
@@ -63,7 +79,8 @@ function App() {
     console.log(appo);
   };
 
-  console.log("users",users)
+  console.log("users",users);
+  console.log("pacientes",customers);
   return (
     <Routes>
       <Route 
@@ -79,6 +96,21 @@ function App() {
                       openNavBarMenu = { openNavBarMenu }
                       users = { users }
                       setUsers = { setUsers }
+                      /> }
+      />
+      <Route 
+        path='registroPaciente'
+        element = { <CustomerForm
+                      addNewCustomer = { addNewCustomer }
+                      /> }
+      />
+      <Route 
+        path='tablaPacientes'
+        element = { <CustomerDashboard
+                      navBarMenu = { navBarMenu }
+                      openNavBarMenu = { openNavBarMenu }
+                      customers = { customers }
+                      setCustomers = { setCustomers }
                       /> }
       />
       <Route 

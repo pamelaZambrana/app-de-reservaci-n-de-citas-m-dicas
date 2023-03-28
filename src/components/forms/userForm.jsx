@@ -16,7 +16,7 @@ const UserForm = ({addNewUser}) => {
 
     const navigate=useNavigate();
     /* submit button */
-    function addAppointment(e){
+    function addUser(e){
         e.preventDefault();
         const values=new User(
             `${nameRef.current.value}`,
@@ -40,7 +40,7 @@ const UserForm = ({addNewUser}) => {
             <h1>Registro de nuevo usuario</h1>
             <form 
                     className="user-form"
-                    onSubmit={ addAppointment }
+                    onSubmit={ addUser }
                 >
                     <fieldset className="card user-section">
                         <h5 className="user-section-label">Datos del trabajador</h5>
@@ -95,9 +95,7 @@ const UserForm = ({addNewUser}) => {
                             ref={ branchRef }
                             type="text"
                             name="branch"
-                            placeholder='hoho'
-                            required
-                            autoFocus  
+                            required 
                         >
                             <option value="" disabled selected hidden>Elija una sucursal</option>
                             <option value={ BRANCHES.EA }>El Alto</option>
@@ -110,8 +108,7 @@ const UserForm = ({addNewUser}) => {
                             type="text"
                             required
                             className="form-select"
-                            name="availability"
-                            autoFocus  
+                            name="availability" 
                         >
                             <option value="" disabled selected hidden>Elija los turnos de atención </option>
                             <option value={ AVAILABILITY.morning }>Turno mañana</option>
@@ -128,8 +125,7 @@ const UserForm = ({addNewUser}) => {
                             name="phone"
                             placeholder="Ej. 71298655"
                             minLength="7"
-                            maxLength="8"
-                            autoFocus  
+                            maxLength="8" 
                         />
                         <label className="user-label" htmlFor="addres">Dirección: </label>
                         <input
@@ -139,7 +135,6 @@ const UserForm = ({addNewUser}) => {
                             required
                             className="form-control"
                             name="address"
-                            autoFocus  
                         />
                         <label className="user-label" htmlFor="email">E-mail: </label>
                         <input
@@ -149,7 +144,6 @@ const UserForm = ({addNewUser}) => {
                             required
                             className="form-control"
                             name="email"
-                            autoFocus  
                         />
                         <label className="user-label" htmlFor="password">Contraseña: </label>
                         <input
@@ -160,8 +154,7 @@ const UserForm = ({addNewUser}) => {
                             className="form-control"
                             name="password"
                             minLength="6"
-                            maxLength="12"
-                            autoFocus  
+                            maxLength="12" 
                         />
                     </fieldset>
                     <div className="buttons-container" >

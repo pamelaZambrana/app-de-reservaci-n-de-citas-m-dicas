@@ -34,8 +34,8 @@ const UserRegister = ({ users, setUsers}) => {
      }else{
        usersTable = (
        <div>
-            <h4>No hay citasusuarios registrados.</h4>
-            <h5>Crea una nuevo usuario.</h5>
+            <h4>No hay trabajadore registrados.</h4>
+            <h5>Crea un nuevo perfil de trabajador.</h5>
        </div>
        ) 
     };
@@ -55,7 +55,7 @@ const UserRegister = ({ users, setUsers}) => {
                     style={ {position:"relative", height:"458px"}} 
                     data-mdb-perfect-scrollbar="true"
                 >
-                    { loading ? <p>Cargando lista de reservas</p> : usersTable }
+                    { loading ? <p>Cargando lista de trabajadores</p> : usersTable }
                 </div>
                 
             </div>
