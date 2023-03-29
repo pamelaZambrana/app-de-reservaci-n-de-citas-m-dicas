@@ -169,7 +169,7 @@ const UserForm = () => {
                     <div className="buttons-container" >
                         <button 
                             type="submit"
-                            className='btn btn-primary user-submit-button'
+                            className='btn btn-primary submit-button'
                         >Guardar</button>
                     </div>
 

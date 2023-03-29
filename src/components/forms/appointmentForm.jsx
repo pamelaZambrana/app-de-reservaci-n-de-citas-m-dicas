@@ -46,12 +46,29 @@ const AppointmentForm = ({ clients, addNewAppointment, arrows, setArrows }) => {
              <h3>NUEVA CITA MÉDICA</h3>
             
                 <form 
-                    className="appointment-form"
                     onSubmit={ addAppointment }
+                    className="appointment-form"
                 >
                     <fieldset className="card appointment-section">
                         <h5 className="appointment-section-label">Datos del paciente</h5>
                         <hr></hr>
+                        <div className="search-container">
+                            <input
+                                id="searchName"
+                                ref={ nameRef }
+                                type="text"
+                                className="form-control"
+                                name="searchNamename"
+                                placeholder="Busca por nombre"
+                            />
+                            <button
+                                type="button"
+                                className='btn btn-primary submit-button'
+                                onClick={ openCloseTab}
+                            >
+                                Ingresar
+                            </button>
+                        </div>
                         <label className="appointment-label" htmlFor="name">Nombres: </label>
                         <input
                             id="name"
@@ -61,28 +78,6 @@ const AppointmentForm = ({ clients, addNewAppointment, arrows, setArrows }) => {
                             className="form-control"
                             name="name"
                             placeholder="Ej. Remedios Muriel"
-                            autoFocus  
-                        />
-                        <label className="appointment-label" htmlFor="apPaterno">Apellido paterno: </label>
-                        <input
-                            id="apPaterno"
-                            className="form-control"
-                            ref={ apPaternoRef }
-                            type="text"
-                            placeholder="Ej. Garcia"
-                            name="apPaterno"
-                            required
-                            autoFocus  
-                        />
-                        <label className="appointment-label" htmlFor="apMaterno">Apellido Materno: </label>
-                        <input
-                            id="apMaterno"
-                            ref={ apMaternoRef }
-                            type="text"
-                            required
-                            className="form-control"
-                            name="apMaterno"
-                            placeholder="Ej. Pérez"
                             autoFocus  
                         />
                         <label className="appointment-label" htmlFor="name">Celular: </label>
@@ -214,12 +209,12 @@ const AppointmentForm = ({ clients, addNewAppointment, arrows, setArrows }) => {
                     <div className="buttons-container" >
                         <button 
                             type="button"
-                            className='btn btn-primary watch-table-button'
+                            className='btn btn-primary watch-table-button submit-button'
                             onClick={ openCloseTab }
                         >Ver Horarios</button>
                         <button 
                             type="submit"
-                            className='btn btn-primary appointment-submit-button'
+                            className='btn btn-primary submit-button'
                         >Guardar</button>
                     </div>
 

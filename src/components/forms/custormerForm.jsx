@@ -2,8 +2,9 @@ import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Customer } from '../../models/customer';
 import { AVAILABILITY, BRANCHES, ESPECIALIDAD } from '../../models/options';
+import { saveNewCustomer } from '../../requests/customerRequest';
 import "../../styles/newUser.css";
-const CustomerForm = ({addNewCustomer}) => {
+const CustomerForm = () => {
     /* Referencias para los inputs */
     const nameRef = useRef("");
     const ageRef = useRef("");
@@ -15,7 +16,7 @@ const CustomerForm = ({addNewCustomer}) => {
 
     const navigate=useNavigate();
     /* submit button */
-    function addCustomer(e){
+    async function addCustomer(e){
         e.preventDefault();
         const values=new Customer(
             nameRef.current.value,
@@ -27,7 +28,14 @@ const CustomerForm = ({addNewCustomer}) => {
             diagnosisRef.current.value,
         )
         alert(JSON.stringify(values));
-        addNewCustomer(values);
+        await saveNewCustomer(values)
+                            .then( ans => {
+                                console.log(ans)
+                            })
+                            .catch( error => {
+                                console.log(error)
+                            })
+
         navigate("/tablaPacientes");
         console.log("sending values", values)
     }
@@ -91,21 +99,23 @@ const CustomerForm = ({addNewCustomer}) => {
                             type="text"
                             name="branch"
                             required
+                            defaultValue={`DEFAULT`}
                         >
-                            <option value="" disabled selected hidden>Elija una sucursal</option>
+                            <option value="DEFAULT" disabled hidden>Elija una sucursal</option>
                             <option value={ BRANCHES.EA }>El Alto</option>
                             <option value={ BRANCHES.LP }>La Paz</option>
                         </select>
-                        <label className="user-label" >Especialidad</label>
-                        <select
+                        {/* <label className="user-label" >Especialidad</label> */}
+                        {/* <select
                             id="specialty"
                             ref={ specialtyRef }
                             type="text"
                             required
                             className="form-select"
                             name="specialty"
+                            defaultValue={`DEFAULT`}
                         >
-                            <option value="" disabled selected hidden>Elija una especialidad</option>
+                            <option value="DEFAULT" disabled hidden>Elija una especialidad</option>
                             <option 
                                 value ={ ESPECIALIDAD.General }
                             >General</option>
@@ -127,7 +137,7 @@ const CustomerForm = ({addNewCustomer}) => {
                             <option 
                                 value ={ ESPECIALIDAD.TerapiaOcupacional }
                             >Terapia Ocupacional</option>
-                        </select>
+                        </select> */}
                         <label className="user-label" htmlFor="diagnosis">Diagnóstico: </label>
                         <input
                             id="diagnosis"
@@ -136,13 +146,20 @@ const CustomerForm = ({addNewCustomer}) => {
                             required
                             className="form-control"
                             name="diagnosis"
+                            defaultValue={`Sin diagnóstico`}
                         />
                     </fieldset>
                     <div className="buttons-container" >
+                    <button 
+                            type="submit"
+                            className='btn btn-primary user-submit-button'
+                            onClick={()=>navigate("/")}
+                        >Cancelar</button>
                         <button 
                             type="submit"
                             className='btn btn-primary user-submit-button'
                         >Guardar</button>
+
                     </div>
 
                 </form>

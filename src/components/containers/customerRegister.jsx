@@ -1,14 +1,28 @@
 import React, {useState, useEffect} from 'react';
+import { getCustomers } from '../../requests/customerRequest';
 import "../../styles/agendaStyles.css";
 import CustomerTable from '../tabs/CustomerTable';
 
-const CustomerRegister = ({ customers, setCustomers}) => {
+const CustomerRegister = () => {
 
     /* Estados de CustomerRegister */
+    const [customers, setCustomers] = useState([]);
     const [searchCustomer, setSearchCustomer] = useState("");
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
-    
+    /* Petición de registros */
+    async function customerRequest(){
+        await getCustomers()
+                        .then(ans=>{
+                            console.log(ans);
+                            setLoading(true);
+                            setCustomers(ans.data.body);
+
+                        })
+                        .catch(error=>{
+                            console.log(error)
+                        })
+    }
     /* Buscando por usuario */
     
     
@@ -38,10 +52,9 @@ const CustomerRegister = ({ customers, setCustomers}) => {
     };
 
     useEffect(() => {
-        setTimeout(() => {
-            setLoading(false);
-        }, 2000);
-    }, [customers]);
+        customerRequest();
+        
+    }, []);
     return (    
             <div className='card agenda'>
             <div className='card-header d-flex'>
@@ -52,7 +65,15 @@ const CustomerRegister = ({ customers, setCustomers}) => {
                     style={ {position:"relative", height:"458px"}} 
                     data-mdb-perfect-scrollbar="true"
                 >
-                    { loading ? <p>Cargando lista de pacientes</p> : customerTable }
+                    { !loading 
+                    ?
+                    <div className="d-flex justify-content-center">
+                        <p>Cargando registro de pacientes</p>
+                        <div className="spinner-border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div> 
+                    : customerTable }
                 </div>
                 
             </div>

@@ -1,22 +1,17 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import {Routes, Route} from 'react-router-dom';
 import"./styles/principal-section.css";
 
-import LoginFormik from './components/forms/loginForm';
-import AppointmentFormik from './components/forms/appointmentForm';
 import Dashboard from './pages/dashboard/Dashboard';
 import AppointmentForm from './components/forms/appointmentForm';
-import LoginForm from './components/forms/loginForm';
-import { AVAILABILITY, ESPECIALIDAD } from './models/options';
+import { ESPECIALIDAD } from './models/options';
 import { Appointment } from './models/AppointmentClass';
 import ColoredTablePage from "./pages/appointments/coloredTablePage"
 import LoginPage from './pages/auth/loginPage';
-import { User } from './models/users';
 import UserFormPage from './pages/formPages/userFormPage';
 import UsersDashboard from './pages/dashboard/usersDashboard';
 import CustomerForm from './components/forms/custormerForm';
-import { Customer } from './models/customer';
 import CustomerDashboard from './pages/dashboard/customerDashboard';
 
 /* Citas de prueba */
@@ -32,17 +27,10 @@ const client9=new Appointment("andy", 77788555,"Osso de Bernoulli", ESPECIALIDAD
 const client10=new Appointment("eli", 77788555,"Osso de Bernoulli", ESPECIALIDAD.Fisioterapia,'2023-03-22T08:30',"el alto",false);
 
 
-
-/* Pacientes de prueba */
-const customer1 = new Customer("Juanito de los Palotes",18,"10-08-1994","69802366","el alto",ESPECIALIDAD.General,"-");
-const customer2 = new Customer("Brosso",30,"09-01-1992","74512369","el alto",ESPECIALIDAD.General,"-");
-const customer3 = new Customer("Gabriela",18,"20-12-1991","71296854","el alto",ESPECIALIDAD.General,"-");
-
 function App() {
 
   /* Estados generales */
   const [clients, setClients] = useState([client1,client2,client3,client4,client5,client6, client7, client8, client9, client10]);
-  const [customers, setCustomers] = useState([customer1,customer2,customer3]);
   const [arrows, setArrows] = useState(1);
   const [navBarMenu, setNavBarMenu] = useState(false);
 
@@ -54,13 +42,6 @@ function App() {
       console.log(navBarMenu);
   }
  
-  /* Add new customer */
-  function addNewCustomer(newCustomer){
-    const CustomerList = [...customers];
-    CustomerList.push(newCustomer);
-    setCustomers(CustomerList);
-    console.log("nuevo paciente",newCustomer);
-  };
   /* Add new appointment */
   function addNewAppointment(appo){
     const clientList = [...clients];
@@ -69,8 +50,6 @@ function App() {
     console.log(appo);
   };
   
-;
-  console.log("pacientes",customers);
   return (
     <Routes>
       <Route 
@@ -88,7 +67,6 @@ function App() {
       <Route 
         path='registroPaciente'
         element = { <CustomerForm
-                      addNewCustomer = { addNewCustomer }
                       /> }
       />
       <Route 
@@ -96,8 +74,6 @@ function App() {
         element = { <CustomerDashboard
                       navBarMenu = { navBarMenu }
                       openNavBarMenu = { openNavBarMenu }
-                      customers = { customers }
-                      setCustomers = { setCustomers }
                       /> }
       />
       <Route 

@@ -19,9 +19,9 @@ const CustomerComponent = ({ customer,  remove }) => {
             <td>
                 <span className='ms-2'>{ customer.branch }</span>
             </td>
-            <td className='align-middle'>
+{/*             <td className='align-middle'>
                 {customer.specialty}
-            </td>
+            </td> */}
             <td className='align-middle'>
                 {customer.diagnosis}
             </td>

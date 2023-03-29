@@ -8,14 +8,15 @@ const UserRegister = () => {
     /* Estados de UserRegister */
     const [users, setUsers] = useState([]);
     const [searchUser, setSearchUser] = useState("");
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     /* Petición */
         async function usersRequest(){
             await getUsers()
                         .then(ans=>{
                             console.log(ans);
-                            setUsers(ans.data.body)
+                            setLoading(true);
+                            setUsers(ans.data.body);
 
                         })
                         .catch(error=>{
@@ -38,13 +39,13 @@ const UserRegister = () => {
     
     /* Desplegando la tabla */
     let usersTable;
-    if(users.length>0 && !loading){
+    if(users.length>0){
         usersTable=
             <UserTable 
                 usersList={ users }
                 remove={ removeUser }
             ></UserTable>
-     }else{
+     }else if (users.length===0 && !loading){
        usersTable = (
        <div>
             <h4>No hay trabajadore registrados.</h4>
@@ -56,9 +57,8 @@ const UserRegister = () => {
     
 
     useEffect(() => {
-        
-        setLoading(false);
         usersRequest();
+        
     }, []);
     return (    
             <div className='card agenda'>
@@ -73,7 +73,16 @@ const UserRegister = () => {
                     style={ {position:"relative", height:"458px"}} 
                     data-mdb-perfect-scrollbar="true"
                 >
-                    { loading ? <p>Cargando lista de trabajadores</p> : usersTable }
+                    { !loading 
+                    ? 
+                    <div className="d-flex justify-content-center">
+                        <p>Cargando registro de trabajadores</p>
+                        <div className="spinner-border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div> 
+                    : usersTable }
+                        
                 </div>
                 
             </div>

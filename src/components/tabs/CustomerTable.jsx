@@ -11,8 +11,8 @@ const CustomerTable = ({customerList, remove}) => {
                         <th scope='col'>Fecha de nacimiento</th>
                         <th scope='col'>Contacto</th> 
                         <th scope='col'>Sucursal</th>     
-                        <th scope='col'>Especialidad</th>
-                        <th scope='col'>Diagnóstico</th>        
+                        <th scope='col'>Diagnóstico</th>
+                        <th scope='col'>Edición</th>        
                     </tr>
                 </thead>
                 <tbody>
