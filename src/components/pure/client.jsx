@@ -2,12 +2,12 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import EditAppointmentForm from '../forms/editAppointmentForm';
 
-const ClientComponent = ({ client, complete, completeTask, remove }) => {
+const AppointmentComponent = ({ appointment, completeAppo, remove }) => {
     let finalHour;
     /* calculando el final de la sesión*/
     function timeRange(){
-        let initialHour=(new Date(client.dateTime).getHours())*60;
-        let initialMinutes=new Date(client.dateTime).getMinutes();
+        let initialHour=(new Date(appointment.dateTime).getHours())*60;
+        let initialMinutes=new Date(appointment.dateTime).getMinutes();
         let initMinutes;
         if(initialMinutes===0){
             initMinutes="00";
@@ -20,10 +20,10 @@ const ClientComponent = ({ client, complete, completeTask, remove }) => {
         let LP=45;
         let minutes;
         let hours;
-        if((client.branch==="la paz")){
+        if((appointment.branch==="la paz")){
             hours=Math.floor((totalMinutes+LP)/(60));
             minutes=(((totalMinutes+LP)/(60))-hours)*60;
-        }else if((client.branch==="el alto")){
+        }else if((appointment.branch==="el alto")){
             hours=Math.floor((totalMinutes+EA)/(60));
             minutes=(((totalMinutes+EA)/(60))-hours)*60;
         };
@@ -34,16 +34,16 @@ const ClientComponent = ({ client, complete, completeTask, remove }) => {
         finalHour=`${hours}:${minutes}`;
         console.log(hours, minutes, finalHour)
         return(
-           /*  `${new Date(client.dateTime).getHours()}:${new Date(client.dateTime).getMinutes()}-${finalHour}` */
+           /*  `${new Date(appointment.dateTime).getHours()}:${new Date(appointment.dateTime).getMinutes()}-${finalHour}` */
            `${initialHour/60}:${initMinutes}-${finalHour}`
         );
     };
     function completedIcon(){
         
-        if(client.complete){
+        if(appointment.complete){
             return(
             <i 
-                onClick={ ()=>completeTask(client) }
+                onClick={ ()=>completeAppo(appointment) }
                 className='bi bi-toggle-on task-action'
                 style={{ color:"green" }}
             >
@@ -53,7 +53,7 @@ const ClientComponent = ({ client, complete, completeTask, remove }) => {
         }else{
             return(
                 <i 
-                onClick={ ()=>completeTask(client) }
+                onClick={ ()=>completeAppo(appointment) }
                 className='bi bi-toggle-off task-action'
                 style={{ color:"gray" }}
                 >
@@ -63,30 +63,30 @@ const ClientComponent = ({ client, complete, completeTask, remove }) => {
     };
     /* Open Edit Appointment */
     const navigate=useNavigate();
-    function editAppointment(client){
+    function editAppointment(appointment){
         return(
            <EditAppointmentForm></EditAppointmentForm> 
         )
     }
     return (
-        <tr className={client.complete ? "complete-appointment" : "uncomplete-appointment"}>
+        <tr className={appointment.complete ? "complete-appointment" : "uncomplete-appointment"}>
             <th>
-                <span className='ms-2'>{ client.branch }</span>
+                <span className='ms-2'>{ appointment.branch }</span>
             </th>
             <td className='align-middle'>
                 <span>{ timeRange() }</span>
             </td>
             <td className='align-middle'>
-                <span>{ client.name }</span>
+                <span>{ appointment.name }</span>
             </td>
             <td className='align-middle'>
-                {client.cellphone}
+                {appointment.cellphone}
             </td>
             <td className='align-middle'>
-                {client.doctor}
+                {appointment.doctor}
             </td>
             <td className='align-middle'>
-                {client.specialty}
+                {appointment.specialty}
             </td>
             <td className='align-middle'>
                 {completedIcon()}
@@ -94,15 +94,15 @@ const ClientComponent = ({ client, complete, completeTask, remove }) => {
             <td className='align-middle'>
                 <i 
                     className="bi bi-pencil-square"
-                    onClick={ ()=>editAppointment(client) }
+                    onClick={ ()=>editAppointment(appointment) }
                 ></i>
                 <i 
                     className="bi bi-trash3"
-                    onClick={()=>remove(client)}
+                    onClick={()=>remove(appointment)}
                 ></i>
             </td>
         </tr>
     )
 }
 
-export default ClientComponent;
+export default AppointmentComponent;

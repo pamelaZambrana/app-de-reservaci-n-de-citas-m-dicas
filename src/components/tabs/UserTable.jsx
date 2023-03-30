@@ -5,7 +5,7 @@ const UserTable = ({usersList, remove}) => {
         
             <table className='table table-striped user-table'>
                 <thead>
-                    <tr>
+                    <tr className='text-center'>
                         <th scope="col">Nombre</th>
                         <th scope='col'>Especialidad</th>
                         <th scope='col'>Sucursal</th>     

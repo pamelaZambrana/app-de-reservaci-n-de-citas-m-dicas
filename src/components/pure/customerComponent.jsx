@@ -3,7 +3,7 @@ import React from 'react';
 const CustomerComponent = ({ customer,  remove }) => {
 
     return (
-        <tr>
+        <tr className='text-center'>
             <td className='align-middle'>
                 <span>{ customer.name }</span>
             </td>
@@ -31,6 +31,7 @@ const CustomerComponent = ({ customer,  remove }) => {
                     className="bi bi-trash3"
                     onClick={()=>remove(customer)}
                 ></i>
+                <i className="bi bi-eye-fill"></i>
             </td>
         </tr>
     )

@@ -29,7 +29,7 @@ const LoginForm = () => {
                             .then(ans=>{
                                 console.log(ans.data);
                                 sessionStorage.setItem("t",ans.data.body);
-                                navigate("/");
+                                navigate("/tablaCitas");
                             })
                             .catch(error=>{
                                 console.log(error.response.data)

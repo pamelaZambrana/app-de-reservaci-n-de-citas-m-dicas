@@ -1,6 +1,8 @@
 import React from 'react';
+import AppointmentComponent from '../pure/client';
 import ClientComponent from '../pure/client';
-const Table = ({clientsList, completeTask, complete, remove}) => {
+const Table = ({appointmentList, completeAppo, complete, remove}) => {
+    console.log("searched",appointmentList);
     return (
         
             <table className='table table-striped'>
@@ -18,16 +20,16 @@ const Table = ({clientsList, completeTask, complete, remove}) => {
                 </thead>
                 <tbody>
 
-                    {clientsList.map((client,index)=> {
+                    {appointmentList.map((appointment,index)=> {
                         return (
-                            <ClientComponent
+                            <AppointmentComponent
                                 key= {index}
-                                client={client}
+                                appointment={appointment}
                                 complete={complete}
-                                completeTask={completeTask}
+                                completeAppo={completeAppo}
                                 remove={remove}
                             >
-                            </ClientComponent>
+                            </AppointmentComponent>
                         )
                     })}                            
                 </tbody>

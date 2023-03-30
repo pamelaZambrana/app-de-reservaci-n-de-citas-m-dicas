@@ -1,13 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import { Appointment } from '../../models/AppointmentClass';
-import { ESPECIALIDAD } from '../../models/options';
 import Table from '../tabs/Table';
 import "../../styles/agendaStyles.css";
 import DateControl from '../pure/dateControl';
 import ColoredTable from '../tabs/coloredTable';
+import { getAppointments } from '../../requests/appointmentRequest';
 
 
-const Agenda = ({ clients, setClients, arrows, setArrows }) => {
+const Agenda = ({  arrows, setArrows }) => {
 
     
     /* Current date */
@@ -15,53 +14,64 @@ const Agenda = ({ clients, setClients, arrows, setArrows }) => {
     const today=new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toJSON().slice(0,10);
 
     /* Estados de agenda */
+    const [appointments, setAppointments] = useState([]);
     const [searchDate, setSearchDate] = useState(today);
     const [loading, setLoading] = useState(true);
+    /* Petición de citas médicas */
+    async function appointmenstRequest(){
+        getAppointments()
+                        .then(ans=>{
+                            setLoading(false);
+                            setAppointments(ans.data.body);
+                        })
+                        .catch(error=>console.log(error))
+    }
     /* ordenando la lista por fecha y hora */
-    let orderedClients=clients.sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime());
+    let orderedAppointments=appointments.sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime());
+    
     /* Desplegando la tabla */
-    let clientsTable;
+    let appointmentsTable;
     let coloredSch;
     const regex=/^[^T]*/;
-
     /* Buscando por fecha */
-    let searchedDates=orderedClients.filter((client)=>{
-        const dateValue=client.dateTime.match(regex)[0];
+    let searchedDates=orderedAppointments.filter((appointment)=>{
+        const dateValue=appointment.dateTime.match(regex)[0];
         const searchValue=searchDate;
         return (dateValue.includes(searchValue));
     });
     
+    
     /* completando citas */
-    function completeAppointment(client){
-        const index=clients.indexOf(client);
-        const tempClients=[...clients];
-        tempClients[index].complete=!tempClients[index].complete;
-        setClients(tempClients);
+    function completeAppointment(appointment){
+        const index=appointments.indexOf(appointment);
+        const tempappointments=[...appointments];
+        tempappointments[index].complete=!tempappointments[index].complete;
+        setAppointments(tempappointments);
     }
     /* borrando citas */
-    function removeAppointment(client){
-        const index=clients.indexOf(client);
+    function removeAppointment(appointment){
+        const index=appointments.indexOf(appointment);
         console.log("index",index);
-        const tempClients=[...clients];
-        console.log("prevClients:",tempClients);
-        tempClients.splice(index,1);
-        setClients(tempClients);
+        const tempappointments=[...appointments];
+        console.log("prevappointments:",tempappointments);
+        tempappointments.splice(index,1);
+        setAppointments(tempappointments);
     }
     /* Editando citas */
-    function editAppointment(client){
+    function editAppointment(appointment){
         
     }
     if(searchedDates.length>0){
-        clientsTable=
+        appointmentsTable=
             <Table 
-                clientsList={searchedDates}
-                completeTask={completeAppointment}
+                appointmentList={searchedDates}
+                completeAppo={completeAppointment}
                 remove={removeAppointment}
             ></Table>
         /* Horaro por colores */
-        coloredSch=<ColoredTable clients={searchedDates}></ColoredTable>;
+        coloredSch=<ColoredTable appointments={searchedDates}></ColoredTable>;
     }else{
-       clientsTable = (
+       appointmentsTable = (
        <div>
             <h4>No hay citas agendadas para esta fecha</h4>
             <h5>Crea una nueva cita.</h5>
@@ -77,14 +87,9 @@ const Agenda = ({ clients, setClients, arrows, setArrows }) => {
     };
 
     useEffect(() => {
-        console.log("Task state has been modified");
-        setTimeout(() => {
-            setLoading(false);
-        }, 2000);
-        return () => {
-            console.log("TaskList component is going to unmount...")
-        };
-    }, [clients]);
+        appointmenstRequest();
+        console.log(appointments);
+    }, []);
     return (    
             <div className='card agenda'>
                 <div className='card-header d-flex'>
@@ -103,7 +108,7 @@ const Agenda = ({ clients, setClients, arrows, setArrows }) => {
                         style={ {position:"relative", height:"400px"}} 
                         data-mdb-perfect-scrollbar="true"
                     >
-                        { loading ? <p>Cargando lista de reservas</p> : clientsTable }
+                        { loading ? <p>Cargando lista de reservas</p> : appointmentsTable }
                     </div>
                 :
                     <div

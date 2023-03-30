@@ -5,14 +5,14 @@ const CustomerTable = ({customerList, remove}) => {
         
             <table className='table table-striped user-table'>
                 <thead>
-                    <tr>
+                    <tr className='text-center'>
                         <th scope="col">Nombre</th>
                         <th scope='col'>Edad</th>
                         <th scope='col'>Fecha de nacimiento</th>
                         <th scope='col'>Contacto</th> 
                         <th scope='col'>Sucursal</th>     
                         <th scope='col'>Diagnóstico</th>
-                        <th scope='col'>Edición</th>        
+                        <th scope='col'>Opciones</th>        
                     </tr>
                 </thead>
                 <tbody>

@@ -28,12 +28,13 @@ const Navbar = ({navBarMenu, openNavBarMenu}) => {
                     <h5 
                         className='nav-item dropdown-toggle menu-button'
                         onClick={()=> openNavBarMenu() }
+                        
                     >
                         Menu
                     </h5>
                     
                 </div>              
-                { navBarMenu ? <DropdownNavMenu></DropdownNavMenu> : null}
+                { navBarMenu ? <DropdownNavMenu openNavBarMenu={openNavBarMenu}></DropdownNavMenu> : null}
                 
             </nav>
         </div>

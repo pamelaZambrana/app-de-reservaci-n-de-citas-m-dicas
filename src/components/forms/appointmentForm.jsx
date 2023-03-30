@@ -1,34 +1,41 @@
-import React, {useRef, useState} from "react";
+import React, {useRef, useState, useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
 import { DOCTOR, ESPECIALIDAD } from "../../models/options";
 import { Appointment } from "../../models/AppointmentClass";
 import Agenda from '../../components/containers/agenda';
 import "../../styles/newAppointment.css";
+import { saveNewAppointment } from "../../requests/appointmentRequest";
+import { getUsers } from "../../requests/userRequest";
+import { getCustomers } from "../../requests/customerRequest";
 
-const AppointmentForm = ({ clients, addNewAppointment, arrows, setArrows }) => {
+const AppointmentForm = ({ clients, arrows, setArrows }) => {
     /* Estado de tabla abierta */
     const [open, setOpen] = useState(false);
-
+    const [users, setUsers] = useState([]);
+    const [pacients, setPacients] = useState([]);
     function openCloseTab(){
         setArrows(2);
         setOpen(!open);
     }
     /* Referencias para los inputs */
     const nameRef = useRef("");
-    const apPaternoRef = useRef("");
-    const apMaternoRef = useRef("");
     const cellphoneRef = useRef("");
     const doctorRef = useRef(DOCTOR.Juanita);
     const specialtyRef = useRef(ESPECIALIDAD.General);
     const dateRef = useRef("");
     const timeRef = useRef("");
 
+    /* Search by name */
+    const searchListener = (event)=>{
+        console.log(event.target.value);
+        /* setSearchValue(event.target.value); */
+    };
     const navigate=useNavigate();
     /* submit button */
-    function addAppointment(e){
+    async function addAppointment(e){
         e.preventDefault();
         const values=new Appointment(
-            `${nameRef.current.value} ${apPaternoRef.current.value} ${apMaternoRef.current.value}`,
+            `${nameRef.current.value}`,
             cellphoneRef.current.value,
             doctorRef.current.value,
             specialtyRef.current.value,
@@ -37,10 +44,53 @@ const AppointmentForm = ({ clients, addNewAppointment, arrows, setArrows }) => {
             false
         )
         alert(JSON.stringify(values));
-        addNewAppointment(values);
-        navigate("/");
+        await saveNewAppointment(values)
+                                .then(ans => {
+                                    console.log("newAppo",ans)
+                                })
+                                .catch(error => {
+                                    console.log("newAppo",error)
+                                });
+        navigate("/tablaCitas");
         console.log("sending values", values)
     }
+    /* Petición lista de doctores */
+    async function usersRequest(){
+        await getUsers()
+                    .then(ans=>{
+                        setUsers(ans.data.body);
+
+                    })
+                    .catch(error=>{
+                        console.log(error)
+                    })
+    };
+    /* Petición de lista de pacientes */
+    async function pacientsRequest(){
+        getCustomers()
+                        .then(ans=>{
+                            setPacients(ans.data.body);
+                        })
+                        .catch(error=>console.log(error))
+    }
+    useEffect(() => {
+        usersRequest();
+        pacientsRequest();
+    }, []);
+
+    /* Buscando pacientes */
+    let searchValue;
+    let searchedPacient;
+    async function searching(event){
+        searchValue=event.target.value;
+        console.log(searchValue);
+        searchedPacient=pacients.filter((pacient)=>{
+            const pacientName=pacient.name;
+            return (pacientName.includes(searchValue));
+        });
+        console.log(searchedPacient);
+    };
+    
     return (
         <div className="appointment-container" >
              <h3>NUEVA CITA MÉDICA</h3>
@@ -55,16 +105,19 @@ const AppointmentForm = ({ clients, addNewAppointment, arrows, setArrows }) => {
                         <div className="search-container">
                             <input
                                 id="searchName"
-                                ref={ nameRef }
-                                type="text"
+                                type="select"
                                 className="form-control"
                                 name="searchNamename"
-                                placeholder="Busca por nombre"
+                                onChange={searching }
                             />
+                                {/* <option value="DEFAULT" disabled hidden>Busque el nombre del paciente</option>
+                                {} */}
+                            
+
                             <button
                                 type="button"
                                 className='btn btn-primary submit-button'
-                                onClick={ openCloseTab}
+                            
                             >
                                 Ingresar
                             </button>
@@ -147,31 +200,8 @@ const AppointmentForm = ({ clients, addNewAppointment, arrows, setArrows }) => {
                             <option>21:00</option>
                         
                         </select>
-                        <label className="appointment-label" >Especialista</label>
-                        <input
-                            id="doctor"
-                            ref={ doctorRef }
-                            type="text"
-                            required
-                            list="doctors"
-                            className="form-select"
-                            name="doctor"
-                            selection="true"
-                            placeholder="Elija un especialista"
-                        />
-                        <datalist id="doctors">
-                            <option 
-                                value ={ DOCTOR.Juanito }
-                            >Juanito</option>
-                            <option 
-                                value ={ DOCTOR.Juanita }
-                            >Juanita</option>
-                            <option 
-                                value ={DOCTOR.OssoDeBernoulli }
-                            >Osso de Bernoulli</option>
-                        </datalist>
                         <label className="appointment-label" >Especialidad</label>
-                        <input
+                        <select
                             id="specialty"
                             ref={ specialtyRef }
                             type="text"
@@ -180,31 +210,49 @@ const AppointmentForm = ({ clients, addNewAppointment, arrows, setArrows }) => {
                             className="form-select"
                             name="specialty"
                             selection="true"
-                            placeholder="Elija una especialidad"
-                        />
-                        <datalist id="specialties">
+                            defaultValue={`DEFAULT`}
+                        >
+                            <option value="DEFAULT" disabled hidden>Elija a una especialidad</option>
                             <option 
                                 value ={ ESPECIALIDAD.General }
-                            ></option>
+                            >General</option>
                             <option 
                                 value ={ ESPECIALIDAD.Fisioterapia }
-                            ></option>
+                            >Fisioterapia</option>
                             <option 
                                 value ={ ESPECIALIDAD.Odontología }
-                            ></option>
+                            >Odontología</option>
                             <option 
                                 value ={ ESPECIALIDAD.Fonoaudiologia }
-                            ></option>
+                            >Fonoaudiología</option>
                             <option 
                                 value ={ ESPECIALIDAD.Psicologia }
-                            ></option>
+                            >Psicología</option>
                             <option 
                                 value ={ ESPECIALIDAD.Psicopedagogia}
-                            ></option>
+                            >Psicopedagogía</option>
                             <option 
                                 value ={ ESPECIALIDAD.TerapiaOcupacional }
-                            ></option>
-                        </datalist>
+                            >Terapia Ocupacional</option>
+                        </select>
+                        <label className="appointment-label" >Especialista</label>
+                        <select
+                            id="doctor"
+                            ref={ doctorRef }
+                            type="text"
+                            required
+                            className="form-select"
+                            name="doctor"
+                            placeholder="Elija un especialista"
+                            defaultValue={`DEFAULT`}
+                        >
+                            <option value="DEFAULT" disabled hidden>Elija a un especialista</option>
+                            {users.map((doctor, index)=>{
+                                return(
+                                    <option key={index}>{doctor.name}</option>
+                                )
+                            })}
+                        </select>
                     </fieldset>
                     <div className="buttons-container" >
                         <button 
@@ -230,8 +278,7 @@ const AppointmentForm = ({ clients, addNewAppointment, arrows, setArrows }) => {
                             <i className="bi bi-x"></i>
                         </button>
                     </div>
-                    <Agenda 
-                        clients = { clients } 
+                    <Agenda
                         arrows = { arrows }
                         setArrows = { setArrows }
                     ></Agenda>

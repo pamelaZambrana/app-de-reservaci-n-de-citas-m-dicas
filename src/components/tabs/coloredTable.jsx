@@ -1,7 +1,7 @@
 import React from 'react';
 import "../../styles/colorTable.css"
 
-const ColoredTable = ({clients}) => {
+const ColoredTable = ({appointments}) => {
     /* Array de especialidades */
     let specialtyArr=[
     {specialty:"Fisioterapia y Psicomotricidad", color:'#F50C14'},
@@ -20,7 +20,7 @@ const ColoredTable = ({clients}) => {
     let hour;
     let minutes;
     
-    if ((clients.length>0)&&(clients[0].branch==="el alto")){
+    if ((appointments.length>0)&&(appointments[0].branch==="el alto")){
         
         for (let i=0;i<24;i++){
             initialTime=initialTime+30;
@@ -41,8 +41,8 @@ const ColoredTable = ({clients}) => {
             /* índices de filas */
             let rowIndex=[];
             let colIndex=[];
-            for (let j=0;j<clients.length;j++){
-                const client=clients[j];
+            for (let j=0;j<appointments.length;j++){
+                const client=appointments[j];
                 const hour=new Date(client.dateTime).getHours();
                 let minutes=new Date(client.dateTime).getMinutes();
                 if((minutes===0)){
@@ -56,7 +56,7 @@ const ColoredTable = ({clients}) => {
                     rowIndex.push(-1);
                 ;
             };
-            /* const rowIndex=clients.findIndex(client=>{
+            /* const rowIndex=appointments.findIndex(client=>{
                 const date=`${new Date(client.dateTime).getHours()}:${new Date(client.dateTime).getMinutes()}`;
                 return(arrInitialhour[i]===date)
             });  */                   
@@ -66,7 +66,7 @@ const ColoredTable = ({clients}) => {
         for(let k=0; k<rowIndex.length;k++){
             const index=rowIndex[k];
             if(index>-1){
-                colIndex.push(specialtyArr.findIndex(spe=>(spe.specialty===clients[index].specialty)));
+                colIndex.push(specialtyArr.findIndex(spe=>(spe.specialty===appointments[index].specialty)));
             }else{
                 colIndex.push(-1);
                 if(rowIndex.length>1){
@@ -99,8 +99,8 @@ const ColoredTable = ({clients}) => {
                     const indexRow=arrFinal[i][1][j];
                     const indexCol=arrFinal[i][2][j];
                     if((indexCol>-1)){
-                        if((clients[indexRow].specialty===spe)){
-                            objectCon={content:clients[indexRow].name,schedule:arrFinal[i][0],style:specialtyArr[indexCol].color};
+                        if((appointments[indexRow].specialty===spe)){
+                            objectCon={content:appointments[indexRow].name,schedule:arrFinal[i][0],style:specialtyArr[indexCol].color};
                             break;
                         }else{
                             objectCon={content:"-",schedule:arrFinal[i][0],style:"#ffffff"};                           

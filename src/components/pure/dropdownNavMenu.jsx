@@ -1,10 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const DropdownNavMenu = () => {
+const DropdownNavMenu = ({openNavBarMenu}) => {
     const navigate=useNavigate();
     return (
-        <ul className="navbar-menu card">
+        <ul 
+            className="navbar-menu card" 
+            onMouseLeave={()=> openNavBarMenu() }
+        >
             <li 
                 className="navbar-item"
                 onClick={()=> navigate("/tablaUsuarios") }
@@ -13,7 +16,12 @@ const DropdownNavMenu = () => {
                 className="navbar-item"
                 onClick={()=>navigate("/tablaPacientes")}
             >Lista de pacientes</li>
-            <li className="navbar-item">Vista mes</li>
+            <li 
+                className="navbar-item"
+                onClick={()=>navigate("/tablaCitas")}
+            >
+                Tabla de citas médicas
+            </li>
             <li className="navbar-item">Agenda</li>
             <li className="navbar-item">Imprimir horario</li>
             <li 

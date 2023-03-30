@@ -73,8 +73,9 @@ const UserForm = () => {
                             required
                             className="form-select"
                             name="specialty"
+                            defaultValue={`DEFAULT`}
                         >
-                            <option value="" disabled selected hidden>Elija una especialidad</option>
+                            <option value="DEFAULT" disabled hidden>Elija una especialidad</option>
                             <option 
                                 value ={ ESPECIALIDAD.General }
                             >General</option>
@@ -105,8 +106,9 @@ const UserForm = () => {
                             type="text"
                             name="branch"
                             required 
+                            defaultValue={`DEFAULT`}
                         >
-                            <option value="" disabled selected hidden>Elija una sucursal</option>
+                            <option value="DEFAULT" disabled hidden>Elija una sucursal</option>
                             <option value={ BRANCHES.EA }>El Alto</option>
                             <option value={ BRANCHES.LP }>La Paz</option>
                         </select>
@@ -118,8 +120,9 @@ const UserForm = () => {
                             required
                             className="form-select"
                             name="availability" 
+                            defaultValue={`DEFAULT`}
                         >
-                            <option value="" disabled selected hidden>Elija los turnos de atención </option>
+                            <option value="DEFAULT" disabled hidden>Elija los turnos de atención </option>
                             <option value={ AVAILABILITY.morning }>Turno mañana</option>
                             <option value={ AVAILABILITY.evening }>Turno tarde</option>
                             <option value={ AVAILABILITY.ambos }>Mañana y tarde</option>
