@@ -8,11 +8,13 @@ import { saveNewAppointment } from "../../requests/appointmentRequest";
 import { getUsers } from "../../requests/userRequest";
 import { getCustomers } from "../../requests/customerRequest";
 
-const AppointmentForm = ({ clients, arrows, setArrows }) => {
+const AppointmentForm = ({ arrows, setArrows }) => {
     /* Estado de tabla abierta */
     const [open, setOpen] = useState(false);
     const [users, setUsers] = useState([]);
     const [pacients, setPacients] = useState([]);
+    const [searchedName, setSearchedName] = useState("");
+    const [searchedContact, setSearchedContact] = useState("");
     function openCloseTab(){
         setArrows(2);
         setOpen(!open);
@@ -72,24 +74,25 @@ const AppointmentForm = ({ clients, arrows, setArrows }) => {
                             setPacients(ans.data.body);
                         })
                         .catch(error=>console.log(error))
-    }
+    };
+    
     useEffect(() => {
         usersRequest();
         pacientsRequest();
     }, []);
-
-    /* Buscando pacientes */
-    let searchValue;
-    let searchedPacient;
-    async function searching(event){
-        searchValue=event.target.value;
-        console.log(searchValue);
-        searchedPacient=pacients.filter((pacient)=>{
-            const pacientName=pacient.name;
-            return (pacientName.includes(searchValue));
-        });
-        console.log(searchedPacient);
+    /* Datos buscados */
+    function selected(event){
+        setSearchedName(event.target.value);
     };
+    let searchContact;
+    searchContact=pacients.filter((pacient)=>{
+        const nameValue=pacient.name;
+        const searchValue=searchedName;
+        return (nameValue.includes(searchValue));
+    });
+    console.log("search", searchContact);
+
+
     
     return (
         <div className="appointment-container" >
@@ -102,40 +105,29 @@ const AppointmentForm = ({ clients, arrows, setArrows }) => {
                     <fieldset className="card appointment-section">
                         <h5 className="appointment-section-label">Datos del paciente</h5>
                         <hr></hr>
-                        <div className="search-container">
+                        <label className="appointment-label" htmlFor="name">Nombre del paciente: </label>
                             <input
-                                id="searchName"
-                                type="select"
-                                className="form-control"
-                                name="searchNamename"
-                                onChange={searching }
+                                id="name"
+                                name="name"
+                                required
+                                ref={ nameRef }
+                                list="searchedPatients"
+                                className="form-select"
+                                onChange={selected}
+                                autoFocus  
                             />
-                                {/* <option value="DEFAULT" disabled hidden>Busque el nombre del paciente</option>
-                                {} */}
-                            
-
-                            <button
-                                type="button"
-                                className='btn btn-primary submit-button'
-                            
-                            >
-                                Ingresar
-                            </button>
-                        </div>
-                        <label className="appointment-label" htmlFor="name">Nombres: </label>
-                        <input
-                            id="name"
-                            ref={ nameRef }
-                            type="text"
-                            required
-                            className="form-control"
-                            name="name"
-                            placeholder="Ej. Remedios Muriel"
-                            autoFocus  
-                        />
+                            <datalist id="searchedPatients" >
+                                {  pacients.map((pacient,index)=>{
+                                        return(
+                                            <option key={index} value={pacient.name} ></option>
+                                        )
+                                    })
+                                }
+                            </datalist>
                         <label className="appointment-label" htmlFor="name">Celular: </label>
-                        <input
+                        {/* <input
                             id="cellphone"
+                            value={searchContact.phone}
                             type="text"
                             required
                             ref={cellphoneRef }
@@ -145,7 +137,8 @@ const AppointmentForm = ({ clients, arrows, setArrows }) => {
                             minLength="7"
                             maxLength="8"
                             autoFocus  
-                        />
+                        /> */}
+                        <p>{searchContact.phone}</p>
                     </fieldset>
                     <fieldset className="card appointment-section">
                         <h5 className="appointment-section-label">Datos de la cita médica</h5>
