@@ -108,17 +108,32 @@ const Agenda = ({  arrows, setArrows }) => {
                         style={ {position:"relative", height:"400px"}} 
                         data-mdb-perfect-scrollbar="true"
                     >
-                        { loading ? <p>Cargando lista de reservas</p> : appointmentsTable }
+                    { loading 
+                        ?
+                        <div className="d-flex justify-content-center">
+                            <p>Cargando lista de citas.</p>
+                            <div className="spinner-border" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                        </div> 
+                        : appointmentsTable
+                    }
                     </div>
                 :
                     <div
                         className='card-body'
                         style={ {position:"relative", height:"400px"}} 
                     >
-                        { loading 
-                        ? <p>Cargando lista de reservas</p> 
-                        :   coloredSch
-                        }
+                    { loading 
+                        ?
+                        <div className="d-flex justify-content-center">
+                            <p>Cargando organizador.</p>
+                            <div className="spinner-border" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                        </div> 
+                        : coloredSch
+                    }
                         
                     </div>
                 }

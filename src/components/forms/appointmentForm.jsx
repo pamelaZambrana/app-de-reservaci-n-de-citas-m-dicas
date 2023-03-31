@@ -9,14 +9,19 @@ import { getUsers } from "../../requests/userRequest";
 import { getCustomers } from "../../requests/customerRequest";
 
 const AppointmentForm = ({ arrows, setArrows }) => {
-    /* Estado de tabla abierta */
+    /* Estado del componente */
     const [open, setOpen] = useState(false);
     const [users, setUsers] = useState([]);
     const [pacients, setPacients] = useState([]);
-    const [searchedName, setSearchedName] = useState("");
+    const [searchedName, setSearchedName] = useState([]);
     const [searchedContact, setSearchedContact] = useState("");
+    const [fillInfo, setfillInfo] = useState(false);
     function openCloseTab(){
-        setArrows(2);
+        if(arrows===1){
+            setArrows(2);
+        }else{
+            setArrows(1);
+        }
         setOpen(!open);
     }
     /* Referencias para los inputs */
@@ -77,21 +82,62 @@ const AppointmentForm = ({ arrows, setArrows }) => {
     };
     
     useEffect(() => {
-        usersRequest();
-        pacientsRequest();
+        return()=>
+            {
+                usersRequest();
+                pacientsRequest();
+
+            }
+        
     }, []);
     /* Datos buscados */
     function selected(event){
         setSearchedName(event.target.value);
     };
     let searchContact;
-    searchContact=pacients.filter((pacient)=>{
-        const nameValue=pacient.name;
-        const searchValue=searchedName;
-        return (nameValue.includes(searchValue));
-    });
-    console.log("search", searchContact);
+    if(!searchedName){
+        searchContact=[...pacients];
+    }else{
+        searchContact=pacients.filter((pacient)=>{
+            const nameValue=pacient.name;
+            const searchValue=searchedName;
+            return (nameValue.includes(searchValue));
+        });
+    };
+    function getInfo(){
+        const val=searchContact[0];
+        setSearchedContact(val);
+        setfillInfo(true);
+    };
 
+    function pacientInfo(){
+        if(fillInfo){
+            return(
+                <input
+                            id="cellphone"
+                            defaultValue={searchedContact.phone}
+                            type="text"
+                            required
+                            ref={cellphoneRef }
+                            className="form-control"
+                            name="cellphone"
+                            placeholder="Ej. 71298655"
+                            minLength="7"
+                            maxLength="8"
+                            autoFocus  
+                        />
+            )
+        } else {
+            return(
+                <p>----</p>
+            )
+        }
+    }
+    /* useEffect(() => {
+        
+    }, [searchedContact]);
+    console.log("search", searchContact); */
+    
 
     
     return (
@@ -106,25 +152,35 @@ const AppointmentForm = ({ arrows, setArrows }) => {
                         <h5 className="appointment-section-label">Datos del paciente</h5>
                         <hr></hr>
                         <label className="appointment-label" htmlFor="name">Nombre del paciente: </label>
-                            <input
-                                id="name"
-                                name="name"
-                                required
-                                ref={ nameRef }
-                                list="searchedPatients"
-                                className="form-select"
-                                onChange={selected}
-                                autoFocus  
-                            />
-                            <datalist id="searchedPatients" >
-                                {  pacients.map((pacient,index)=>{
-                                        return(
-                                            <option key={index} value={pacient.name} ></option>
-                                        )
-                                    })
-                                }
-                            </datalist>
-                        <label className="appointment-label" htmlFor="name">Celular: </label>
+                        <div className="search-container">
+                                <input
+                                    id="name"
+                                    name="name"
+                                    required
+                                    ref={ nameRef }
+                                    list="searchedPatients"
+                                    className="form-select"
+                                    onChange={selected}
+                                    autoFocus  
+                                />
+                                <datalist id="searchedPatients" >
+                                    {  pacients.map((pacient,index)=>{
+                                            return(
+                                                <option key={index} value={pacient.name} ></option>
+                                            )
+                                        })
+                                    }
+                                </datalist>
+                                <button 
+                                    className="btn btn-primary"
+                                    onClick={getInfo}
+                                >
+                                    Ingresar paciente
+                                </button>
+
+                        </div>
+                        <label className="appointment-label" htmlFor="name">Número de contacto: </label>
+
                         {/* <input
                             id="cellphone"
                             value={searchContact.phone}
@@ -138,7 +194,7 @@ const AppointmentForm = ({ arrows, setArrows }) => {
                             maxLength="8"
                             autoFocus  
                         /> */}
-                        <p>{searchContact.phone}</p>
+                       { pacientInfo() }
                     </fieldset>
                     <fieldset className="card appointment-section">
                         <h5 className="appointment-section-label">Datos de la cita médica</h5>
@@ -151,7 +207,6 @@ const AppointmentForm = ({ arrows, setArrows }) => {
                             required
                             className="form-control"
                             name="datetime"
-                            autoFocus  
                         />
                       
 
@@ -267,6 +322,7 @@ const AppointmentForm = ({ arrows, setArrows }) => {
                         <button 
                             className='close-table-button'
                             onClick={ openCloseTab}
+                            setArrows={setArrows}
                         >
                             <i className="bi bi-x"></i>
                         </button>
