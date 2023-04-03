@@ -3,11 +3,11 @@ import DropdownNavMenu from './dropdownNavMenu';
 import "../../styles/navStyle.css";
 
 
-const Navbar = ({navBarMenu, openNavBarMenu}) => {
+const Navbar = ({navBarMenu, openNavBarMenu, setLogin}) => {
     
     return (
         <div >
-            <nav className='navbar fixed-top'>
+            <nav className='navbar '>
                 <div className='navbar-item months'>
                     <h5 className='navbar-item'>Suyana</h5>
                     <h5 className="navbar-item month">Febrero</h5>
@@ -34,7 +34,10 @@ const Navbar = ({navBarMenu, openNavBarMenu}) => {
                     </h5>
                     
                 </div>              
-                { navBarMenu ? <DropdownNavMenu openNavBarMenu={openNavBarMenu}></DropdownNavMenu> : null}
+                { navBarMenu ? <DropdownNavMenu 
+                                    openNavBarMenu={openNavBarMenu}
+                                    setLogin={ setLogin }
+                                ></DropdownNavMenu> : null}
                 
             </nav>
         </div>

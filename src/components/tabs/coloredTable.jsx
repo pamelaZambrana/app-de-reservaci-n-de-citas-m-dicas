@@ -1,5 +1,6 @@
 import React from 'react';
 import "../../styles/colorTable.css"
+import { BRANCHES } from '../../models/options';
 
 const ColoredTable = ({appointments}) => {
     /* Array de especialidades */
@@ -19,8 +20,8 @@ const ColoredTable = ({appointments}) => {
     let finalMinutes;
     let hour;
     let minutes;
-    
-    if ((appointments.length>0)&&(appointments[0].branch==="el alto")){
+    console.log(appointments[0].branch);
+    if ((appointments.length>0)&&(appointments[0].branch==="El Alto")){
         
         for (let i=0;i<24;i++){
             initialTime=initialTime+30;
@@ -34,7 +35,6 @@ const ColoredTable = ({appointments}) => {
             if((finalMinutes==="0")){
                 finalMinutes="00";
             };
-
             arrInitialhour.push(`${hour}:${minutes}`);
             /* llenando la tabla */
             const regex=arrInitialhour.map(item=>(new RegExp(item)));
@@ -49,7 +49,7 @@ const ColoredTable = ({appointments}) => {
                     minutes="00";
                 };
                 const date=`${hour}:${minutes}`;
-                console.log("dates:",date)
+                /* console.log("dates:",date) */
                 if((arrInitialhour[i]===date)){
                     rowIndex.push(j);
                 }else if((arrInitialhour[i]!==date)&&(rowIndex.length<1)){
@@ -89,7 +89,7 @@ const ColoredTable = ({appointments}) => {
         
         arrFinal.push([`${hour}:${minutes}-${finalHour}:${finalMinutes}`,rowIndex,colIndex]);
     };  
-        console.log(arrFinal);
+        /* console.log(arrFinal); */
         let objectCon={};
         let contents=[];
         for(let i=0; i<arrFinal.length;i++){
@@ -126,8 +126,8 @@ const ColoredTable = ({appointments}) => {
             }
             
         }
-        console.log("secciones" ,contentRow);
-        console.log(contentRow[0][0].schedule);
+       /*  console.log("secciones" ,contentRow);
+        console.log(contentRow[0][0].schedule); */
        
             
     return (

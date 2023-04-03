@@ -17,7 +17,7 @@ const loginSchema=Yup.object().shape(
     }
 );
 
-const LoginForm = () => {
+const LoginForm = ({login, setLogin}) => {
     const initialCredentials={
         email:"",
         password:""
@@ -28,11 +28,13 @@ const LoginForm = () => {
         await loginUser(values)
                             .then(ans=>{
                                 console.log(ans.data);
-                                sessionStorage.setItem("t",ans.data.body);
-                                navigate("/tablaCitas");
+                                /* sessionStorage.setItem("t",ans.data.body); */
+                                setLogin(true);
+                                navigate("/home/tablaCitas");
+
                             })
                             .catch(error=>{
-                                console.log(error.response.data)
+                                console.log(error)
                             })
         console.log(values);
     }

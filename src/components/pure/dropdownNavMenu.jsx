@@ -1,35 +1,46 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate} from 'react-router-dom';
 
-const DropdownNavMenu = ({openNavBarMenu}) => {
+const DropdownNavMenu = ({openNavBarMenu, setLogin}) => {
     const navigate=useNavigate();
+    function exit(){
+        setLogin(false);
+        navigate("/login");
+    }
+    const completeMenu=[
+        {
+        to: "tablaUsuarios",
+        option: "Lista de trabajadores"
+        },
+        {
+            to: "tablaPacientes",
+            option: "Lista de pacientes"
+            },
+        {
+            to: "tablaCitas",
+            option: "Lista de citas médicas"
+            },
+    ]
     return (
         <ul 
             className="navbar-menu card" 
             onMouseLeave={()=> openNavBarMenu() }
         >
-            <li 
-                className="navbar-item"
-                onClick={()=> navigate("/tablaUsuarios") }
-            >Lista de trabajadores</li>
-            <li 
-                className="navbar-item"
-                onClick={()=>navigate("/tablaPacientes")}
-            >Lista de pacientes</li>
-            <li 
-                className="navbar-item"
-                onClick={()=>navigate("/tablaCitas")}
-            >
-                Tabla de citas médicas
-            </li>
-            <li className="navbar-item">Agenda</li>
-            <li className="navbar-item">Imprimir horario</li>
-            <li 
-                className="navbar-item"
-                onClick={()=>navigate("/login")}
-            >
-                Salir
-            </li>
+            { 
+                completeMenu.map((item, key)=>(
+                    <li className="navbar-item" key={key}>
+                        <NavLink 
+                            to={item.to}
+                            style={({isActive})=>({
+                                textDecoration: "none",
+                                color: 'black',
+                            })}
+                        >{item.option}</NavLink>
+                    </li>
+                )
+                )
+            }
+                <li className="navbar-item" onClick={ exit } >Salir</li>
         </ul>
     );
 }

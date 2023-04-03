@@ -2,7 +2,7 @@
 .agenda{
     height: 100%;
     position: relative;
-    top:5rem;
+    top:1rem;
     padding: 5px;
     border: solid 1px var(--gray2);
 }

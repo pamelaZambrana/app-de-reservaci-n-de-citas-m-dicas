@@ -2,7 +2,6 @@ import React from 'react';
 import AppointmentComponent from '../pure/client';
 import ClientComponent from '../pure/client';
 const Table = ({appointmentList, completeAppo, complete, remove}) => {
-    console.log("searched",appointmentList);
     return (
         
             <table className='table table-striped'>

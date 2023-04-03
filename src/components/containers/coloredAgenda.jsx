@@ -6,7 +6,7 @@ import ColoredTable from '../tabs/coloredTable';
 import { getAppointments, removeAppointments } from '../../requests/appointmentRequest';
 
 
-const Agenda = ({  arrows, setArrows }) => {
+const ColoredAgenda = ({  arrows, setArrows }) => {
 
     
     /* Current date */
@@ -64,21 +64,9 @@ const Agenda = ({  arrows, setArrows }) => {
         
     }
     if(searchedDates.length>0){
-        appointmentsTable=
-            <Table 
-                appointmentList={searchedDates}
-                completeAppo={completeAppointment}
-                remove={removeAppointment}
-            ></Table>
         /* Horaro por colores */
         coloredSch=<ColoredTable appointments={searchedDates}></ColoredTable>;
     }else{
-       appointmentsTable = (
-       <div>
-            <h4>No hay citas agendadas para esta fecha</h4>
-            <h5>Crea una nueva cita.</h5>
-       </div>
-       )
         /* Horaro por colores */
        coloredSch = (
         <div>
@@ -103,45 +91,25 @@ const Agenda = ({  arrows, setArrows }) => {
                     ></DateControl>
                     
                 </div>
-                { arrows === 1 
-                ? 
-                    <div 
-                        className='card-body' 
-                        style={ {position:"relative", height:"458px"}} 
-                        data-mdb-perfect-scrollbar="true"
-                    >
-                    { loading 
-                        ?
-                        <div className="d-flex justify-content-center">
-                            <p>Cargando lista de citas.</p>
-                            <div className="spinner-border" role="status">
-                                <span className="visually-hidden">Loading...</span>
-                            </div>
-                        </div> 
-                        : appointmentsTable
-                    }
-                    </div>
-                :
-                    <div
-                        className='card-body'
-                        style={ {position:"relative", height:"458px"}} 
-                    >
-                    { loading 
-                        ?
-                        <div className="d-flex justify-content-center">
-                            <p>Cargando organizador.</p>
-                            <div className="spinner-border" role="status">
-                                <span className="visually-hidden">Loading...</span>
-                            </div>
-                        </div> 
-                        : coloredSch
-                    }
-                        
-                    </div>
+                <div
+                    className='card-body'
+                    style={ {position:"relative", height:"458px"}} 
+                >
+                { loading 
+                    ?
+                    <div className="d-flex justify-content-center">
+                        <p>Cargando organizador.</p>
+                        <div className="spinner-border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div> 
+                    : coloredSch
                 }
+                    
+                </div>
                 
             </div>
     )
 }
 
-export default Agenda;
+export default ColoredAgenda;

@@ -1,6 +1,6 @@
 import React, {useRef, useState, useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
-import { DOCTOR, ESPECIALIDAD } from "../../models/options";
+import { BRANCHES, DOCTOR, ESPECIALIDAD } from "../../models/options";
 import { Appointment } from "../../models/AppointmentClass";
 import Agenda from '../../components/containers/agenda';
 import "../../styles/newAppointment.css";
@@ -47,18 +47,18 @@ const AppointmentForm = ({ arrows, setArrows }) => {
             doctorRef.current.value,
             specialtyRef.current.value,
             `${dateRef.current.value}T${timeRef.current.value}`,
-            "el alto",
+            BRANCHES.EA,
             false
         )
         alert(JSON.stringify(values));
         await saveNewAppointment(values)
                                 .then(ans => {
                                     console.log("newAppo",ans)
+                                    navigate("/home/tablaCitas");
                                 })
                                 .catch(error => {
                                     console.log("newAppo",error)
                                 });
-        navigate("/tablaCitas");
         console.log("sending values", values)
     }
     /* Petición lista de doctores */

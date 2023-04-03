@@ -1,11 +1,10 @@
 import React from 'react';
 import CustomerForm from '../../components/forms/custormerForm';
 
-const CustomerFormPage = ({addNewCustomer}) => {
+const CustomerFormPage = () => {
     return (
         <div>
             <CustomerForm
-                addNewCustomer={ addNewCustomer }
             ></CustomerForm>
         </div>
     );

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 const DateControl = ({searchDate, setSearchDate,searchByDate, arrows, setArrows}) => {
 
     function eventListener(event){
@@ -15,12 +16,12 @@ const DateControl = ({searchDate, setSearchDate,searchByDate, arrows, setArrows}
            
         };
     };
-
+    const navigate=useNavigate();
     return (
         
         <div className='w-100 d-flex justify-content-between align-items-center'>
             <div className='d-flex gap-3'>
-                <h5>Control de citas agendadas</h5>
+                <h1>Control de citas agendadas</h1>
                 <input 
                     type='date' 
                     onChange={eventListener} 

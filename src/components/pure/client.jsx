@@ -20,10 +20,10 @@ const AppointmentComponent = ({ appointment, completeAppo, remove }) => {
         let LP=45;
         let minutes;
         let hours;
-        if((appointment.branch==="la paz")){
+        if((appointment.branch==="La Paz")){
             hours=Math.floor((totalMinutes+LP)/(60));
             minutes=(((totalMinutes+LP)/(60))-hours)*60;
-        }else if((appointment.branch==="el alto")){
+        }else if((appointment.branch==="El Alto")){
             hours=Math.floor((totalMinutes+EA)/(60));
             minutes=(((totalMinutes+EA)/(60))-hours)*60;
         };
@@ -32,7 +32,6 @@ const AppointmentComponent = ({ appointment, completeAppo, remove }) => {
            
         }
         finalHour=`${hours}:${minutes}`;
-        console.log(hours, minutes, finalHour)
         return(
            /*  `${new Date(appointment.dateTime).getHours()}:${new Date(appointment.dateTime).getMinutes()}-${finalHour}` */
            `${initialHour/60}:${initMinutes}-${finalHour}`
