@@ -27,8 +27,10 @@ const LoginForm = ({login, setLogin}) => {
     async function loginToApi(values){
         await loginUser(values)
                             .then(ans=>{
-                                console.log(ans.data);
-                                /* sessionStorage.setItem("t",ans.data.body); */
+                                //console.log(ans.data);
+                                sessionStorage.setItem("name", ans.data.body.name);   
+                                sessionStorage.setItem("rol",  ans.data.body.rol); 
+                                sessionStorage.setItem("token",ans.data.body.token); 
                                 setLogin(true);
                                 navigate("/home/tablaCitas");
 

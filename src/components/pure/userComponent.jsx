@@ -1,6 +1,24 @@
 import React from 'react';
+import { removeUser } from '../../requests/userRequest';
+import errorAlert from '../../alerts/errorAlert'
+import successAlert from '../../alerts/successAlert'
 
 const UserComponent = ({ user,  remove }) => {
+
+    const eliminarUsuario = async ()=>{
+        //console.log({user});
+        //console.log(user._id);
+        await removeUser(user._id)
+            .then( answer =>{
+                console.log({answer});
+                successAlert(answer.data.message)
+            } )
+            .catch( error => {
+                console.log(error.response.data);
+                errorAlert(error.response.data.body.error)
+            })
+        remove(user)
+    }
 
     return (
         <tr>
@@ -29,7 +47,7 @@ const UserComponent = ({ user,  remove }) => {
                 <i className="bi bi-pencil-square"></i>
                 <i 
                     className="bi bi-trash3"
-                    onClick={()=>remove(user)}
+                    onClick={()=>eliminarUsuario()}
                 ></i>
             </td>
         </tr>

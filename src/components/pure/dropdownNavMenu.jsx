@@ -6,6 +6,9 @@ const DropdownNavMenu = ({openNavBarMenu, setLogin}) => {
     function exit(){
         setLogin(false);
         navigate("/login");
+        sessionStorage.setItem("name","");   
+        sessionStorage.setItem("rol",""); 
+        sessionStorage.setItem("token",""); 
     }
     const completeMenu=[
         {

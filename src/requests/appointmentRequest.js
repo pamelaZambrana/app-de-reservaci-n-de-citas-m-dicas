@@ -1,11 +1,12 @@
 import axios from "axios";
-const token=sessionStorage.getItem("t");
+const token=sessionStorage.getItem("token");
 
 export function saveNewAppointment(appointment){
     return(
         axios.post(
             "https://suyana-api.vercel.app/api/appointment",
-            appointment
+            appointment,
+            {headers:{"x-token":token}}
         )
     )
 };
@@ -14,6 +15,7 @@ export function getAppointments(){
     return(
         axios.get(
             "https://suyana-api.vercel.app/api/appointment",
+            {headers:{"x-token":token}}
         )
     )
 };
