@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Formik, Form, ErrorMessage } from 'formik';
 import * as Yup from "yup";
 import { login, loginUser } from '../../requests/userRequest';
+import { useAuthContext } from '../pure/auth';
 
 const loginSchema=Yup.object().shape(
     {
@@ -17,23 +18,24 @@ const loginSchema=Yup.object().shape(
     }
 );
 
-const LoginForm = ({login, setLogin}) => {
+const LoginForm = () => {
+    const {login}=useAuthContext();
+    let navigate=useNavigate();
     const initialCredentials={
         email:"",
         password:""
     };
-    const navigate = useNavigate();
-
+    //const navigate=useNavigate();
     async function loginToApi(values){
         await loginUser(values)
                             .then(ans=>{
-                                //console.log(ans.data);
+                                console.log(ans.data);
                                 sessionStorage.setItem("name", ans.data.body.name);   
                                 sessionStorage.setItem("rol",  ans.data.body.rol); 
-                                sessionStorage.setItem("token",ans.data.body.token); 
-                                setLogin(true);
-                                navigate("/home/tablaCitas");
-
+                                sessionStorage.setItem("token",ans.data.body.token);
+                                login();
+                                navigate("/private/home/tablaUsuarios");
+                                
                             })
                             .catch(error=>{
                                 console.log(error)
@@ -53,6 +55,7 @@ const LoginForm = ({login, setLogin}) => {
                     async (values) => {
                     alert(JSON.stringify(values, null, 2));
                     loginToApi(values);
+                    
                     }
                 }
                 >

@@ -16,6 +16,7 @@ export function loginUser(values){
 };
 
 export function getUsers(){
+    console.log("sessionS",sessionStorage);
     return axios.get(
         "https://suyana-api.vercel.app/api/doctor",
         {headers: {"x-token":token}}

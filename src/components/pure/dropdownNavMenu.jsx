@@ -1,15 +1,19 @@
 import React from 'react';
 import { NavLink, useNavigate} from 'react-router-dom';
+import { useAuthContext } from './auth';
 
-const DropdownNavMenu = ({openNavBarMenu, setLogin}) => {
+const DropdownNavMenu = ({openNavBarMenu}) => {
+    const {logOut}=useAuthContext();
     const navigate=useNavigate();
+
     function exit(){
-        setLogin(false);
-        navigate("/login");
         sessionStorage.setItem("name","");   
         sessionStorage.setItem("rol",""); 
-        sessionStorage.setItem("token",""); 
+        sessionStorage.setItem("token","");
+        navigate("/");
+        logOut();
     }
+    
     const completeMenu=[
         {
         to: "tablaUsuarios",
@@ -23,7 +27,8 @@ const DropdownNavMenu = ({openNavBarMenu, setLogin}) => {
             to: "tablaCitas",
             option: "Lista de citas médicas"
             },
-    ]
+    ];
+
     return (
         <ul 
             className="navbar-menu card" 

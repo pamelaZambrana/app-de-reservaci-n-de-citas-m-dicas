@@ -1,13 +1,11 @@
 import React from 'react';
 import LoginForm from '../../components/forms/loginForm';
 
-const LoginPage = ({login, setLogin}) => {
-    console.log(login)
+const LoginPage = ({logged}) => {
     return (
-        <div className='h-100'>
+        <div className="App">
             <LoginForm 
-                login={login}
-                setLogin={setLogin}
+                logged={logged}
             ></LoginForm>
         </div>
     );

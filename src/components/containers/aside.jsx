@@ -7,19 +7,19 @@ const Aside = ({addNewAppointment}) => {
         <div className='aside d-flex flex-column gap-3'>
             <button 
                 className='aside-button'
-                onClick={()=>navigate("/registroUsuario")}
+                onClick={()=>navigate("/private/registroUsuario")}
             >
                 Nuevo perfil de trabajador
             </button>
             <button 
                 className='aside-button'
-                onClick={()=>navigate("/registroPaciente")}
+                onClick={()=>navigate("/private/registroPaciente")}
             >
                 Nuevo perfil de paciente
             </button>
             <button 
                 className='aside-button'
-                onClick={()=>navigate("/newAppointment")}
+                onClick={()=>navigate("/private/newAppointment")}
             >
                 Agendar Cita
             </button>

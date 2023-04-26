@@ -14,10 +14,9 @@ const CustomerRegister = () => {
     async function customerRequest(){
         await getCustomers()
                         .then(ans=>{
-                            console.log(ans);
                             setLoading(true);
                             setCustomers(ans.data.body);
-
+                            console.log(ans.data.body);
                         })
                         .catch(error=>{
                             console.log(error)

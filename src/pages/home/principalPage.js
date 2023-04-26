@@ -5,13 +5,12 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import UsersDashboard from '../dashboard/usersDashboard';
 import CustomerDashboard from '../dashboard/customerDashboard';
 import Dashboard from '../dashboard/Dashboard';
-const PrincipalPage = ({login, setLogin, arrows, setArrows}) => {
-     
-  
+
+const PrincipalPage = ({arrows, setArrows}) => {
   const [navBarMenu, setNavBarMenu] = useState(false);
+  
   /* Abrir navBarMenu */
   function openNavBarMenu(){
-    console.log(navBarMenu);
       setNavBarMenu(prevState=>!prevState);  
   }
     return (
@@ -19,36 +18,29 @@ const PrincipalPage = ({login, setLogin, arrows, setArrows}) => {
         <Navbar
             navBarMenu = { navBarMenu }
             openNavBarMenu = { openNavBarMenu }
-            setLogin={ setLogin }
             >
         </Navbar>
         <section className='principal-section'>
         <Routes>
             <Route 
             path='tablaUsuarios'
-            element = { login
-                        ? <UsersDashboard 
-                            setLogin = { setLogin }
+            element = { <UsersDashboard 
                         /> 
-                        :<Navigate from="/tablaUsuarios" to={ "/login" }/>} 
+                      } 
             />
             <Route 
             path='tablaPacientes'
-            element = { login 
-                        ? <CustomerDashboard
-                            setLogin = { setLogin }
+            element = { <CustomerDashboard
                             /> 
-                        : <Navigate from="/tablaPacientes"  replace to={"/login"}/>}
+                        }
             />
             <Route 
             path='tablaCitas'
-            element = { login
-                        ? <Dashboard 
+            element = {<Dashboard 
                             arrows = { arrows }
                             setArrows = { setArrows }
-                            setLogin = { setLogin }
                             /> 
-                        : <Navigate from ="/tablaCitas" to="/login"/>}
+                      }
             />
         </Routes>
           <Aside

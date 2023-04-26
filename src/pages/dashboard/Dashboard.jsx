@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Agenda from '../../components/containers/agenda';
 
-const Dashboard = ({ clients, setClients, addNewAppointment, arrows, setArrows }) => {
+const Dashboard = ({ clients, setClients, arrows, setArrows }) => {
 
     return (
         <div>

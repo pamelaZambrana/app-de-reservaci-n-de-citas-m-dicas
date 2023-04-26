@@ -3,7 +3,7 @@ import DropdownNavMenu from './dropdownNavMenu';
 import "../../styles/navStyle.css";
 
 
-const Navbar = ({navBarMenu, openNavBarMenu, setLogin}) => {
+const Navbar = ({navBarMenu, openNavBarMenu, logged, login}) => {
     
     return (
         <div >
@@ -36,7 +36,8 @@ const Navbar = ({navBarMenu, openNavBarMenu, setLogin}) => {
                 </div>              
                 { navBarMenu ? <DropdownNavMenu 
                                     openNavBarMenu={openNavBarMenu}
-                                    setLogin={ setLogin }
+                                    logged={ logged }
+                                    login = { login }
                                 ></DropdownNavMenu> : null}
                 
             </nav>
