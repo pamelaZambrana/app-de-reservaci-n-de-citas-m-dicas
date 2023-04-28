@@ -34,7 +34,7 @@ const LoginForm = () => {
                                 sessionStorage.setItem("rol",  ans.data.body.rol); 
                                 sessionStorage.setItem("token",ans.data.body.token);
                                 login();
-                                navigate("/private/home/tablaUsuarios");
+                                navigate("/private/home/");
                                 
                             })
                             .catch(error=>{

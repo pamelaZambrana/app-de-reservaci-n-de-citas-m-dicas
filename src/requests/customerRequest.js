@@ -1,7 +1,8 @@
 import axios from "axios";
-const token=sessionStorage.getItem("token");
+
 
 export function saveNewCustomer(newCustomer){
+    const token=sessionStorage.getItem("token");
     return(
         axios.post(
             "https://suyana-api.vercel.app/api/patient",
@@ -12,6 +13,7 @@ export function saveNewCustomer(newCustomer){
 };
 
 export function getCustomers(){
+    const token=sessionStorage.getItem("token");
     return(
         axios.get(
             "https://suyana-api.vercel.app/api/patient",

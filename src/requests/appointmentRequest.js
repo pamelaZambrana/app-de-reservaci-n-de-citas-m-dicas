@@ -1,7 +1,8 @@
 import axios from "axios";
-const token=sessionStorage.getItem("token");
+
 
 export function saveNewAppointment(appointment){
+    const token=sessionStorage.getItem("token");
     return(
         axios.post(
             "https://suyana-api.vercel.app/api/appointment",
@@ -12,6 +13,7 @@ export function saveNewAppointment(appointment){
 };
 
 export function getAppointments(){
+    const token=sessionStorage.getItem("token");
     return(
         axios.get(
             "https://suyana-api.vercel.app/api/appointment",
@@ -21,6 +23,7 @@ export function getAppointments(){
 };
 
 export function removeAppointments(index){
+    const token=sessionStorage.getItem("token");
     console.log(`https://suyana-api.vercel.app/api/appointment/${index}`)
     return(
         axios.delete(

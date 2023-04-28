@@ -11,20 +11,18 @@ const UserRegister = () => {
     const [loading, setLoading] = useState(false);
 
     /* Petición */
-        async function usersRequest(){
-            await getUsers()
-                        .then(ans=>{
-                            console.log(ans);
-                            setLoading(true);
-                            setUsers(ans.data.body);
-
-                        })
-                        .catch(error=>{
-                            console.log(error)
-                        })
-        };
-    
-    /* Buscando por usuario */
+    async function usersRequest(){
+        await getUsers()
+        .then(ans=>{
+            console.log(ans);
+            setLoading(true);
+            setUsers(ans.data.body);
+            
+        })
+        .catch(error=>{
+            console.log(error)
+        })
+    };   
     
     
     /* borrando citas */
@@ -58,7 +56,6 @@ const UserRegister = () => {
 
     useEffect(() => {
         usersRequest();
-        
     }, []);
     return (    
             <div className='card agenda'>

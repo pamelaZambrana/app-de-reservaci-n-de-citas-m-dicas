@@ -39,7 +39,7 @@ const UserForm = () => {
                         .catch( error => {
                             console.log(error)
                         })
-        navigate("/tablaUsuarios");
+        navigate("/private/home/tablaUsuarios");
         /* TODO: redireccionar a tabla de usuarios */
         /* navigate("/"); */
         console.log("sending values", values)

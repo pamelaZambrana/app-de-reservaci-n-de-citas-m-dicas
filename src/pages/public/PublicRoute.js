@@ -4,7 +4,7 @@ import { useAuthContext } from '../../components/pure/auth';
 
 const PublicRoute = () => {
     const isLogin = useAuthContext();
-
+    console.log("is logn?", isLogin);
     if(isLogin===true){
         return <Navigate to={"/private/home"}/>
     }
