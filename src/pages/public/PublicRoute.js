@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuthContext } from '../../components/pure/auth';
+import { useAuthContext } from '../../components/pure/context/auth';
 
 const PublicRoute = () => {
     const isLogin = useAuthContext();

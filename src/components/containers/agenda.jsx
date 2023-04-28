@@ -1,9 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import Table from '../tabs/Table';
 import "../../styles/agendaStyles.css";
 import DateControl from '../pure/dateControl';
 import ColoredTable from '../tabs/coloredTable';
 import { getAppointments, removeAppointments } from '../../requests/appointmentRequest';
+import { useEditContext } from '../pure/context/editContext';
+import { useNavigate } from 'react-router-dom';
 
 
 const Agenda = ({  arrows, setArrows }) => {
@@ -60,15 +62,19 @@ const Agenda = ({  arrows, setArrows }) => {
                             })
     };
     /* Editando citas */
+    const navigate=useNavigate();
     function editAppointment(appointment){
-        
-    }
+        const index=appointment._id;
+        localStorage.setItem("id", JSON.stringify(index));
+        navigate("/private/editAppointment");
+    };
     if(searchedDates.length>0){
         appointmentsTable=
             <Table 
                 appointmentList={searchedDates}
                 completeAppo={completeAppointment}
                 remove={removeAppointment}
+                editAppointment = { editAppointment }
             ></Table>
         /* Horaro por colores */
         coloredSch=<ColoredTable appointments={searchedDates}></ColoredTable>;

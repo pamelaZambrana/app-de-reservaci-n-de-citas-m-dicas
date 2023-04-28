@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 export const AuthContext = createContext();
 
 function AuthProvider({children}){
-
-    const [isLogin, setIsLogin] = useState(sessionStorage.getItem("token")==="" ? false : true);
+    const token = sessionStorage.getItem("token");
+    console.log("token?",token === "");
+    const [isLogin, setIsLogin] = useState(sessionStorage.getItem("token")=== ""  ? false : true);
     console.log(isLogin);
     const login=useCallback(()=>{
         setIsLogin(true);

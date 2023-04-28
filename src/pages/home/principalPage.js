@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Navbar from '../../components/pure/navbar';
 import Aside from '../../components/containers/aside';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import {Route, Routes } from 'react-router-dom';
 import UsersDashboard from '../dashboard/usersDashboard';
 import CustomerDashboard from '../dashboard/customerDashboard';
 import Dashboard from '../dashboard/Dashboard';

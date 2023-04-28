@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Formik, Form, ErrorMessage } from 'formik';
 import * as Yup from "yup";
 import { login, loginUser } from '../../requests/userRequest';
-import { useAuthContext } from '../pure/auth';
+import { useAuthContext } from '../pure/context/auth';
 
 const loginSchema=Yup.object().shape(
     {

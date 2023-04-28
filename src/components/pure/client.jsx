@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import EditAppointmentForm from '../forms/editAppointmentForm';
+import EditAppointmentForm from '../forms/xxx';
 
-const AppointmentComponent = ({ appointment, completeAppo, remove }) => {
+const AppointmentComponent = ({ appointment, completeAppo, remove, editAppointment }) => {
     let finalHour;
     /* calculando el final de la sesión*/
     function timeRange(){
@@ -60,13 +60,7 @@ const AppointmentComponent = ({ appointment, completeAppo, remove }) => {
             );
         };
     };
-    /* Open Edit Appointment */
-    const navigate=useNavigate();
-    function editAppointment(appointment){
-        return(
-           <EditAppointmentForm></EditAppointmentForm> 
-        )
-    }
+
     return (
         <tr className={appointment.complete ? "complete-appointment" : "uncomplete-appointment"}>
             <th>

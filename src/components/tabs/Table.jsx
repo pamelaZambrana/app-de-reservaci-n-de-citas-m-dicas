@@ -1,7 +1,7 @@
 import React from 'react';
 import AppointmentComponent from '../pure/client';
 import ClientComponent from '../pure/client';
-const Table = ({appointmentList, completeAppo, complete, remove}) => {
+const Table = ({appointmentList, completeAppo, complete, remove, editAppointment}) => {
     return (
         
             <table className='table table-striped'>
@@ -27,6 +27,7 @@ const Table = ({appointmentList, completeAppo, complete, remove}) => {
                                 complete={complete}
                                 completeAppo={completeAppo}
                                 remove={remove}
+                                editAppointment={editAppointment}
                             >
                             </AppointmentComponent>
                         )

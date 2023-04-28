@@ -54,7 +54,7 @@ const AppointmentForm = ({ arrows, setArrows }) => {
         await saveNewAppointment(values)
                                 .then(ans => {
                                     console.log("newAppo",ans)
-                                    navigate("/home/tablaCitas");
+                                    navigate("/private/home/tablaCitas");
                                 })
                                 .catch(error => {
                                     console.log("newAppo",error)

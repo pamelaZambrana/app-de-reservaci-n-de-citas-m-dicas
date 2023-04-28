@@ -1,93 +1,181 @@
-import React, {useRef, useState} from "react";
+import React, {useRef, useState, useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
-import { DOCTOR, ESPECIALIDAD } from "../../models/options";
+import { BRANCHES, DOCTOR, ESPECIALIDAD } from "../../models/options";
 import { Appointment } from "../../models/AppointmentClass";
 import Agenda from '../containers/agenda';
 import "../../styles/newAppointment.css";
+import { getIdAppointments, saveNewAppointment, saveUpdateAppointment } from "../../requests/appointmentRequest";
+import { getUsers } from "../../requests/userRequest";
+import { getCustomers } from "../../requests/customerRequest";
+import { useEditContext } from "../pure/context/editContext";
 
-const EditAppointmentForm = ({ clients, addNewAppointment, arrows, setArrows }) => {
-    /* Estado de tabla abierta */
+const EditAppointmentForm = ({ arrows, setArrows }) => {
+    /* Estado del componente */
     const [open, setOpen] = useState(false);
-
+    const [users, setUsers] = useState([]);
+    const [pacients, setPacients] = useState([]);
+    const [searchedName, setSearchedName] = useState([]);
+    const [searchedContact, setSearchedContact] = useState("");
+    const [fillInfo, setfillInfo] = useState(false);
+    const [appointment, setAppointment] = useState([]);
+    const { editApp, indexApp } = useEditContext();
+    const [date, setDate] = useState("");
+    const [hour, setHour] = useState("");
     function openCloseTab(){
-        setArrows(2);
+        if(arrows===1){
+            setArrows(2);
+        }else{
+            setArrows(1);
+        }
         setOpen(!open);
     }
     /* Referencias para los inputs */
     const nameRef = useRef("");
-    const apPaternoRef = useRef("");
-    const apMaternoRef = useRef("");
     const cellphoneRef = useRef("");
     const doctorRef = useRef(DOCTOR.Juanita);
     const specialtyRef = useRef(ESPECIALIDAD.General);
     const dateRef = useRef("");
     const timeRef = useRef("");
 
+    /* Search by name */
+    const searchListener = (event)=>{
+        console.log(event.target.value);
+        /* setSearchValue(event.target.value); */
+    };
     const navigate=useNavigate();
     /* submit button */
-    function addAppointment(e){
+    async function updateAppointment(e){
         e.preventDefault();
         const values=new Appointment(
-            `${nameRef.current.value} ${apPaternoRef.current.value} ${apMaternoRef.current.value}`,
-            cellphoneRef.current.value,
+            //`${nameRef.current.value}`,
+            //cellphoneRef.current.value,
             doctorRef.current.value,
             specialtyRef.current.value,
             `${dateRef.current.value}T${timeRef.current.value}`,
-            "el alto",
-            false
+            //BRANCHES.EA,
+            //false
         )
         alert(JSON.stringify(values));
-        addNewAppointment(values);
-        navigate("/");
+        await saveUpdateAppointment(values, indexApp )
+                                .then(ans => {
+                                    console.log("newAppo",ans)
+                                    navigate("/private/home/tablaCitas");
+                                    
+                                })
+                                .catch(error => {
+                                    console.log("newAppo",error)
+                                });
         console.log("sending values", values)
     }
+    /* Petición lista de doctores */
+    async function usersRequest(){
+        await getUsers()
+                    .then(ans=>{
+                        setUsers(ans.data.body);
+
+                    })
+                    .catch(error=>{
+                        console.log(error)
+                    })
+    };
+    /* Petición de lista de pacientes */
+    async function pacientsRequest(){
+        getCustomers()
+                        .then(ans=>{
+                            setPacients(ans.data.body);
+                        })
+                        .catch(error=>console.log(error))
+    };
+    
+    /* Datos buscados */
+    function selected(event){
+        setSearchedName(event.target.value);
+    };
+    let searchContact;
+    if(!searchedName){
+        searchContact=[...pacients];
+    }else{
+        searchContact=pacients.filter((pacient)=>{
+            const nameValue=pacient.name;
+            const searchValue=searchedName;
+            return (nameValue.includes(searchValue));
+        });
+    };
+    function getInfo(){
+        const val=searchContact[0];
+        setSearchedContact(val);
+        setfillInfo(true);
+    };
+
+    /* Petición de datos del appointment en específico */
+    async function appointmentRequest(id){
+        await getIdAppointments(id)
+        .then(ans=>{
+            setAppointment(ans.data.body[0]);
+            const regex=/^[^T]*/;
+            const regex2=/(\d{2}):(\d{2})$/;
+            setDate(`${ans.data.body[0].dateTime.match(regex)[0]}`);
+            setHour(`${ans.data.body[0].dateTime.match(regex2)[0]}`);
+            console.log(ans.data.body[0])
+        })
+        .catch(error=>{
+            console.log(error)
+        })
+    };
+    console.log(appointment.specialty)
+    useEffect(() => {
+        usersRequest();
+        pacientsRequest();
+        appointmentRequest();
+    }, []);
+    
+
+    
     return (
         <div className="appointment-container" >
              <h3>NUEVA CITA MÉDICA</h3>
             
                 <form 
+                    onSubmit={ updateAppointment }
                     className="appointment-form"
-                    onSubmit={ addAppointment }
                 >
                     <fieldset className="card appointment-section">
                         <h5 className="appointment-section-label">Datos del paciente</h5>
                         <hr></hr>
-                        <label className="appointment-label" htmlFor="name">Nombres: </label>
-                        <input
-                            id="name"
-                            ref={ nameRef }
-                            type="text"
-                            required
-                            className="form-control"
-                            name="name"
-                            placeholder="Ej. Remedios Muriel"
-                            autoFocus  
-                        />
-                        <label className="appointment-label" htmlFor="apPaterno">Apellido paterno: </label>
-                        <input
-                            id="apPaterno"
-                            className="form-control"
-                            ref={ apPaternoRef }
-                            type="text"
-                            placeholder="Ej. Garcia"
-                            name="apPaterno"
-                            required
-                            autoFocus  
-                        />
-                        <label className="appointment-label" htmlFor="apMaterno">Apellido Materno: </label>
-                        <input
-                            id="apMaterno"
-                            ref={ apMaternoRef }
-                            type="text"
-                            required
-                            className="form-control"
-                            name="apMaterno"
-                            placeholder="Ej. Pérez"
-                            autoFocus  
-                        />
-                        <label className="appointment-label" htmlFor="name">Celular: </label>
-                        <input
+                        <label className="appointment-label" htmlFor="name">Nombre del paciente: </label>
+                        <div className="search-container">
+                                {/* <input
+                                    id="name"
+                                    value={appointment.name}
+                                    name="name"
+                                    required
+                                    ref={ nameRef }
+                                    className="form-select"
+                                    //onChange={selected}
+                                    //autoFocus  
+                                    //list="searchedPatients"
+                                /> */}
+                                <p >{appointment.name}</p>
+                                {/* <datalist id="searchedPatients" >
+                                    {  pacients.map((pacient,index)=>{
+                                            return(
+                                                <option key={index} value={pacient.name} ></option>
+                                            )
+                                        })
+                                    }
+                                </datalist> */}
+                                {/* <button 
+                                    className="btn btn-primary"
+                                    onClick={getInfo}
+                                >
+                                    Ingresar paciente
+                                </button> */}
+
+                        </div>
+                        <label className="appointment-label" htmlFor="name">Número de contacto: </label>
+                        {/* <input
                             id="cellphone"
+                            defaultValue={appointment.cellphone}
                             type="text"
                             required
                             ref={cellphoneRef }
@@ -97,7 +185,8 @@ const EditAppointmentForm = ({ clients, addNewAppointment, arrows, setArrows }) 
                             minLength="7"
                             maxLength="8"
                             autoFocus  
-                        />
+                        /> */}
+                        <p className="text-center"> {appointment.cellphone} </p>
                     </fieldset>
                     <fieldset className="card appointment-section">
                         <h5 className="appointment-section-label">Datos de la cita médica</h5>
@@ -105,25 +194,25 @@ const EditAppointmentForm = ({ clients, addNewAppointment, arrows, setArrows }) 
                         <label className="appointment-label" htmlFor="datetime">Fecha: </label>
                         <input
                             id="date"
+                            defaultValue={ date }
                             ref={ dateRef }
                             type="date"
                             required
                             className="form-control"
                             name="datetime"
-                            autoFocus  
                         />
                       
 
                         <label className="appointment-label" htmlFor="name">Hora: </label>
                         <select
                             id="time"
+                            defaultValue={ hour }
                             ref={ timeRef }
                             type="text"
                             required
                             className="form-select"
                             name="time"
                         >
-                            <option>Elija un horario</option>
                             <option>08:30</option>
                             <option>09:00</option>
                             <option>09:30</option>
@@ -152,31 +241,8 @@ const EditAppointmentForm = ({ clients, addNewAppointment, arrows, setArrows }) 
                             <option>21:00</option>
                         
                         </select>
-                        <label className="appointment-label" >Especialista</label>
-                        <input
-                            id="doctor"
-                            ref={ doctorRef }
-                            type="text"
-                            required
-                            list="doctors"
-                            className="form-select"
-                            name="doctor"
-                            selection="true"
-                            placeholder="Elija un especialista"
-                        />
-                        <datalist id="doctors">
-                            <option 
-                                value ={ DOCTOR.Juanito }
-                            >Juanito</option>
-                            <option 
-                                value ={ DOCTOR.Juanita }
-                            >Juanita</option>
-                            <option 
-                                value ={DOCTOR.OssoDeBernoulli }
-                            >Osso de Bernoulli</option>
-                        </datalist>
                         <label className="appointment-label" >Especialidad</label>
-                        <input
+                        <select
                             id="specialty"
                             ref={ specialtyRef }
                             type="text"
@@ -185,41 +251,57 @@ const EditAppointmentForm = ({ clients, addNewAppointment, arrows, setArrows }) 
                             className="form-select"
                             name="specialty"
                             selection="true"
-                            placeholder="Elija una especialidad"
-                        />
-                        <datalist id="specialties">
+                        >
+                            <option value={appointment.specialty} selected disabled hidden>{ appointment.specialty }</option>
                             <option 
                                 value ={ ESPECIALIDAD.General }
-                            ></option>
+                            >General</option>
                             <option 
                                 value ={ ESPECIALIDAD.Fisioterapia }
-                            ></option>
+                            >Fisioterapia</option>
                             <option 
                                 value ={ ESPECIALIDAD.Odontología }
-                            ></option>
+                            >Odontología</option>
                             <option 
                                 value ={ ESPECIALIDAD.Fonoaudiologia }
-                            ></option>
+                            >Fonoaudiología</option>
                             <option 
                                 value ={ ESPECIALIDAD.Psicologia }
-                            ></option>
+                            >Psicología</option>
                             <option 
                                 value ={ ESPECIALIDAD.Psicopedagogia}
-                            ></option>
+                            >Psicopedagogía</option>
                             <option 
                                 value ={ ESPECIALIDAD.TerapiaOcupacional }
-                            ></option>
-                        </datalist>
+                            >Terapia Ocupacional</option>
+                        </select>
+                        <label className="appointment-label" >Especialista</label>
+                        <select
+                            id="doctor"
+                            ref={ doctorRef }
+                            type="text"
+                            required
+                            className="form-select"
+                            name="doctor"
+                            placeholder="Elija un especialista"
+                        >
+                        <option value={appointment.doctor} selected disabled hidden>{ appointment.doctor }</option>
+                            {users.map((doctor, index)=>{
+                                return(
+                                    <option key={index}>{doctor.name}</option>
+                                )
+                            })}
+                        </select>
                     </fieldset>
                     <div className="buttons-container" >
                         <button 
                             type="button"
-                            className='btn btn-primary watch-table-button'
+                            className='btn btn-primary watch-table-button submit-button'
                             onClick={ openCloseTab }
                         >Ver Horarios</button>
                         <button 
                             type="submit"
-                            className='btn btn-primary appointment-submit-button'
+                            className='btn btn-primary submit-button'
                         >Guardar</button>
                     </div>
 
@@ -231,12 +313,12 @@ const EditAppointmentForm = ({ clients, addNewAppointment, arrows, setArrows }) 
                         <button 
                             className='close-table-button'
                             onClick={ openCloseTab}
+                            setArrows={setArrows}
                         >
                             <i className="bi bi-x"></i>
                         </button>
                     </div>
-                    <Agenda 
-                        clients = { clients } 
+                    <Agenda
                         arrows = { arrows }
                         setArrows = { setArrows }
                     ></Agenda>
