@@ -1,0 +1,29 @@
+@import "../../assets/styles/variables";
+.principal-navbar{
+    @include display-estructure(space-between, center);
+    background-color: $secondary1;
+    color: $black;
+    i{
+        @include content-medium;
+    }
+};
+.navbar-links{
+    @include display-estructure(center, center);
+    gap: 1rem;
+    flex-wrap: wrap;
+    list-style-type: none;
+    a{
+        padding: 1rem;
+        text-decoration: none;
+        @include content-small;
+        color: $black;
+    }
+    li:hover{
+        background-color: $secondary3;
+        border-radius: 1.5rem;
+        a{
+            color: $background1;
+        }
+
+    }
+}

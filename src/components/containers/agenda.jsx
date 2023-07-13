@@ -1,10 +1,9 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect} from 'react';
 import Table from '../tabs/Table';
 import "../../styles/agendaStyles.css";
 import DateControl from '../pure/dateControl';
 import ColoredTable from '../tabs/coloredTable';
 import { getAppointments, removeAppointments } from '../../requests/appointmentRequest';
-import { useEditContext } from '../pure/context/editContext';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -97,7 +96,7 @@ const Agenda = ({  arrows, setArrows }) => {
     useEffect(() => {
         appointmenstRequest();
         console.log(appointments);
-    }, []);
+    }, [appointments]);
     return (    
             <div className='card agenda'>
                 <div className='card-header d-flex'>

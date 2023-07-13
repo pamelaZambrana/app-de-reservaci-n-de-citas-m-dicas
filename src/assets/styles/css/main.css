@@ -1,0 +1,14 @@
+/* ---- colors ----- */
+/* ----- fonts ----- */
+/* ----screen sizes--- */
+/* ----containers sizes ----- */
+:root {
+  font-size: 62.5%;
+  width: 100%;
+}
+
+body {
+  box-sizing: border-box;
+  margin: 0;
+  background-color: #F7F7F7;
+}/*# sourceMappingURL=main.css.map */

@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import './App.css';
-import {Routes, Route, Navigate, useNavigate,} from 'react-router-dom';
+/* import React, { useState} from 'react';
+//import './App.css';
+import {Routes, Route} from 'react-router-dom';
 import"./styles/principal-section.css";
 import ColoredTablePage from "./pages/appointments/coloredTablePage"
 import LoginPage from './pages/auth/loginPage';
@@ -8,11 +8,12 @@ import UserFormPage from './pages/formPages/userFormPage';
 import CustomerForm from './components/forms/custormerForm';
 import PrincipalPage from './pages/home/principalPage';
 import NewAppointmentPage from './pages/formPages/newAppointmentPage';
-import { AuthProvider, useAuth } from './components/pure/context/auth';
 import PublicRoute from './pages/public/PublicRoute';
 import PrivateRoute from './pages/private/PrivateRoute';
 import EditAppointmentPage from './pages/formPages/EditAppointmentPage';
 import { EditProvider } from './components/pure/context/editContext';
+import { AuthProvider } from './components/pure/context/auth';
+
 
 
 
@@ -21,7 +22,8 @@ function App() {
   const [arrows, setArrows] = useState(1);
 
   return (
-    <AuthProvider>
+    
+  <AuthProvider>
       <EditProvider>
         <Routes>
           <Route path="/" element={<PublicRoute/>}>
@@ -30,7 +32,7 @@ function App() {
               element = { <LoginPage/> }
             />
           </Route>
-
+  
           <Route path='private/*' element={<PrivateRoute/>}>
             <Route 
               path='home/*'
@@ -77,7 +79,8 @@ function App() {
         </Routes>
       </EditProvider>
     </AuthProvider>
-  );
-}
-
-export default App;
+    );
+  }
+  
+  export default App;
+   */

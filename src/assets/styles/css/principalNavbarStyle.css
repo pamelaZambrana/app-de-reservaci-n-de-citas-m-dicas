@@ -1,0 +1,38 @@
+/* ---- colors ----- */
+/* ----- fonts ----- */
+/* ----screen sizes--- */
+/* ----containers sizes ----- */
+.principal-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #B9CFDF;
+  color: #0E0F10;
+}
+.principal-navbar i {
+  font-size: 1.8rem;
+  font-family: "Inter", sans-serif;
+}
+
+.navbar-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  list-style-type: none;
+}
+.navbar-links a {
+  padding: 1rem;
+  text-decoration: none;
+  font-size: 1.4rem;
+  font-family: "Roboto", sans-serif;
+  color: #0E0F10;
+}
+.navbar-links li:hover {
+  background-color: #739fbe;
+  border-radius: 1.5rem;
+}
+.navbar-links li:hover a {
+  color: #F7F7F7;
+}/*# sourceMappingURL=principalNavbarStyle.css.map */
