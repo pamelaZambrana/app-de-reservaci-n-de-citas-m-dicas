@@ -1,0 +1,11 @@
+@import "../../assets/styles/variables";
+.principal-navbar{
+    padding: 0 1rem 0 1rem;
+    @include display-estructure(space-between, center);
+    background-color: $secondary1;
+    color: $black;
+    i{
+        @include content-medium;
+
+    }
+};

@@ -1,135 +1,104 @@
-import React from 'react';
-import "../../styles/loginStyles.css";
-import { useNavigate } from 'react-router-dom';
-import { Formik, Form, ErrorMessage } from 'formik';
-import * as Yup from "yup";
-import { login, loginUser } from '../../requests/userRequest';
-import { useAuthContext } from '../pure/context/auth';
+import React, {  useRef, useState } from 'react';
+import { useNavigate } from 'react-router';
 
-const loginSchema=Yup.object().shape(
-    {
-        email: Yup
-                .string()
-                .required("User is required"),
-
-        password: Yup
-                    .string()
-                    .required("Password is required")
-    }
-);
+import { Link } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.js';
+import { loginRequest } from '../../requests/userRequest';
 
 const LoginForm = () => {
-    const {login}=useAuthContext();
-    let navigate=useNavigate();
-    const initialCredentials={
-        email:"",
-        password:""
+    /* ---- using ref to save the changes ---- */
+    const emailRef = useRef("");
+    const passwordRef = useRef("");
+    const navigate = useNavigate();
+    /* ---- using globalState ---- */
+
+    /*---- using localstate ----- */
+    const [error, setError] = useState(null);
+    async function login(values){
+        await loginRequest(values)
+        .then(response => {
+            const user = {
+                id : response.data.body.id,
+                name : response.data.body.name,
+                rol : response.data.body.rol,
+                token : response.data.body.token,
+            }
+            localStorage.setItem("user", `${JSON.stringify(user)}`);
+            console.log(response);
+           /*  dispatch({
+                type : TYPES.INIT_SESSION,
+            }); */
+          /*   dispatch({
+                type : TYPES.SET_USER,
+                payload: user,
+            }) */
+            setError(null);
+            navigate(-1);  
+            })
+            .catch(err => {
+                console.log("error",err.response.data.message);
+                setError(err.response.data.message);
+                console.log(error)
+            });
     };
-    //const navigate=useNavigate();
-    async function loginToApi(values){
-        await loginUser(values)
-                            .then(ans=>{
-                                console.log(ans.data);
-                                sessionStorage.setItem("name", ans.data.body.name);   
-                                sessionStorage.setItem("rol",  ans.data.body.rol); 
-                                sessionStorage.setItem("token",ans.data.body.token);
-                                login();
-                                navigate("/private/home/");
-                                
-                            })
-                            .catch(error=>{
-                                console.log(error)
-                            })
-        console.log(values);
-    }
+    function userlogin(e){
+        e.preventDefault();
+        const values = {
+            email : emailRef.current.value,
+            password : passwordRef.current.value,            
+        };
+        login(values);
+
+    };
     return (
-        <div className='login-container '>
-            <Formik
-                
-                initialValues={
-                    initialCredentials
-                    }
-                validationSchema={ loginSchema }
-                onSubmit={
-                    
-                    async (values) => {
-                    alert(JSON.stringify(values, null, 2));
-                    loginToApi(values);
-                    
-                    }
+        <div>
+            <form onSubmit={ userlogin } className='login-form'>
+                <h1>Iniciar sesión</h1>
+                {
+                    error !== null 
+                    ?
+                    <p className='error-message'>{ `${error}` }</p>
+                    :
+                    null
                 }
-                >
-                {({
-                    values,
-                    errors,
-                    touched,
-                    handleChange,
-                    handleBlur,
-                    isSubmitting,
-                    /* and other goodies */
-                }) => (
-                    <Form className="card login-form">
-                        <h2>Inciar sesión: </h2>
-                        <hr className='w-100'/>
-                        <div className="w-100 mt-3 d-flex gap-3 align-items-center">
-                            <label className="form-label">Email:</label>
-                            <input
-                                type="text"
-                                name="email"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                value={values.email}
-                                className="w-100 form-control"
-                            />
-                        
-                        </div>
-                        {
-                            errors.email && touched.email && 
-                            (
-                                <ErrorMessage className="form-text d-flex" name="email" component="div"></ErrorMessage>
-                            )
-                        }
-                        <div className="w-100 mt-3 d-flex gap-3 align-items-center">
-                            <label className="form-label">Contraseña:</label>
-                            <input
-                                type="password"
-                                name="password"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                value={values.password}
-                                className="form-control"
-                            />
-                            
-                        </div>
-                        {
-                            errors.password && touched.email && 
-                            (
-                                <ErrorMessage className="form-text" name="password" component="div"></ErrorMessage>
-                            )
-                        }
-                        
-                        <button 
-                            type="submit" 
-                            disabled={isSubmitting}
-                            className="btn btn-primary login-button"
-                        >
-                            Siguiente
-                        </button>
-                        
-                    </Form>
-                )}
-            </Formik>
+                <div className='form-input'>
+                    <label for="email" className='input-label'>Email</label>
+                    <input 
+                        type='email'    
+                        id='email' 
+                        name='email' 
+                        required 
+                        className='input'
+                        ref={ emailRef }
+                        autoFocus
+                    />
+                </div>
+                <div className='form-input'>
+                    <label for="password" className='input-label'>Contraseña</label>
+                    <input 
+                        type='password' 
+                        id='password' 
+                        name='password' 
+                        required 
+                        className='input'
+                        ref={ passwordRef }
+                    />
+
+                </div>
+                <div className='buttons-container'>
+                    <button type='submit' className='submit-button'> Ingresar </button>
+                    <button 
+                        type='button' 
+                        className='cancel-button'
+                        onClick={() => navigate(-1)}
+                    > Cancelar </button>
+                </div>
+            </form>
         </div>
-    )};
-
-
+    );
+}
 
 export default LoginForm;
 
-/* await login(values)
-                            .then(ans=>{
-                                console.log(ans)
-                            })
-                            .catch(error=>{
-                                console.log(error)
-                            }) */
+

@@ -1,0 +1,22 @@
+.login-container{
+height: 100%;
+width: 100%;
+background-color: var(--gray1);
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.login-form{
+    display: flex;
+    align-items: start;
+    width: 40%;
+    height: auto;
+    padding: 1rem 2rem;
+}
+.form-text{
+    text-align: end;
+}
+.login-button{
+    align-self: center;
+    margin: 1rem;
+}

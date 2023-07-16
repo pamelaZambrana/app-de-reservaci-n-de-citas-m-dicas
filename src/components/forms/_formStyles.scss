@@ -1,0 +1,76 @@
+@import "../../assets/styles/variables";
+.login-form{
+    min-height: 94vh;
+    width: 100%;
+    margin: 0 auto;
+    @include display-estructure(center, center);
+    flex-direction: column;
+    gap: 1rem;
+    background-color: $background2;
+    h1{
+        @include principalTitle;
+        color: $primary;
+    };
+};
+.form-input{
+    @include display-estructure(center, center);
+    flex-direction: column;
+    gap: 1rem;
+    label, input {
+        @include content-medium;
+        color: $black;
+    }
+    label{
+        align-self: start;
+    }
+    input{
+        border-radius: 1.5rem;
+        border: none;
+        @include input-shadow;
+    };
+};
+.buttons-container{
+    width: 100%;
+    margin-top: 2rem;
+    @include display-estructure(center, center);
+    gap: 3rem;
+};
+.submit-button, .cancel-button{
+    @include content-medium;
+    border-radius: 1rem;
+    padding: 1rem 1rem;
+    border: none;
+    @include button-shadow;
+};
+.submit-button{
+    background-color: $confirm;
+    color: $background1;
+};
+.cancel-button{
+    background-color: $background2;
+    color: $black;
+}
+.error-message{
+    @include content-small;
+    color: $negative;
+};
+@media (min-width:$breakpoint-small){
+    .login-form{
+        width: 85%;
+    };
+};
+@media (min-width:$breakpoint-medium){
+    .login-form{
+        width: 75%;
+    };
+};
+@media (min-width:$breakpoint-large){
+    .login-form{
+        width: 70%;
+    };
+};
+@media (min-width:$breakpoint-xlarge){
+    .login-form{
+        width: 65%;
+    };
+};

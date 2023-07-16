@@ -1,0 +1,27 @@
+@import "../../assets/styles/variables";
+.footer{
+    @include display-estructure(flex-start, center);
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 1rem 2rem;
+    gap: 3rem;
+    background-color: $background2;
+    border-top: solid 1px $primary;
+    section{
+        @include display-estructure(flex-start, flex-start);
+        flex-direction: column;
+        gap: 1rem;
+    }
+};
+
+.footer-items{
+    padding: 1rem;
+    @include display-estructure(space-around,center);
+    gap: 1rem;
+    p, a, i{
+        margin: 0;
+        text-decoration: none;
+        @include content-small;
+        color: $primary;
+    }
+}

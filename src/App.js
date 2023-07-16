@@ -1,83 +1,45 @@
-import React, {useEffect, useState} from 'react';
-import './App.css';
-import {Routes, Route, Navigate, useNavigate,} from 'react-router-dom';
-import"./styles/principal-section.css";
-import ColoredTablePage from "./pages/appointments/coloredTablePage"
-import LoginPage from './pages/auth/loginPage';
-import UserFormPage from './pages/formPages/userFormPage';
-import CustomerForm from './components/forms/custormerForm';
-import PrincipalPage from './pages/home/principalPage';
-import NewAppointmentPage from './pages/formPages/newAppointmentPage';
-import { AuthProvider, useAuth } from './components/pure/context/auth';
-import PublicRoute from './pages/public/PublicRoute';
-import PrivateRoute from './pages/private/PrivateRoute';
-import EditAppointmentPage from './pages/formPages/EditAppointmentPage';
-import { EditProvider } from './components/pure/context/editContext';
+import React from 'react';
+import { Route,
+    RouterProvider,
+    createBrowserRouter, 
+    createRoutesFromElements,} from 'react-router-dom';
+
+import LayoutPage from './pages/PrincipalLayout/LayoutPage';
+import AppointmentTablePage from "./pages/Private/Tables/AppointmentTablePage";
+import WorkersTablePage from "./pages/Private/Tables/WorkersTablePage";
+import PatientsTablePage from './pages/Private/Tables/PatientsTablePage';
+import NewWorkerFormPage from './pages/Private/Forms/NewWorkerFormPage';
+import NewPatientFormPage from './pages/Private/Forms/NewPatientFormPage';
+import NewAppointmentFormPage from './pages/Private/Forms/NewAppointmentFormPage';
+import GlobalProvider from './globalContext/globalContext';
+import PrincipalSectionPage from './pages/Private/PrincipalSectionPage';
+import LoginPage from './pages/PrincipalLayout/LoginPage';
 
 
+const router = createBrowserRouter(createRoutesFromElements(
+  <Route path="/" element = <LayoutPage/>>
+    <Route index element=<LoginPage/>/>
+    <Route path="private" element={<PrincipalSectionPage/>}>
+      <Route index element=<AppointmentTablePage/>></Route>
+      <Route path ='trabajadores' element=<WorkersTablePage/>></Route>
+      <Route path ="pacientes" element=<PatientsTablePage/>></Route>
+      <Route path='nuevo-trabajador' element=<NewWorkerFormPage/>></Route>
+      <Route path='nuevo-paciente' element=<NewPatientFormPage/>></Route>
+      <Route path='nueva-cita' element=<NewAppointmentFormPage/>></Route>
+    </Route>
+  </Route>
+))
 
 function App() {
 
-  const [arrows, setArrows] = useState(1);
-
   return (
-    <AuthProvider>
-      <EditProvider>
-        <Routes>
-          <Route path="/" element={<PublicRoute/>}>
-            <Route 
-              index
-              element = { <LoginPage/> }
-            />
-          </Route>
-
-          <Route path='private/*' element={<PrivateRoute/>}>
-            <Route 
-              path='home/*'
-              element={
-                <PrincipalPage
-                  arrows = { arrows }
-                  setArrows = { setArrows }
-                  />
-                }
-            /> 
-            <Route 
-              path='registroUsuario'
-              element = { <UserFormPage/> }
-            />
-            <Route 
-              path='registroPaciente'
-              element = { <CustomerForm/> }
-            />
-            <Route 
-                path='newAppointment'
-                element = { <NewAppointmentPage 
-                              arrows = { arrows }
-                              setArrows = { setArrows }
-                          /> 
-                          }
-            />
-            <Route 
-                path='editAppointment'
-                element = { <EditAppointmentPage
-                              arrows = { arrows }
-                              setArrows = { setArrows }
-                          /> 
-                          }
-            />
-            <Route
-              path='watch'
-              element = { <ColoredTablePage
-                                arrows = { arrows }
-                                setArrows = { setArrows }
-                          /> }
-            /></Route>
-              
-          <Route path='*' element={<p>Not Found</p>}/>
-        </Routes>
-      </EditProvider>
-    </AuthProvider>
-  );
-}
-
-export default App;
+    <>
+      <GlobalProvider>
+        <RouterProvider router = { router }></RouterProvider>
+      </GlobalProvider>
+    </>
+    );
+  }
+  
+  export default App;
+  

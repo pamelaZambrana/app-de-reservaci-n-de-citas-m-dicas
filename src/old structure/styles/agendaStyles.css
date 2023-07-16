@@ -1,0 +1,41 @@
+
+.agenda{
+    height: 100%;
+    position: relative;
+    top:1rem;
+    padding: 5px;
+    border: solid 1px var(--gray2);
+}
+.card-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width:100%;
+    padding: 0.5rem;
+}
+.card-body{
+    overflow:scroll;
+}
+th, tr, td{
+    padding: 10px;
+    border: solid var(--gray1) 0.1px;
+}
+.complete-appointment{
+    text-decoration: line-through;
+    color: gray;
+}
+
+.agenda table{
+    margin: 0 auto;
+    
+}
+td i{
+    margin: 10px;
+    cursor: pointer;
+}
+
+td i:hover{
+    color: red;
+    border-radius: 50%;
+    background-color: var(--ligth-blue1);
+}

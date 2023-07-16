@@ -1,0 +1,43 @@
+@import "../../../assets/styles/variables";
+.navbar-links-plain{
+    @include display-estructure(center, center);
+    gap: 1rem;
+    flex-wrap: wrap;
+    list-style-type: none;
+    a{
+        text-decoration: none;
+        @include content-small;
+        color: $black;
+    }
+
+    a:hover, .active-link{
+        padding: 1rem;
+        background-color: $secondary3;
+        border-radius: 1.5rem;
+        color: $background1;
+    };
+
+};
+.navbar-links-vertical{
+    position: absolute;
+    right: 2rem;
+    top: 3rem;
+    padding: 1rem;
+    background-color: $background1;
+    border-radius: 1.5rem;
+    list-style-type: none;
+    a{
+        text-decoration: none;
+        @include content-small;
+        color: $black;
+    }
+    @include menu-shadow;
+    li{
+        margin-top: 1rem;
+    }
+    a:hover, .active-link{
+        width: 100%;
+        color: $secondary3;
+        text-decoration: underline;
+    };
+};

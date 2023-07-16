@@ -1,0 +1,42 @@
+.appointment-container{
+    width: 100%;
+    padding: 2rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--gray1);
+
+}
+.appointment-section{
+    border: solid 2px var(--gray1);
+    padding: 1rem;
+}
+.appointment-form{
+    min-width: 600px;
+    justify-content: center;
+}
+.appointment-label,.appointment-section-label {
+    width: 100%;
+    margin: 0.5rem;
+    text-align: left;
+}
+.search-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:0.5rem;
+}
+
+.appointment-submit-button, .watch-table-button{
+    justify-self: center ;
+    grid-column: 1 / 3;
+}
+.option{
+    font-size: 1.25px;
+}
+
+/* .form-select:hover{
+    cursor: pointer;
+} */

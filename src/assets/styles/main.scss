@@ -1,0 +1,16 @@
+@import "./variables";
+@import "../../components/principalNavbar/principalNavbarStyle";
+@import "../../components/common/navbarLinks/navbarLinksStyles";
+@import  "../../components/footer/footerStyles";
+@import  "../../components/forms/formStyles";
+:root{
+    font-size: 62.5%;
+    width: 100%;
+}
+body{
+    box-sizing: border-box;
+    //padding: 0;
+    margin: 0; 
+    background-color: $background1;
+}
+

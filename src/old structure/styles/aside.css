@@ -1,0 +1,17 @@
+.aside{
+    /* display: flex; */
+/*     align-items: center; */
+    margin-top: 4rem;
+     width: 100%;
+     padding: 1rem;
+ }
+ .aside-button{
+    padding: 5px;
+    border-radius: 3px;
+    border: solid 1px var(--gray2);
+    background-color: white;
+    font-size: 1rem;
+ }
+ .aside-button:hover{
+    background-color: var(--ligth-blue1);
+ }

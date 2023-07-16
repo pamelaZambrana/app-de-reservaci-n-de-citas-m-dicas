@@ -1,0 +1,11 @@
+.colorTable{
+    font-size: 0.8rem;
+    overflow: scroll;
+    width: 100%;
+    height: 100vh;
+}
+.colorTable-cell{
+    padding: 3px;
+    font-weight: bold;
+}
+    
