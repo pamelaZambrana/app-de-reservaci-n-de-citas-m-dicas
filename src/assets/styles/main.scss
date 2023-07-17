@@ -1,16 +1,24 @@
 @import "./variables";
 @import "../../components/principalNavbar/principalNavbarStyle";
-@import "../../components/common/navbarLinks/navbarLinksStyles";
+@import "../../components/common/navbarItems/navbarLinksStyles";
 @import  "../../components/footer/footerStyles";
 @import  "../../components/forms/formStyles";
-:root{
-    font-size: 62.5%;
-    width: 100%;
-}
+@import "../../components/secondaryNavbar/secondaryNabarStyles";
 body{
+    height: 100vh;
     box-sizing: border-box;
-    //padding: 0;
     margin: 0; 
     background-color: $background1;
+    min-height: 100vh;
+}
+:root{
+    width: 100%;
+    height: 100%;
+    font-size: 62.5%;
+}
+.principal-section{
+    margin-top: 3rem;
+    min-height: 100vh;
+    overflow-x: scroll;
 }
 

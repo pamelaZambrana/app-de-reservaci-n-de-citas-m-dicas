@@ -1,30 +1,51 @@
 @import "../../assets/styles/variables";
 .login-form{
-    min-height: 94vh;
+    height: 100vh;
     width: 100%;
     margin: 0 auto;
     @include display-estructure(center, center);
     flex-direction: column;
     gap: 1rem;
-    background-color: $background2;
+    background-color: $background1;
     h1{
         @include principalTitle;
         color: $primary;
     };
 };
+.action-form{
+    margin: 3rem auto 0 auto;
+    width: 100%;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    background-color: $background1;
+    text-align: center;
+    h1{
+        @include principalTitle;
+        color: $primary;
+    };
+    h5{
+        @include subtitle1;
+    }
+
+}
 .form-input{
+    width: 80%;
+    min-height: auto;
+    margin: 1rem auto 1rem auto;
     @include display-estructure(center, center);
     flex-direction: column;
     gap: 1rem;
-    label, input {
+    label, input, select {
         @include content-medium;
         color: $black;
     }
     label{
         align-self: start;
     }
-    input{
-        border-radius: 1.5rem;
+    input, select{
+        width: 100%;
+        padding: 0.5rem;
+        border-radius: 1rem;
         border: none;
         @include input-shadow;
     };
@@ -54,23 +75,27 @@
     @include content-small;
     color: $negative;
 };
-@media (min-width:$breakpoint-small){
-    .login-form{
-        width: 85%;
-    };
-};
-@media (min-width:$breakpoint-medium){
-    .login-form{
-        width: 75%;
-    };
-};
-@media (min-width:$breakpoint-large){
-    .login-form{
+ @media (min-width:$breakpoint-small){
+    .form-input{
         width: 70%;
     };
 };
-@media (min-width:$breakpoint-xlarge){
-    .login-form{
-        width: 65%;
+@media (min-width:$breakpoint-medium){
+    .action-form{
+        //height: 90vh;
+        margin: 5rem auto 0 auto;
+    };
+    .form-input{
+        width: 60%;
+    }
+};
+@media (min-width:$breakpoint-large){
+    .form-input{
+        width: 50%;
     };
 };
+@media (min-width:$breakpoint-xlarge){
+    .form-input{
+        width: 40%;
+    };
+}; 

@@ -1,11 +1,16 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import NavbarLinks from '../common/navbarLinks/navbarLinks';
+
 import { useContext } from 'react';
 import { GlobalContext } from '../../globalContext/globalContext';
 import { TYPES } from '../../globalContext/reducer';
 import { secondaryNavbarList } from './linkList';
+
+import { navbarButtonsList } from './navbarButtonsList';
+import NavbarButtons from '../common/navbarItems/navbarButtons';
+import NavbarLinks from '../common/navbarItems/navbarLinks';
+
 
 const SecondaryNavbar = () => {
       /* ---- using local state */
@@ -30,11 +35,18 @@ const SecondaryNavbar = () => {
     return (
         <nav className='secondary-navbar'>
           {
-              windowSize.width > 785 ?
-              <NavbarLinks
-                list={ secondaryNavbarList }
-                classStyle={ "navbar-links-plain" }
-              ></NavbarLinks>
+              windowSize.width > 768 ?
+              <>
+                <NavbarButtons
+                  list = { navbarButtonsList }
+                  classStyle={ "navbar-buttons-plain" }
+                  classButtons={"navbar-button-plain"}
+                ></NavbarButtons>
+                <NavbarLinks
+                  list={ secondaryNavbarList }
+                  classStyle={ "navbar-links-plain" }
+                ></NavbarLinks>
+              </>
               :
               <>
                 <i 
@@ -43,10 +55,20 @@ const SecondaryNavbar = () => {
                 ></i>
                 {
                   openMenu ?
-                  <NavbarLinks
-                    list={ secondaryNavbarList }
-                    classStyle={ "navbar-links-vertical" }
-                  ></NavbarLinks>
+                  <div 
+                    className='navbar-open-menu'
+                    onMouseLeave={() => dispatch({ type: TYPES.CLOSE_OPEN_PRINCIPAL_MENU })}   
+                  >
+                    <NavbarLinks
+                      list={ secondaryNavbarList }
+                      classStyle={ "navbar-links-vertical" }
+                    ></NavbarLinks>
+                    <NavbarButtons
+                      list = { navbarButtonsList }
+                      classStyle={ "navbar-buttons-vertical" }
+                      classButtons={"navbar-button-vertical"}
+                    ></NavbarButtons>
+                  </div>
                   : null
                 }
               </>

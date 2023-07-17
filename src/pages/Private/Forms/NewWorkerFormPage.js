@@ -1,10 +1,10 @@
 import React from 'react';
+import NewWorkerForm from '../../../components/forms/NewWorkerForm';
 
 const NewWorkerFormPage = () => {
     return (
-        <div>
-            new worker form
-        </div>
+        <NewWorkerForm></NewWorkerForm>
+        
     );
 }
 

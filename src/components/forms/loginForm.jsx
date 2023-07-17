@@ -1,7 +1,6 @@
 import React, {  useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import { loginRequest } from '../../requests/userRequest';
@@ -16,7 +15,7 @@ const LoginForm = () => {
     /*---- using localstate ----- */
     const [error, setError] = useState(null);
     async function login(values){
-        await loginRequest(values)
+        /* await loginRequest(values)
         .then(response => {
             const user = {
                 id : response.data.body.id,
@@ -26,21 +25,21 @@ const LoginForm = () => {
             }
             localStorage.setItem("user", `${JSON.stringify(user)}`);
             console.log(response);
-           /*  dispatch({
+           dispatch({
                 type : TYPES.INIT_SESSION,
-            }); */
-          /*   dispatch({
+            }); 
+          dispatch({
                 type : TYPES.SET_USER,
                 payload: user,
-            }) */
+            }) 
             setError(null);
-            navigate(-1);  
-            })
-            .catch(err => {
-                console.log("error",err.response.data.message);
-                setError(err.response.data.message);
-                console.log(error)
-            });
+        })
+        .catch(err => {
+            console.log("error",err.response.data.message);
+            setError(err.response.data.message);
+            console.log(error)
+        }); */
+        navigate("private");  
     };
     function userlogin(e){
         e.preventDefault();
@@ -52,7 +51,7 @@ const LoginForm = () => {
 
     };
     return (
-        <div>
+        <div className='principal-section'>
             <form onSubmit={ userlogin } className='login-form'>
                 <h1>Iniciar sesión</h1>
                 {
@@ -63,7 +62,7 @@ const LoginForm = () => {
                     null
                 }
                 <div className='form-input'>
-                    <label for="email" className='input-label'>Email</label>
+                    <label htmlFor="email" className='input-label'>Email</label>
                     <input 
                         type='email'    
                         id='email' 
@@ -75,7 +74,7 @@ const LoginForm = () => {
                     />
                 </div>
                 <div className='form-input'>
-                    <label for="password" className='input-label'>Contraseña</label>
+                    <label htmlFor="password" className='input-label'>Contraseña</label>
                     <input 
                         type='password' 
                         id='password' 
@@ -88,13 +87,9 @@ const LoginForm = () => {
                 </div>
                 <div className='buttons-container'>
                     <button type='submit' className='submit-button'> Ingresar </button>
-                    <button 
-                        type='button' 
-                        className='cancel-button'
-                        onClick={() => navigate(-1)}
-                    > Cancelar </button>
                 </div>
             </form>
+            
         </div>
     );
 }

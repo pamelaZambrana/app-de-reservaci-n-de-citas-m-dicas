@@ -1,0 +1,22 @@
+@import "../../assets/styles/_variables.scss";
+.secondary-navbar{
+    z-index: 1;
+    position: fixed;
+    top:3rem;
+    width: 100%;
+    height: 3rem;
+    background-color: $background2;
+    @include display-estructure(flex-end, center);
+    padding: 0.5rem 1rem;
+    i{
+        @include content-medium;
+        color: $primary;
+    };
+};
+
+@media (min-width: $breakpoint-medium){
+    .secondary-navbar{
+        height: 5rem;
+        @include display-estructure(space-between, center);
+    }
+};

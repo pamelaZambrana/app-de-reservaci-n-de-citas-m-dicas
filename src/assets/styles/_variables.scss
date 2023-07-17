@@ -14,25 +14,29 @@ $black : #0E0F10;
 
 /* ----- fonts ----- */
 @mixin principalTitle {
-    font-size: 3rem;
+    font-size: 2.4rem;
     font-family: 'Roboto', sans-serif;
     font-weight: bold;
 };
 @mixin subtitle1{
-    font-size: 2.6rem;
+    font-size: 2rem;
     font-family: 'Playfair Display', serif;
     font-weight: bold;
 };
-@mixin subtitile2{
-    font-size: 2.4rem;
+@mixin subtitle2{
+    font-size: 1.8rem;
     font-family: 'Playfair Display', serif;
 };
 @mixin content-medium{
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     font-family:  'Inter', sans-serif;
 }
 @mixin content-small{
-    font-size: 1.4rem;
+    font-size: 1.2rem;
+    font-family: 'Roboto', sans-serif;
+};
+@mixin content-xsmall{
+    font-size: 1rem;
     font-family: 'Roboto', sans-serif;
 }
 @mixin menu-shadow{
@@ -41,14 +45,14 @@ $black : #0E0F10;
     box-shadow: -8px 10px 23px -6px rgba(64,61,64,0.53);
 };
 @mixin input-shadow{
-    -webkit-box-shadow: 4px 10px 26px 3px rgba(102,99,102,0.43);
--moz-box-shadow: 4px 10px 26px 3px rgba(102,99,102,0.43);
-box-shadow: 4px 10px 26px 3px rgba(102,99,102,0.43);
+    box-shadow: 7px 7px 27px -6px rgba(105,96,96,0.81);
+    -webkit-box-shadow: 7px 7px 27px -6px rgba(105,96,96,0.81);
+    -moz-box-shadow: 7px 7px 27px -6px rgba(105,96,96,0.81);
 }
 @mixin button-shadow{
-    -webkit-box-shadow: 5px 13px 15px -3px rgba(97,94,97,0.77);
-    -moz-box-shadow: 5px 13px 15px -3px rgba(97,94,97,0.77);
-    box-shadow: 5px 13px 15px -3px rgba(97,94,97,0.77);
+    box-shadow: -3px 7px 27px -6px rgba(105,96,96,0.81);
+-webkit-box-shadow: -3px 7px 27px -6px rgba(105,96,96,0.81);
+-moz-box-shadow: -3px 7px 27px -6px rgba(105,96,96,0.81);
 }
 /* ----screen sizes--- */
 $breakpoint-xsmall: 320px;

@@ -1,6 +1,6 @@
 import { AVAILABILITY, BRANCHES, ESPECIALIDAD } from "./options";
 
-export class User{
+export class Worker{
     name="";
     specialty=ESPECIALIDAD.General;
     branch=BRANCHES.EA;
