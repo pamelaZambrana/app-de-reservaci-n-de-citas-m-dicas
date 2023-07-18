@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AVAILABILITY, BRANCHES, ESPECIALIDAD } from './models/options';
 import { Worker } from './models/workers';
+import { newWorkerRequestToBackend } from '../../requests/workerRequest';
 
 
 const NewWorkerForm = () => {
@@ -30,9 +31,8 @@ const NewWorkerForm = () => {
             passwordRef.current.value,
         )
         alert(JSON.stringify(values));
-        
         /* ---- request ---- */
-        /* await saveNewUser(values)
+        await newWorkerRequestToBackend(values)
                         .then( ans => {
                             console.log(ans)
                         })

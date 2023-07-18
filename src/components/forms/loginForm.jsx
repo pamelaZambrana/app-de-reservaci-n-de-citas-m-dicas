@@ -15,7 +15,7 @@ const LoginForm = () => {
     /*---- using localstate ----- */
     const [error, setError] = useState(null);
     async function login(values){
-        /* await loginRequest(values)
+        await loginRequest(values)
         .then(response => {
             const user = {
                 id : response.data.body.id,
@@ -25,21 +25,21 @@ const LoginForm = () => {
             }
             localStorage.setItem("user", `${JSON.stringify(user)}`);
             console.log(response);
-           dispatch({
-                type : TYPES.INIT_SESSION,
-            }); 
-          dispatch({
-                type : TYPES.SET_USER,
-                payload: user,
-            }) 
+            //dispatch({
+            //    type : TYPES.INIT_SESSION,
+            //}); 
+            //dispatch({
+            //    type : TYPES.SET_USER,
+            //    payload: user,
+            //}) 
             setError(null);
         })
         .catch(err => {
             console.log("error",err.response.data.message);
             setError(err.response.data.message);
             console.log(error)
-        }); */
-        navigate("private");  
+        });
+        navigate("private");   // Este navigate no debería estar dentro del .then ?
     };
     function userlogin(e){
         e.preventDefault();
