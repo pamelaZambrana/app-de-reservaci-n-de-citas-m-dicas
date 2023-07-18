@@ -1,9 +1,10 @@
-import React, {  useRef, useState } from 'react';
+import React, {  useContext, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import { loginRequest } from '../../requests/userRequest';
+import { TYPES } from '../../globalContext/reducer';
 
 const LoginForm = () => {
     /* ---- using ref to save the changes ---- */
@@ -11,12 +12,13 @@ const LoginForm = () => {
     const passwordRef = useRef("");
     const navigate = useNavigate();
     /* ---- using globalState ---- */
-
+    const [globalState, dispatch] = useContext();
     /*---- using localstate ----- */
     const [error, setError] = useState(null);
     async function login(values){
         await loginRequest(values)
         .then(response => {
+            setError(null);
             const user = {
                 id : response.data.body.id,
                 name : response.data.body.name,
@@ -24,22 +26,17 @@ const LoginForm = () => {
                 token : response.data.body.token,
             }
             localStorage.setItem("user", `${JSON.stringify(user)}`);
-            console.log(response);
-            //dispatch({
-            //    type : TYPES.INIT_SESSION,
-            //}); 
-            //dispatch({
-            //    type : TYPES.SET_USER,
-            //    payload: user,
-            //}) 
-            setError(null);
+            dispatch({
+                type : TYPES.INIT_SESSION,
+                payload: user,
+            }); 
+            navigate("private");
         })
         .catch(err => {
             console.log("error",err.response.data.message);
             setError(err.response.data.message);
             console.log(error)
         });
-        navigate("private");   // Este navigate no debería estar dentro del .then ?
     };
     function userlogin(e){
         e.preventDefault();
