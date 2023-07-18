@@ -1,10 +1,9 @@
 import React from 'react';
+import NewAppointmentForm from '../../../components/forms/NewAppointment';
 
 const NewAppointmentFormPage = () => {
     return (
-        <div>
-            new appointment form
-        </div>
+        <NewAppointmentForm></NewAppointmentForm>
     );
 }
 

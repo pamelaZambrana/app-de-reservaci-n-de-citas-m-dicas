@@ -1,10 +1,9 @@
 import React from 'react';
+import NewPatientForm from '../../../components/forms/NewPatientForm';
 
 const NewPatientFormPage = () => {
     return (
-        <div>
-            new patient form
-        </div>
+        <NewPatientForm></NewPatientForm>
     );
 }
 

@@ -114,18 +114,17 @@ const AppointmentForm = ({ arrows, setArrows }) => {
         if(fillInfo){
             return(
                 <input
-                            id="cellphone"
-                            defaultValue={searchedContact.phone}
-                            type="text"
-                            required
-                            ref={cellphoneRef }
-                            className="form-control"
-                            name="cellphone"
-                            placeholder="Ej. 71298655"
-                            minLength="7"
-                            maxLength="8"
-                            autoFocus  
-                        />
+                    id="cellphone"
+                    defaultValue={searchedContact.phone}
+                    type="text"
+                    required
+                    ref={cellphoneRef }
+                    name="cellphone"
+                    placeholder="Ej. 71298655"
+                    minLength="7"
+                    maxLength="8"
+                    autoFocus  
+                />
             )
         } else {
             return(
@@ -141,25 +140,23 @@ const AppointmentForm = ({ arrows, setArrows }) => {
 
     
     return (
-        <div className="appointment-container" >
-             <h3>NUEVA CITA MÉDICA</h3>
-            
-                <form 
-                    onSubmit={ addAppointment }
-                    className="appointment-form"
-                >
-                    <fieldset className="card appointment-section">
-                        <h5 className="appointment-section-label">Datos del paciente</h5>
-                        <hr></hr>
-                        <label className="appointment-label" htmlFor="name">Nombre del paciente: </label>
-                        <div className="search-container">
+        <div>
+            <form 
+                onSubmit={ addAppointment }
+                className="action-form"
+            >
+                <h3>NUEVA CITA MÉDICA</h3>
+                <h5>Datos del paciente</h5>
+                <hr></hr>
+                    <fieldset>
+                        <div className="form-input">
+                            <label htmlFor="name">Nombre del paciente: </label>
                                 <input
                                     id="name"
                                     name="name"
                                     required
                                     ref={ nameRef }
                                     list="searchedPatients"
-                                    className="form-select"
                                     onChange={selected}
                                     autoFocus  
                                 />
@@ -172,7 +169,7 @@ const AppointmentForm = ({ arrows, setArrows }) => {
                                     }
                                 </datalist>
                                 <button 
-                                    className="btn btn-primary"
+                                    className="confirm-button"
                                     onClick={getInfo}
                                 >
                                     Ingresar paciente

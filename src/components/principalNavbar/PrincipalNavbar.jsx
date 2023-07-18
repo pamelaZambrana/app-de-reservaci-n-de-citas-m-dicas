@@ -20,7 +20,10 @@ const PrincipalNavbar = () => {
             <li className='navbar-links-plain'>
               <NavLink
                 to="/"
-                onClick={() => dispatch({ type : TYPES.CLOSE_SESSION })}
+                onClick={() => {
+                  dispatch({ type : TYPES.CLOSE_SESSION });
+                  localStorage.removeItem("user");
+                }}
               >Cerrar sesión</NavLink>
             </li>
           :null

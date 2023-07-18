@@ -35,12 +35,11 @@ const NewWorkerForm = () => {
         await newWorkerRequestToBackend(values)
                         .then( ans => {
                             console.log(ans)
-                            navigate("/private/home/tablaUsuarios");
+                            navigate("/private/trabajadores");
                         })
                         .catch( error => {
                             console.log(error)
                         })
-
     }
     return (
     <form 

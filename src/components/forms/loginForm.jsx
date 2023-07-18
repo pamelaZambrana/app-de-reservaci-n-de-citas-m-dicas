@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import { loginRequest } from '../../requests/userRequest';
 import { TYPES } from '../../globalContext/reducer';
+import { GlobalContext } from '../../globalContext/globalContext';
 
 const LoginForm = () => {
     /* ---- using ref to save the changes ---- */
@@ -12,7 +13,7 @@ const LoginForm = () => {
     const passwordRef = useRef("");
     const navigate = useNavigate();
     /* ---- using globalState ---- */
-    const [globalState, dispatch] = useContext();
+    const [globalState, dispatch] = useContext(GlobalContext);
     /*---- using localstate ----- */
     const [error, setError] = useState(null);
     async function login(values){
@@ -20,7 +21,6 @@ const LoginForm = () => {
         .then(response => {
             setError(null);
             const user = {
-                id : response.data.body.id,
                 name : response.data.body.name,
                 rol : response.data.body.rol,
                 token : response.data.body.token,

@@ -1,6 +1,6 @@
 import { AVAILABILITY, BRANCHES, ESPECIALIDAD } from "./options";
 
-export class Customer{
+export class Patient{
         name="";
         age="";
         birthday="";
