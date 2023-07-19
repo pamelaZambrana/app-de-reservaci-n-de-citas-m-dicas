@@ -3,6 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { BRANCHES, DOCTOR, ESPECIALIDAD, SPECIALTY } from "./models/options";
 import { Appointment } from "../../old structure/models/AppointmentClass";
 import { schedule } from "./scheduleList";
+import { getAllPatientsBackend } from "../../requests/patientRequest";
+import { getAllDoctorsRequestBackend } from "../../requests/workerRequest";
+import { newAppointmentRequestToBackend } from "../../requests/appointmentRequest";
+import successAlert from "../../alerts/successAlert";
+import errorAlert from "../../alerts/errorAlert";
 
 
 const NewAppointmentForm = ({ arrows, setArrows }) => {
@@ -47,43 +52,40 @@ const NewAppointmentForm = ({ arrows, setArrows }) => {
             BRANCHES.EA,
             false
         )
-        alert(JSON.stringify(values));
-       /*  await saveNewAppointment(values)
-                                .then(ans => {
-                                    console.log("newAppo",ans)
-                                    navigate("/private/pacientes");
-                                })
-                                .catch(error => {
-                                    console.log("newAppo",error)
-                                });
-        console.log("sending values", values) */
+        await newAppointmentRequestToBackend(values)
+            .then(ans=>{
+                successAlert(ans.data.message);
+                //navigate("/private/pacientes");
+            })
+            .catch(e=>{
+                errorAlert(e.response.data.body.error)
+            })
     }
     /* Petición lista de doctores */
-    /* async function usersRequest(){
-        await getUsers()
-                    .then(ans=>{
-                        setUsers(ans.data.body);
-
-                    })
-                    .catch(error=>{
-                        console.log(error)
-                    })
-    }; */
+    async function doctorsRequest(){
+        await getAllDoctorsRequestBackend()
+            .then(ans=>{
+                console.log(ans)
+                setUsers(ans.data.body);
+            })
+            .catch(e=>{
+                console.log(e);
+            })
+    }
     /* Petición de lista de pacientes */
-    /* async function pacientsRequest(){
-        getCustomers()
-                        .then(ans=>{
-                            setPacients(ans.data.body);
-                        })
-                        .catch(error=>console.log(error))
-    }; */
-    
+    async function pacientsRequest(){
+        getAllPatientsBackend()
+            .then(ans=>{
+                console.log(ans);
+                setPacients(ans.data.body)
+            })
+            .catch(e=>{console.log(e)});
+    }
     useEffect(() => {
         return()=>
             {
-                /* usersRequest();
-                pacientsRequest(); */
-
+                doctorsRequest();
+                pacientsRequest();
             }
         
     }, []);
