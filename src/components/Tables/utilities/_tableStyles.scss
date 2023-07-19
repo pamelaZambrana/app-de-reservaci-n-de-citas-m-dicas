@@ -1,0 +1,75 @@
+@import "../../../assets/styles/variables";
+@import "../../forms/formStyles";
+.table-container{
+    width: calc(100% -#{1rem*2});
+   margin: 4rem 1rem 1rem 1rem;
+}
+.table-header{
+    padding: 1rem;
+    @include display-estructure(space-between,flex-start);
+    flex-wrap: wrap;
+    gap: 1rem;
+    background-color: $secondary1;
+}
+.table-title-container{
+    @include display-estructure(space-between, center);
+    gap: 2rem;
+    h1, i{
+        @include principalTitle;
+        text-align: left;
+        color: $primary;
+    };
+    h1{
+        max-width: 70%;
+    };
+    i:hover{
+        cursor: pointer;
+    }
+
+}
+.searcher{
+    @extend .form-input;
+    margin: 0;
+    min-width: 25rem;
+    width: 100%;
+    label, input{
+        @include content-small;
+        align-self: center;
+    };
+};
+
+@media (min-width:$breakpoint-small){
+    .table-title-container{
+        h1{
+            max-width: none;
+        };
+    };
+};
+@media (min-width:$breakpoint-medium){
+    .table-container{
+        margin-top: 6rem;
+    };
+    .table-header{
+        border-radius: 1.2rem 1.2rem 0 0 ;
+    }
+    .table-title-container{
+        h1{
+            max-width: none;
+        };
+    };
+    .searcher{
+        max-width: 50%;
+    }
+};
+@media (min-width:$breakpoint-large){
+
+    .searcher{
+        flex-direction: row;
+        max-width: 40%;
+    }
+};
+@media (min-width:$breakpoint-xlarge){
+    .searcher{
+        //max-width: 30%;
+    }
+};

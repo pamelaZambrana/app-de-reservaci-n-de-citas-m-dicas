@@ -1,10 +1,9 @@
 import React from 'react';
+import WorkersTable from '../../../components/Tables/WorkersTable';
 
 const WorkersTablePage = () => {
     return (
-        <div>
-            Workers table
-        </div>
+        <WorkersTable></WorkersTable>
     );
 }
 

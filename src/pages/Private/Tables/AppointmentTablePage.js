@@ -1,10 +1,9 @@
 import React from 'react';
+import AppointmentsTable from '../../../components/Tables/AppointmentsTable';
 
 const AppointmentTablePage = () => {
     return (
-        <div>
-            Appointment table
-        </div>
+        <AppointmentsTable></AppointmentsTable>
     );
 }
 

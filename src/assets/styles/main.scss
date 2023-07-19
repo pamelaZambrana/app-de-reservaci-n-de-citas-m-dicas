@@ -4,6 +4,8 @@
 @import  "../../components/footer/footerStyles";
 @import  "../../components/forms/formStyles";
 @import "../../components/secondaryNavbar/secondaryNabarStyles";
+@import "../../components/Tables/utilities/tableStyles";
+@import "../../components/Tables/utilities/tableContentStyles";
 body{
     height: 100vh;
     box-sizing: border-box;
@@ -19,6 +21,6 @@ body{
 .principal-section{
     margin-top: 3rem;
     min-height: 100vh;
-    overflow-x: scroll;
+    overflow-y: scroll;
 }
 

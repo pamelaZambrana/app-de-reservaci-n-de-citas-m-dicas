@@ -1,0 +1,32 @@
+@import "../../../assets/styles/variables";
+.table-content{
+    width: 100%;
+    margin-top: 1rem; 
+    overflow: auto;
+    @include content-medium;
+    table{
+        border-radius: 0 0 1.2rem 1.2rem;
+        border: solid 1px $secondary2;
+        th, td{
+            padding: 1rem;
+            border: solid 1px $secondary2;
+        };
+        th{
+            font-weight:700;
+        };
+
+    };
+};
+.table-icons-container{
+    @include display-estructure( center, center);
+    gap: 1rem;
+    i:hover{
+        cursor: pointer;
+    }
+}
+@media(min-width: $breakpoint-medium){
+    .table-content{
+        @include display-estructure(center, center);
+    }
+
+}

@@ -1,10 +1,9 @@
 import React from 'react';
+import PatientsTable from '../../../components/Tables/PatientsTable';
 
 const PatientsTablePage = () => {
     return (
-        <div>
-            Pacients table
-        </div>
+        <PatientsTable></PatientsTable>
     );
 }
 
