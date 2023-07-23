@@ -5,7 +5,8 @@ export class Appointment{
     cellphone="";
     doctor=DOCTOR.Juanita;
     specialty=ESPECIALIDAD.General;
-    dateTime="";
+    date ="";
+    time="";
     branch=BRANCHES.EA;
     complete=false;
     constructor(
@@ -13,7 +14,8 @@ export class Appointment{
         cellphone,
         doctor,
         specialty,
-        dateTime,
+        date,
+        time,
         branch,
         complete){
 
@@ -21,7 +23,8 @@ export class Appointment{
         this.cellphone=cellphone;
         this.doctor=doctor;
         this.specialty=specialty;
-        this.dateTime=dateTime;
+        this.date=date
+        this.time=time;
         this.branch=branch;
         this.complete=complete;
     }

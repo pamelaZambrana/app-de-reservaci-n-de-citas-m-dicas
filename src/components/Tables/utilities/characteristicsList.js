@@ -23,12 +23,9 @@ export const tablesList = [
         inputClass : "text-searcher",
         properties : {
             name : "Nombre", 
-            specialty : "Especialidad",
-            branch : "Sucursal",
-            availability : "Turno",
+            age : "Edad",
             phone : "Contacto",
-            address : "Dirección",
-            email : "Email",
+            branch : "Sucursal",
         }
     },
     {

@@ -12,8 +12,8 @@ import errorAlert from "../../alerts/errorAlert";
 
 const NewAppointmentForm = ({ arrows, setArrows }) => {
     /* Estado del componente */
-    const [open, setOpen] = useState(false);
-    const [users, setUsers] = useState([]);
+   const [open, setOpen] = useState(false);
+    const [workers, setWorkers] = useState([]);
     const [pacients, setPacients] = useState([]);
     const [searchedName, setSearchedName] = useState([]);
     const [searchedContact, setSearchedContact] = useState("");
@@ -48,14 +48,16 @@ const NewAppointmentForm = ({ arrows, setArrows }) => {
             cellphoneRef.current.value,
             doctorRef.current.value,
             specialtyRef.current.value,
-            `${dateRef.current.value}T${timeRef.current.value}`,
+            dateRef.current.value,
+            timeRef.current.value,
             BRANCHES.EA,
             false
-        )
+        );
+         console.log(values)
         await newAppointmentRequestToBackend(values)
             .then(ans=>{
                 successAlert(ans.data.message);
-                navigate("/private/pacientes");
+                navigate("/private");
             })
             .catch(e=>{
                 errorAlert(e.response.data.body.error)
@@ -66,7 +68,7 @@ const NewAppointmentForm = ({ arrows, setArrows }) => {
         await getAllDoctorsRequestBackend()
             .then(ans=>{
                 console.log(ans)
-                setUsers(ans.data.body);
+                setWorkers(ans.data.body);
             })
             .catch(e=>{
                 console.log(e);
@@ -242,7 +244,7 @@ const NewAppointmentForm = ({ arrows, setArrows }) => {
                     defaultValue={`DEFAULT`}
                 >
                     <option value="DEFAULT" disabled hidden>Elija a un especialista</option>
-                    {users.map((doctor, index)=>{
+                    {workers.map((doctor, index)=>{
                         return(
                             <option key={index}>{doctor.name}</option>
                         )
