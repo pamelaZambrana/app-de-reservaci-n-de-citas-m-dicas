@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import TableHeader from './common/TableHeader';
 import { tablesList } from './utilities/characteristicsList';
 import TableContent from './common/TableContent';
+import { getAllPatientsBackend } from '../../requests/patientsRequest';
 
 
 const worker1 = {
@@ -70,11 +71,16 @@ const PatientsTable = () => {
        </div>
        ) 
     }; */
-
+    async function pacientsRequest(){
+        getAllPatientsBackend()
+            .then(ans=>{
+                console.log(ans);
+                setPatients(ans.data.body)
+            })
+            .catch(e=>{console.log(e)});
+    }
     useEffect(() => {
-        setPatients([worker1, worker2]); // debe ir dentro de la función request .then()
-        //customerRequest();
-        
+        pacientsRequest()
     }, []);
     return (    
     <div className='table-container'>

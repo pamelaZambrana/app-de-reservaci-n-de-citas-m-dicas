@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import TableHeader from './common/TableHeader';
 import TableContent from './common/TableContent';
 import { tablesList } from './utilities/characteristicsList';
-
+import {getAllDoctorsRequestBackend} from '../../requests/workerRequest'
 
 const worker1 = {
     _id: 5452,
@@ -32,10 +32,19 @@ const WorkersTable = () => {
     const [loading, setLoading] = useState(false);
    
     /* ----request aqui ---- */
+    async function doctorsRequest(){
+        await getAllDoctorsRequestBackend()
+            .then(ans=>{
+                console.log(ans)
+                setWorkers(ans.data.body);
+            })
+            .catch(e=>{
+                console.log(e);
+            })
+    }
 
     useEffect(() => {
-        setWorkers([worker1, worker2]); // debe ir dentro de la función request .then()
-
+        doctorsRequest()
         /* ---- llamada a request---- */
         //workerRequest();
     }, []);
