@@ -2,7 +2,7 @@ import React from 'react';
 import errorAlert from '../../../alerts/errorAlert'
 import successAlert from '../../../alerts/successAlert'
 
-const RegisterInfo = ({ worker, properties }) => {
+const RegisterInfo = ({ item, properties }) => {
 
     /* const eliminarUsuario = async ()=>{
         //console.log({user});
@@ -22,19 +22,10 @@ const RegisterInfo = ({ worker, properties }) => {
     return (
         <tr>
             {
-                properties.map((prop, index) => (
-                    <td>{ worker[prop] }</td>
+                Object.keys(properties).map((prop, index) => (
+                    <td key={ index }>{ item[prop] }</td>
                 ))
             }
-            {/* <td>
-                <span>{ worker.name }</span>
-            </td>
-            <td> {worker.specialty} </td>
-            <td> <span className='ms-2'>{ worker.branch }</span> </td>
-            <td> { worker.availability} </td>
-            <td> { worker.phone} </td>
-            <td> { worker.address} </td>
-            <td> {worker.email} </td> */}
             <td>
                 <div className='table-icons-container'>
                     <i className="bi bi-pencil-square"></i>

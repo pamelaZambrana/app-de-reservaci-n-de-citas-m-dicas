@@ -47,11 +47,15 @@ const WorkersTable = () => {
             <TableHeader
                 header = { tablesList[0] } 
             ></TableHeader>
-            <TableContent
-                entries = { tablesList[0].entries }
-                workersList = { workers }
-                properties = { tablesList[0].properties }
-            ></TableContent>
+            {
+                workers.length > 0 ?
+                <TableContent
+                    contentList = { workers }
+                    properties = { tablesList[0].properties }
+                ></TableContent>
+                :
+                <p>No hay registros en esta fecha...</p>
+            }
         </>
         :
         <p>Cargando...</p>

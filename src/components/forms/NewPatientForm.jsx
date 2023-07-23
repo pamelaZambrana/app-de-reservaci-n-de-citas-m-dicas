@@ -2,6 +2,9 @@ import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BRANCHES, ESPECIALIDAD } from './models/options';
 import { Patient } from './models/patient';
+import { newPatientRequestToBackend } from '../../requests/patientsRequest';
+import successAlert from '../../alerts/successAlert';
+import errorAlert from '../../alerts/errorAlert';
 const NewPatientForm = () => {
     /* Referencias para los inputs */
     const nameRef = useRef("");
@@ -25,16 +28,15 @@ const NewPatientForm = () => {
             specialtyRef.current.value,
             diagnosisRef.current.value,
         )
-        /* alert(JSON.stringify(values));
-        await saveNewCustomer(values)
-                            .then( ans => {
-                                console.log(ans)
-                            })
-                            .catch( error => {
-                                console.log(error)
-                            })
-
-        navigate("/private/pacientes"); */
+        //alert(JSON.stringify(values));
+        await newPatientRequestToBackend(values)
+            .then(ans=>{
+                successAlert(ans.data.message)
+            })
+            .catch(e=>{
+                errorAlert(e.response.data.body.error);
+            })
+        navigate("/private/pacientes"); 
         console.log("sending values", values)
     }
     return (

@@ -1,21 +1,42 @@
 import React, {useState, useEffect} from 'react';
 import TableHeader from './common/TableHeader';
 import { tablesList } from './utilities/characteristicsList';
+import TableContent from './common/TableContent';
 
 
+const worker1 = {
+    _id: 12336,
+    name : "Bellota", 
+    specialty : "Psicomotricidad",
+    branch : "El Alto",
+    availability : "Mañana y Tarde",
+    phone : "26485215",
+    address : "Av. Quintanilla",
+    email : "bellota@gmail.com",
+};
+const worker2 = {
+    _id: 12337,
+    name : "Stampy", 
+    specialty : "Fisioterapia",
+    branch : "El Alto",
+    availability : "Mañana y Tarde",
+    phone : "89785236",
+    address : "Av. Quintanilla",
+    email : "stampy@gmail.com",
+}
 const PatientsTable = () => {
 
-    /* Estados de PatientsTable */
-    const [customers, setCustomers] = useState([]);
+    /* ---- using local state ------ */
+    const [patients, setPatients] = useState([]);
+    const [loading, setLoading] = useState(false);
     //const [searchCustomer, setSearchCustomer] = useState("");
-    //const [loading, setLoading] = useState(false);
 
     /* Petición de registros */
     /* async function customerRequest(){
-        await getCustomers()
+        await getpatients()
                         .then(ans=>{
                             setLoading(true);
-                            setCustomers(ans.data.body);
+                            setPatients(ans.data.body);
                             console.log(ans.data.body);
                         })
                         .catch(error=>{
@@ -27,18 +48,18 @@ const PatientsTable = () => {
     
     /* borrando citas */
     function removeUser(customer){
-        const index=customers.indexOf(customer);
-        const tempCustomers=[...customers];
-        tempCustomers.splice(index,1);
-        setCustomers(tempCustomers);
+        const index=patients.indexOf(customer);
+        const temppatients=[...patients];
+        temppatients.splice(index,1);
+        setPatients(temppatients);
     }
     
     /* Desplegando la tabla */
    /*  let customerTable;
-    if(customers.length>0){
+    if(patients.length>0){
         customerTable=
             <CustomerTable
-                customerList={ customers }
+                customerList={ patients }
                 remove={ removeUser }
             ></CustomerTable>
      }else{
@@ -51,32 +72,31 @@ const PatientsTable = () => {
     }; */
 
     useEffect(() => {
+        setPatients([worker1, worker2]); // debe ir dentro de la función request .then()
         //customerRequest();
         
     }, []);
     return (    
     <div className='table-container'>
-        <TableHeader
-            header = { tablesList[1]}
-        ></TableHeader>
-    {/* <div className='card-header d-flex'>
-        <h1>Registro de Pacientes</h1>
-    </div>
-        <div 
-            className='card-body' 
-            style={ {position:"relative", height:"458px"}} 
-            data-mdb-perfect-scrollbar="true"
-        >
-            { !loading 
-            ?
-            <div className="d-flex justify-content-center">
-                <p>Cargando registro de pacientes</p>
-                <div className="spinner-border" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                </div>
-            </div> 
-            : customerTable }
-        </div> */}
+    {
+        !loading ?
+        <>
+            <TableHeader
+                header = { tablesList[1] } 
+            ></TableHeader>
+            {
+                patients.length > 0 ?
+                <TableContent
+                    contentList = { patients }
+                    properties = { tablesList[1].properties }
+                ></TableContent>
+                :
+                <p>No hay registros en esta fecha...</p>
+            }
+        </>
+        :
+        <p>Cargando...</p>
+    }
         
     </div>
     )
